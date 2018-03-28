@@ -40,13 +40,13 @@ public class Drop extends ApplicationAdapter {
     @Override
     public void create() {
         batch = new SpriteBatch();
-        img = new Texture("badlogic.jpg");
+        img = new Texture("tutorial/badlogic.jpg");
 
-        dropImage = new Texture("droplet.png");
-        bucketImage = new Texture("bucket.png");
+        dropImage = new Texture("tutorial/droplet.png");
+        bucketImage = new Texture("tutorial/bucket.png");
 
-        rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
-        dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
+        rainMusic = Gdx.audio.newMusic(Gdx.files.internal("tutorial/rain.mp3"));
+        dropSound = Gdx.audio.newSound(Gdx.files.internal("tutorial/drop.wav"));
 
         font = new BitmapFont();
         font.getData().setScale(3);

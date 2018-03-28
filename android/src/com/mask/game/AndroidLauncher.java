@@ -14,8 +14,8 @@ public class AndroidLauncher extends AndroidApplication {
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		config.useAccelerometer = false;
 		config.useCompass = false;
-		//initialize(new MASKgame(), config);
+		initialize(new MASKgame(), config);
 		//initialize(new Drop(), config);
-		initialize(new Drop2(), config);
+		//initialize(new Drop2(), config);
 	}
 }

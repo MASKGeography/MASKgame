@@ -10,8 +10,8 @@ import com.badlogic.gdx.graphics.Texture;
 public class Assets {
 
     public enum Textures {
-        DROPLET("droplet.png"),
-        BUCKET("bucket.png");
+        DROPLET("tutorial/droplet.png"),
+        BUCKET("tutorial/bucket.png");
 
         private final Texture texture;
         Textures(String image) {

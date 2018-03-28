@@ -37,8 +37,8 @@ public class GameScreen implements Screen {
         bucketImage = Assets.Textures.BUCKET.get();
 
         // load the drop sound effect and the rain background "music"
-        dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
-        rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
+        dropSound = Gdx.audio.newSound(Gdx.files.internal("tutorial/drop.wav"));
+        rainMusic = Gdx.audio.newMusic(Gdx.files.internal("tutorial/rain.mp3"));
         rainMusic.setLooping(true);
 
         // create the camera and the SpriteBatch
