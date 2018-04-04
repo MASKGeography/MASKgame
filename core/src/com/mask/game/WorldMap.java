@@ -4,8 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g3d.utils.TextureProvider;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.TimeUtils;
 
 import java.util.Random;
 
@@ -17,6 +16,11 @@ public class WorldMap implements Screen {
 
     private final MASKgame game;
     private OrthographicCamera camera;
+    private TimeUtils timer;
+    private long startTime;
+    private long lastChanged;
+
+    private Random randy;
 
     int[] randarr;
 
@@ -27,15 +31,19 @@ public class WorldMap implements Screen {
         camera.setToOrtho(false, 800, 480);
 
         randarr = new int[10];
-        Random randy = new Random();
+        randy = new Random();
         for (int i = 0; i < 10; ++i) {
             randarr[i] = Math.abs(randy.nextInt()) % Assets.countries.size();
         }
+
+        timer = new TimeUtils();
+        startTime = timer.millis();
+        lastChanged = startTime;
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0.2f, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         camera.update();
@@ -49,6 +57,16 @@ public class WorldMap implements Screen {
         }
 
         game.batch.end();
+
+
+        if (timer.millis() - lastChanged >= 5 * 1000) {
+            lastChanged = timer.millis();
+
+            for (int i = 0; i < 10; ++i) {
+                randarr[i] = Math.abs(randy.nextInt()) % Assets.countries.size();
+            }
+        }
+
 
     }
 

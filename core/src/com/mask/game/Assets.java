@@ -22,13 +22,19 @@ public class Assets {
         String[] lines = file.readString().split("\n");
 
         for (String line : lines) {
-            Gdx.app.log("Hello", line);
+            Gdx.app.log("CSV line", line);
             String[] tokens = line.split(",");
 
-            for (int i = 1; i < tokens.length; ++i)
-                countries.add(tokens[i]);
+            for (int i = 1; i < tokens.length; ++i) {
+                if (!tokens[i].equals("")) {
+                    countries.add(tokens[i]);
+                    Gdx.app.log("Country", tokens[i]);
+                }
+            }
 
         }
+
+        Gdx.app.log("Number of countries", Integer.toString(countries.size()));
 
         return;
 
