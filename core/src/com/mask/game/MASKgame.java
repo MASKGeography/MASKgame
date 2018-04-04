@@ -12,6 +12,7 @@ public class MASKgame extends Game {
     public SpriteBatch batch;
 
     public void create() {
+        Assets.init();
         batch = new SpriteBatch();
         this.setScreen(new MainMenu(this));
     }
