@@ -4,7 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g3d.utils.TextureProvider;
 import com.badlogic.gdx.physics.box2d.World;
+
+import java.util.Random;
 
 /**
  * Created by Neel on 4/2/2018.
@@ -15,11 +18,19 @@ public class WorldMap implements Screen {
     private final MASKgame game;
     private OrthographicCamera camera;
 
+    int[] randarr;
+
     public WorldMap(final MASKgame gam) {
         game = gam;
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
+
+        randarr = new int[10];
+        Random randy = new Random();
+        for (int i = 0; i < 10; ++i) {
+            randarr[i] = Math.abs(randy.nextInt()) % Assets.countries.size();
+        }
     }
 
     @Override
@@ -32,6 +43,11 @@ public class WorldMap implements Screen {
 
         game.batch.begin();
         Assets.Fonts.DEFAULT.get().draw(game.batch, "Welcome to the world map! ", 100, 150);
+
+        for (int i = 0; i < 10; ++i) {
+            Assets.Fonts.DEFAULT.get().draw(game.batch, Assets.countries.get(randarr[i]), 100, 150+20*i);
+        }
+
         game.batch.end();
 
     }

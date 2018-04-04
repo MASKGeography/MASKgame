@@ -55,6 +55,7 @@ public class MainMenu implements Screen {
     public void hide() {
     }
 
+
     @Override
     public void pause() {
     }
