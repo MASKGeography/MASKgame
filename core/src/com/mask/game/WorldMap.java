@@ -42,7 +42,7 @@ public class WorldMap implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        Assets.Fonts.DEFAULT.get().draw(game.batch, "Welcome to the world map! ", 100, 150);
+        Assets.Fonts.DEFAULT.get().draw(game.batch, "Welcome to the world map! ", 100, 100);
 
         for (int i = 0; i < 10; ++i) {
             Assets.Fonts.DEFAULT.get().draw(game.batch, Assets.countries.get(randarr[i]), 100, 150+20*i);

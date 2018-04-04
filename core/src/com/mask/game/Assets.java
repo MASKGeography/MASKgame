@@ -9,7 +9,6 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
-import java.io.BufferedReader;
 import java.util.ArrayList;
 
 public class Assets {
@@ -19,7 +18,7 @@ public class Assets {
     public static void init() {
         countries = new ArrayList<String>();
 
-        FileHandle file = Gdx.files.internal("ListOfCountries.csv");
+        FileHandle file = Gdx.files.internal("geography/ListOfCountries.csv");
         String[] lines = file.readString().split("\n");
 
         for (String line : lines) {
@@ -36,7 +35,16 @@ public class Assets {
     }
 
     public enum Textures {
+        AD("geography/flagSprites/ad.png");
 
+        private final Texture texture;
+        Textures(String image) {
+            texture = new Texture(Gdx.files.internal(image));
+        }
+
+        public Texture get() {
+            return texture;
+        }
     };
 
     public enum Sounds {
