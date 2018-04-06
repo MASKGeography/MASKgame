@@ -28,7 +28,7 @@ public class WorldMap implements Screen {
         game = gam;
 
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
+        camera.setToOrtho(false, Assets.Textures.WORLDMAP.get().getWidth(), Assets.Textures.WORLDMAP.get().getHeight());
 
         randarr = new int[10];
         randy = new Random();
@@ -50,6 +50,7 @@ public class WorldMap implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
+        game.batch.draw(Assets.Textures.WORLDMAP.get(), 0, 0);
         Assets.Fonts.DEFAULT.get().draw(game.batch, "Welcome to the world map! ", 100, 100);
 
         for (int i = 0; i < 10; ++i) {

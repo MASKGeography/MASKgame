@@ -36,11 +36,18 @@ public class Assets {
 
         Gdx.app.log("Number of countries", Integer.toString(countries.size()));
 
+        int count = 0;
+        for (String country : countries) {
+            if (country.equals("")) ++count;
+        }
+        Gdx.app.log("Number empty", Integer.toString(count));
+
         return;
 
     }
 
     public enum Textures {
+        WORLDMAP("geography/worldMap.png"),
         AD("geography/flagSprites/ad.png");
 
         private final Texture texture;
