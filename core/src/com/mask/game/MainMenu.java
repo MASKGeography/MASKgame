@@ -24,14 +24,14 @@ public class MainMenu implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0.2f, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        Assets.Fonts.DEFAULT.get().draw(game.batch, "Welcome to Drop!!! ", 100, 150);
+        Assets.Fonts.DEFAULT.get().draw(game.batch, "Where in the world? ", 100, 150);
         Assets.Fonts.DEFAULT.get().draw(game.batch, "Tap anywhere to begin!", 100, 100);
 
         if (Gdx.input.isTouched()) {
@@ -54,6 +54,7 @@ public class MainMenu implements Screen {
     @Override
     public void hide() {
     }
+
 
     @Override
     public void pause() {
