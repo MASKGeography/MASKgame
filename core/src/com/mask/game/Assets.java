@@ -10,10 +10,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Assets {
 
     public static ArrayList<String> countries;
+
+    public static HashMap<String, Texture> flagSprites;
 
     public static void init() {
         countries = new ArrayList<String>();
