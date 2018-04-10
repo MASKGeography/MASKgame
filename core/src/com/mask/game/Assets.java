@@ -30,15 +30,13 @@ public class Assets {
 
             for (int i = 1; i < tokens.length; ++i) {
                 if (!tokens[i].equals("")) {
-                    if (tokens[i].contains("\n")) {
-                        tokens[i] = tokens[i].substring(0, tokens[i].length() - 1);
-                    }
                     countries.add(tokens[i]);
                     Gdx.app.log("Country", tokens[i]);
                 }
             }
 
         }
+
     }
     private static void initCountryTextures() {
         FileHandle file = Gdx.files.internal("geography/listOfCountriesFormatted.csv");
