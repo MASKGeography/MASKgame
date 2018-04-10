@@ -149,7 +149,9 @@ public class WorldMap implements Screen, GestureDetector.GestureListener {
 
     @Override
     public boolean zoom(float initialDistance, float distance) {
-
+        //camera.zoom *= (initialDistance / distance) * 0.0001;
+        camera.zoom = (initialDistance / distance);
+        camera.update();
         return false;
     }
 
