@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.MathUtils;
@@ -42,7 +41,7 @@ public class WorldMap implements Screen, GestureDetector.GestureListener {
         randarr = new int[10];
         randy = new Random();
         for (int i = 0; i < 10; ++i) {
-            randarr[i] = Math.abs(randy.nextInt()) % Assets.countries2.size();
+            randarr[i] = Math.abs(randy.nextInt()) % Assets.countries.size();
         }
 
         timer = new TimeUtils();
@@ -51,7 +50,7 @@ public class WorldMap implements Screen, GestureDetector.GestureListener {
 
         Gdx.input.setInputProcessor(new GestureDetector(this));
 
-        testFlagSprite = new Sprite(Assets.flagSprites.get(Assets.countries2.get(2)));
+        testFlagSprite = new Sprite(Assets.flagSprites.get(Assets.countries.get(2)));
         //testFlagSprite.scale(2);
 
     }
@@ -69,11 +68,11 @@ public class WorldMap implements Screen, GestureDetector.GestureListener {
         game.batch.draw(Assets.Textures.WORLDMAP.get(), 0, 0);
         Assets.Fonts.DEFAULT.get().draw(game.batch, "Welcome to the world map! ", 100, 100);
 
-        Gdx.app.log("Hola", "" + Assets.countries.size() + " " + Assets.countries2.size());
+        Gdx.app.log("Hola", "" + Assets.countriesProper.size() + " " + Assets.countries.size());
 
         for (int i = 0; i < 10; ++i) {
-            Assets.Fonts.DEFAULT.get().draw(game.batch, Assets.countries2.get(randarr[i]), 100, 150+20*i);
-            game.batch.draw(Assets.flagSprites.get(Assets.countries2.get(randarr[i])), 1000, 150+20*i);
+            Assets.Fonts.DEFAULT.get().draw(game.batch, Assets.countries.get(randarr[i]), 100, 150+20*i);
+            game.batch.draw(Assets.flagSprites.get(Assets.countries.get(randarr[i])), 1000, 150+20*i);
         }
 
         if (flagX != -1) {
@@ -90,7 +89,7 @@ public class WorldMap implements Screen, GestureDetector.GestureListener {
             lastChanged = timer.millis();
 
             for (int i = 0; i < 10; ++i) {
-                randarr[i] = Math.abs(randy.nextInt()) % Assets.countries2.size();
+                randarr[i] = Math.abs(randy.nextInt()) % Assets.countries.size();
             }
         }
 

@@ -35,7 +35,7 @@ public class MainMenu implements Screen {
         Assets.Fonts.DEFAULT.get().draw(game.batch, "Tap anywhere to begin!", 100, 100);
 
         if (Gdx.input.isTouched()) {
-            game.setScreen(new WorldMap(game));
+            game.setScreen(new WorldMap2(game));
             dispose();
         }
 
