@@ -42,7 +42,7 @@ public class Plot {
 	
 	/**
 	 * Adds a plot to the list of plots.
-	 * @param newPrompt a plot to be added to the list of plots
+	 * @param newPrompts a plot to be added to the list of plots
 	 */
 	public void addPlot(Prompt newPrompts) {
 		plots.add(newPrompts);
@@ -98,29 +98,32 @@ public class Plot {
 			}
 	}
 
-	private static void init(){
+	public static void init(){
 	    Plot plots = new Plot();
-	    Prompt prompt = new Prompt;
+	    Prompt prompt = new Prompt();
 	    PromptWords promptWords = new PromptWords();
 
         FileHandle file = Gdx.files.internal("geography/plots.csv");
         String[] lines = file.readString().split("\n");
 
         for (String line : lines) {
-            Gdx.app.log("CSV line", line);
+            Gdx.app.log("CSV line prompts", line);
             String[] tokens = line.split(",");
 
             prompt.addOverview(tokens[0]);
 
-            for (int i = 1; i < tokens.length; ++i) {
+            for (int i = 1; i < tokens.length; i=i+2) {
                 if (!tokens[i].equals("")) {
                     promptWords.setPromptWord(tokens[i]);
                     promptWords.setSpriteName(tokens[i+1]);
                     prompt.addPrompt(promptWords);
+                    plots.addPlot(prompt);
                     Gdx.app.log("Prompt:", tokens[i]);
-                    Gdx.app.log("SpriteName:", tokens[i]);
+                    Gdx.app.log("PromptSpriteName:", tokens[i+1]);
                 }
             }
+
+
 
         }
     }
