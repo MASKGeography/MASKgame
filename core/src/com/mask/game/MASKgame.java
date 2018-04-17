@@ -16,6 +16,7 @@ public class MASKgame extends Game {
     public void create() {
         Gdx.app.setLogLevel(Application.LOG_INFO);
 
+        Plot.init();
         Assets.init();
         batch = new SpriteBatch();
         this.setScreen(new MainMenu(this));
