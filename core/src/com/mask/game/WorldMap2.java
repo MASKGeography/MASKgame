@@ -2,8 +2,10 @@ package com.mask.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.input.GestureDetector;
@@ -12,6 +14,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 
 import java.util.Random;
@@ -27,6 +30,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
     private float width, height;
     Sprite background;
+    Color backgroundColor;
 
     boolean lastTouched = false;
     boolean atAllTouched = false;
@@ -47,8 +51,10 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, width, height);
 
-        background = new Sprite(Assets.Textures.WORLDMAP.get());
+        //use new square version of map
+        background = new Sprite(Assets.Textures.WORLDMAP2.get());
 
+        //use original map heights
         float mapHeight = Assets.Textures.WORLDMAP.get().getHeight();
         float mapWidth = Assets.Textures.WORLDMAP.get().getWidth();
 
@@ -77,7 +83,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         camera.update();
@@ -123,6 +129,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
             }
         }
+
 
         lastTouched = false;
     }

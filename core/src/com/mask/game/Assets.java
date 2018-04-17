@@ -68,7 +68,8 @@ public class Assets {
     }
 
     public enum Textures {
-        WORLDMAP("geography/worldMap.png");
+        WORLDMAP("geography/worldMap.png"),
+        WORLDMAP2("geography/worldMap2.png");
 
         private final Texture texture;
         Textures(String image) {
