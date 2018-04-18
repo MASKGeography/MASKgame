@@ -37,9 +37,8 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
     float touchX = -1, touchY = -1;
 
     Sprite flagClicker;
-    Sprite[] randomFlags;
-    int toFind = 1;
-    String answerString = "";
+
+    Sprite[] flagButtons;
 
 
     public WorldMap2(MASKgame gam) {
@@ -47,6 +46,9 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
+
+        Gdx.app.log("Width", "" + width);
+        Gdx.app.log("Height", "" + height);
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, width, height);
@@ -72,12 +74,37 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
         flagClicker = new Sprite(Assets.flagSprites.get(Assets.countries.get(0)));
 
-        randomFlags = new Sprite[10];
-        for (int i = 1; i <= 10; ++i) {
-            randomFlags[i - 1] = new Sprite(Assets.flagSprites.get(Assets.countries.get(i)));
-            randomFlags[i - 1].setCenter(100 * i, 50 * i);
-            randomFlags[i - 1].setScale(3);
+        flagButtons = new Sprite[Assets.countries2XPos.keySet().size()];
+        Vector3 pos = new Vector3(0, 0, 0);
+
+        int iter = 0;
+        while (iter < Assets.countries2XPos.keySet().size()){
+            String key = Assets.countries.get(iter);
+            String name = key;
+            Double x = Assets.countries2XPos.get(key);
+            Double y = Assets.countries2YPos.get(key);
+
+            Gdx.app.log("DEBUGZ", name + " " + x + " " + y + " " + name.length());
+
+            if (x == null || y == null) {
+                ++iter;
+                continue;
+            }
+
+            pos.x = x.floatValue() * width;
+            pos.y = y.floatValue() * height;
+            pos.z = 0;
+            pos = camera.unproject(pos);
+
+            Gdx.app.log("name", name);
+
+
+            flagButtons[iter] = new Sprite(Assets.flagSprites.get(Assets.countries.get(iter)));
+            flagButtons[iter].setPosition(pos.x, pos.y);
+
+            ++iter;
         }
+
 
     }
 
@@ -91,13 +118,11 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         game.batch.begin();
 
         background.draw(game.batch);
-        for (Sprite flag : randomFlags) flag.draw(game.batch);
+        for (Sprite button : flagButtons) button.draw(game.batch);
 
         BitmapFont font = Assets.Fonts.DEFAULT.get();
         font.getData().setScale(3);
 
-        font.draw(game.batch, "Prompt: Find country " + Assets.countries.get(toFind) + "(" + toFind + ")", 1000, 800);
-        font.draw(game.batch, answerString, 1000, 600);
         font.draw(game.batch, "x = " + flagClicker.getX(), 500, 400);
         font.draw(game.batch, "y = " + flagClicker.getY(), 500, 500);
 
@@ -114,20 +139,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         }
 
         if (atAllTouched) {
-            for (int i = 0; i < 10; ++i) {
-                Sprite flag = randomFlags[i];
-                if (Intersector.intersectRectangles(flag.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
-                    if (i == toFind - 1) {
-                        answerString = "Congratulations, you found the country!";
-                        toFind = toFind % 10 + 1;
 
-                        atAllTouched = false;
-                    } else {
-                        answerString = "YOU WRONG!!!";
-                    }
-                }
-
-            }
         }
 
 
