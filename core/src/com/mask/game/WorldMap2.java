@@ -74,12 +74,11 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
         flagClicker = new Sprite(Assets.flagSprites.get(Assets.countries.get(0)));
 
-        flagButtons = new Sprite[Assets.countries2XPos.keySet().size()];
+        flagButtons = new Sprite[10];
         Vector3 pos = new Vector3(0, 0, 0);
 
         int iter = 0;
-        while (iter < Assets.countries2XPos.keySet().size()){
-            String key = Assets.countries.get(iter);
+        for (String key : Assets.countries2XPos.keySet()){
             String name = key;
             Double x = Assets.countries2XPos.get(key);
             Double y = Assets.countries2YPos.get(key);
@@ -103,6 +102,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
             flagButtons[iter].setPosition(pos.x, pos.y);
 
             ++iter;
+            if (iter >= 10) break;
         }
 
 
@@ -122,6 +122,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
         BitmapFont font = Assets.Fonts.DEFAULT.get();
         font.getData().setScale(3);
+
 
         font.draw(game.batch, "x = " + flagClicker.getX(), 500, 400);
         font.draw(game.batch, "y = " + flagClicker.getY(), 500, 500);

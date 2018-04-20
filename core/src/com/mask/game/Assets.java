@@ -69,9 +69,7 @@ public class Assets {
         FileHandle file = Gdx.files.internal("geography/testlocs.csv");
         String[] lines = file.readString().split("\n");
 
-        int stop = 10;
         for (String line : lines) {
-            if (stop-- == 0) break;
             String[] tokens = line.split(",");
             String name = tokens[0];
             Double x = Double.parseDouble(tokens[1]);
@@ -87,7 +85,8 @@ public class Assets {
 
     }
     public static void init() {
-        initCountries();
+        countriesProper = new ArrayList<String>();
+        //initCountries();
         initCountryTextures();
         initCountryPos();
 
