@@ -1,5 +1,7 @@
 package com.mask.game;
 
+import com.badlogic.gdx.Gdx;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -16,6 +18,8 @@ public class Prompt {
 	private String overview;
 	
 	private int size;
+
+	public int i = 0;
 	
 	//constructor
 	/**
@@ -141,13 +145,16 @@ public class Prompt {
 	 * @return a prompt
 	 */
 	public PromptWords getAPrompt() {
-			if (size == 0) {
-				return null;
+		/*	if (size == 0) {
+                PromptWords promptFail = new PromptWords("FAIL", "failSprite");
+                return promptFail;
 			}
 			else {
 				size=size-1;
 				return prompts.get(size);
-			}
+			} */
+        i = (i+1)%size();
+      return prompts.get(i);
 	}
 	
 	/**

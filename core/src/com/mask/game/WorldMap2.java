@@ -37,6 +37,11 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
     int toFind = 1;
     String answerString = "";
 
+    PromptWords prompty;
+    String thePrompt;
+    String theSprite;
+    Prompt ploty;
+
 
     public WorldMap2(MASKgame gam) {
         game = gam;
@@ -73,6 +78,17 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
             randomFlags[i - 1].setScale(3);
         }
 
+
+
+
+        ploty = Plot.getAPlot();
+        prompty = ploty.getAPrompt();
+        thePrompt = prompty.getPromptWord();
+        theSprite = prompty.getSpriteName();
+
+
+
+
     }
 
     @Override
@@ -85,12 +101,14 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         game.batch.begin();
 
         background.draw(game.batch);
+
         for (Sprite flag : randomFlags) flag.draw(game.batch);
 
         BitmapFont font = Assets.Fonts.DEFAULT.get();
         font.getData().setScale(3);
 
-        font.draw(game.batch, "Prompt: Find country " + Assets.countries.get(toFind) + "(" + toFind + ")", 1000, 800);
+
+        font.draw(game.batch, "Prompt: " + thePrompt + "(" + theSprite + ")", 1000, 800);
         font.draw(game.batch, answerString, 1000, 600);
         font.draw(game.batch, "x = " + flagClicker.getX(), 500, 400);
         font.draw(game.batch, "y = " + flagClicker.getY(), 500, 500);
@@ -111,9 +129,12 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
             for (int i = 0; i < 10; ++i) {
                 Sprite flag = randomFlags[i];
                 if (Intersector.intersectRectangles(flag.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
-                    if (i == toFind - 1) {
+                    if (i==toFind-1) {
                         answerString = "Congratulations, you found the country!";
-                        toFind = toFind % 10 + 1;
+                        prompty = ploty.getAPrompt();
+                        thePrompt = prompty.getPromptWord();
+                        theSprite = prompty.getSpriteName();
+                        toFind = toFind % 10 +1;
 
                         atAllTouched = false;
                     } else {
