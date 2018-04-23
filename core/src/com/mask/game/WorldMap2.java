@@ -29,7 +29,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
     private OrthographicCamera camera;
 
     private float width, height;
-    Sprite background;
+    Sprite background, fakebackground;
     Color backgroundColor;
 
     boolean lastTouched = false;
@@ -55,6 +55,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
         //use new square version of map
         background = new Sprite(Assets.Textures.WORLDMAP2.get());
+        fakebackground = new Sprite(Assets.Textures.WORLDMAP.get());
 
         //use original map heights
         float mapHeight = Assets.Textures.WORLDMAP.get().getHeight();
@@ -66,15 +67,19 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         }
 
         background.setScale(scale);
+        fakebackground.setScale(scale);
 
         background.setCenterX(camera.position.x);
         background.setCenterY(camera.position.y);
+
+        fakebackground.setCenterX(camera.position.x);
+        fakebackground.setCenterY(camera.position.y);
 
         Gdx.input.setInputProcessor(new GestureDetector(this));
 
         flagClicker = new Sprite(Assets.flagSprites.get(Assets.countries.get(0)));
 
-        flagButtons = new Sprite[10];
+        flagButtons = new Sprite[Assets.countries2XPos.keySet().size()];
         Vector3 pos = new Vector3(0, 0, 0);
 
         int iter = 0;
@@ -83,28 +88,32 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
             Double x = Assets.countries2XPos.get(key);
             Double y = Assets.countries2YPos.get(key);
 
-            Gdx.app.log("DEBUGZ", name + " " + x + " " + y + " " + name.length());
+            Gdx.app.log("DEBUG", name + " " + x + " " + y + " " + name.length());
 
             if (x == null || y == null) {
                 ++iter;
                 continue;
             }
 
-            pos.x = x.floatValue() * width;
-            pos.y = y.floatValue() * height;
+            pos.x = x.floatValue() * mapWidth + fakebackground.getX();
+            pos.y = (y.floatValue()) * mapHeight + fakebackground.getY();
             pos.z = 0;
-            pos = camera.unproject(pos);
+            //pos = camera.unproject(pos);
 
             Gdx.app.log("name", name);
 
 
-            flagButtons[iter] = new Sprite(Assets.flagSprites.get(Assets.countries.get(iter)));
+            flagButtons[iter] = new Sprite(Assets.flagSprites.get(name));
             flagButtons[iter].setPosition(pos.x, pos.y);
 
             ++iter;
-            if (iter >= 10) break;
         }
 
+        Rectangle rect = background.getBoundingRectangle();
+        Gdx.app.log("X:", "" + rect.x);
+        Gdx.app.log("Y:", "" + rect.y);
+        Gdx.app.log("W:", "" + rect.width);
+        Gdx.app.log("H:", "" + rect.height);
 
     }
 
@@ -118,14 +127,15 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         game.batch.begin();
 
         background.draw(game.batch);
+        //fakebackground.draw(game.batch);
         for (Sprite button : flagButtons) button.draw(game.batch);
 
         BitmapFont font = Assets.Fonts.DEFAULT.get();
         font.getData().setScale(3);
 
 
-        font.draw(game.batch, "x = " + flagClicker.getX(), 500, 400);
-        font.draw(game.batch, "y = " + flagClicker.getY(), 500, 500);
+//        font.draw(game.batch, "x = " + flagClicker.getX(), 500, 400);
+//        font.draw(game.batch, "y = " + flagClicker.getY(), 500, 500);
 
         if (atAllTouched) {
             flagClicker.draw(game.batch);

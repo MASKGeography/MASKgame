@@ -66,7 +66,7 @@ public class Assets {
         countries2XPos = new HashMap<String, Double>();
         countries2YPos = new HashMap<String, Double>();
 
-        FileHandle file = Gdx.files.internal("geography/testlocs.csv");
+        FileHandle file = Gdx.files.internal("geography/coordinatePercentOfCountries.csv");
         String[] lines = file.readString().split("\n");
 
         for (String line : lines) {
