@@ -94,9 +94,36 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
                 ++iter;
                 continue;
             }
-
+            float middleX = mapWidth / 2 + fakebackground.getX();
+            float middleY = mapWidth / 2 - fakebackground.getY();
+            float diffe;
+            pos.y = y.floatValue() * mapHeight + fakebackground.getY();
             pos.x = x.floatValue() * mapWidth + fakebackground.getX();
-            pos.y = (y.floatValue()) * mapHeight + fakebackground.getY();
+            if(pos.x < middleX)
+            {
+                pos.x = x.floatValue() * mapWidth + fakebackground.getX();
+                diffe = middleX - pos.x;
+                pos.x = pos.x - diffe/3;
+            }
+            else if(pos.x > middleX || pos.x == middleX)
+            {
+                pos.x = x.floatValue() * mapWidth + fakebackground.getX();
+                diffe = pos.x - middleX;
+                pos.x = pos.x + diffe/3;
+            }
+            if(pos.y < middleY)
+            {
+                pos.y = y.floatValue() * mapHeight + fakebackground.getY();
+                diffe = middleY - pos.y;
+                pos.y = pos.y - diffe/4;
+            }
+            else if(pos.y > middleY || pos.y == middleY)
+            {
+                pos.y = y.floatValue() * mapHeight + fakebackground.getY();
+                diffe = pos.y - middleY;
+                pos.y = pos.y + diffe/4;
+            }
+
             pos.z = 0;
             //pos = camera.unproject(pos);
 
@@ -105,9 +132,12 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
             flagButtons[iter] = new Sprite(Assets.flagSprites.get(name));
             flagButtons[iter].setPosition(pos.x, pos.y);
+            flagButtons[iter].setSize(8,6);
 
             ++iter;
         }
+
+
 
         Rectangle rect = background.getBoundingRectangle();
         Gdx.app.log("X:", "" + rect.x);
