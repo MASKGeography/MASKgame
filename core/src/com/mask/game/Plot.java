@@ -14,10 +14,12 @@ import java.util.Random;
 public class Plot {
 	
 	//data
+
+    public static ArrayList<Prompt> plots;
 	
-	private ArrayList<Prompt> plots;
-	
-	private int size;
+	private static int size;
+
+	private static int i = 0;
 	
 	//constructor
 	public Plot() {
@@ -44,7 +46,7 @@ public class Plot {
 	 * Adds a plot to the list of plots.
 	 * @param newPrompts a plot to be added to the list of plots
 	 */
-	public void addPlot(Prompt newPrompts) {
+	public static void addPlot(Prompt newPrompts) {
 		plots.add(newPrompts);
 			size++;
 	}
@@ -54,15 +56,15 @@ public class Plot {
 	 * Returns the number of "undealt" plots.
 	 * @return number of "undealt" plots
 	 */
-	public int size() {
-		return size;
+	public static int size() {
+        return size;
 	}
 	
 	/**
 	 * Returns whether there are any "undealt" plots.
 	 * @return true is empty, false if not empty
 	 */
-	public boolean isEmpty() {
+	public static boolean isEmpty() {
 		if (plots.size()==0) 
 			return true;
 		else
@@ -72,7 +74,7 @@ public class Plot {
 	/**
 	 * Shuffles the "deck" of plots.
 	 */
-	public void randomize() {
+	public static void randomize() {
 		Random randy = new Random();
 		for(int i = plots.size()-1; i>=0; i--) {
 			int a = randy.nextInt(plots.size());
@@ -81,51 +83,57 @@ public class Plot {
 			plots.set(a, second);
 			plots.set(i, first);
 		}
-		size = plots.size();
+        size = plots.size();
 	}
 	
 	/**
 	 * Returns a plot.
 	 * @return a plot
 	 */
-	public Prompt getAPlot() {
-			if (size == 0) {
-				return null;
-			}
-			else {
-				size=size-1;
-				return plots.get(size);
-			}
-	}
+	public static Prompt getAPlot() {
+      /*  if (size == 0) {
+            PromptWords promptFail = new PromptWords("FAIL", "failSprite");
+            Prompt fail = new Prompt(promptFail, "failOverview");
+            return fail;
+        }
+        else {
+            size=size-1;
+            return plots.get(size);
+        }*/
+      i = (i+1) % size();
+      return plots.get(i);
+    }
 
-	public static void init(){
-	    Plot plots = new Plot();
-	    Prompt prompt = new Prompt();
-	    PromptWords promptWords = new PromptWords();
+	public static Plot init(){
+        Plot plots = new Plot();
 
         FileHandle file = Gdx.files.internal("geography/plots.csv");
         String[] lines = file.readString().split("\n");
 
         for (String line : lines) {
-            Gdx.app.log("CSV line prompts", line);
+            Gdx.app.log("QQQ CSV line prompts", line);
+            Prompt prompt = new Prompt();
             String[] tokens = line.split(",");
 
             prompt.addOverview(tokens[0]);
+            Gdx.app.log("QQQ Overview:", tokens[0]);
 
             for (int i = 1; i < tokens.length; i=i+2) {
                 if (!tokens[i].equals("")) {
+                    PromptWords promptWords = new PromptWords();
                     promptWords.setPromptWord(tokens[i]);
                     promptWords.setSpriteName(tokens[i+1]);
                     prompt.addPrompt(promptWords);
-                    plots.addPlot(prompt);
-                    Gdx.app.log("Prompt:", tokens[i]);
-                    Gdx.app.log("PromptSpriteName:", tokens[i+1]);
+                    Gdx.app.log("QQQ Prompt:", tokens[i]);
+                    Gdx.app.log("QQQ PromptSpriteName:", tokens[i+1]);
                 }
             }
-
-
+            plots.addPlot(prompt);
+            Gdx.app.log("QQQ Num Prompts", Integer.toString(plots.size));
 
         }
+
+        return plots;
     }
 }
 
