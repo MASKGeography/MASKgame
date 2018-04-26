@@ -18,6 +18,9 @@ public class Assets {
     public static ArrayList<String> countries;
     public static HashMap<String, Texture> flagSprites;
 
+    public static HashMap<String, Double> countries2XPos;
+    public static HashMap<String, Double> countries2YPos;
+
     private static void initCountries() {
         countriesProper = new ArrayList<String>();
 
@@ -59,16 +62,41 @@ public class Assets {
 
         }
     }
+    private static void initCountryPos() {
+        countries2XPos = new HashMap<String, Double>();
+        countries2YPos = new HashMap<String, Double>();
+
+        FileHandle file = Gdx.files.internal("geography/coordinatePercentOfCountries.csv");
+        String[] lines = file.readString().split("\n");
+
+        for (String line : lines) {
+            String[] tokens = line.split(",");
+            String name = tokens[0];
+            Double x = Double.parseDouble(tokens[1]);
+            Double y = Double.parseDouble(tokens[2]);
+
+            Gdx.app.log("CountryPos", name + " " + x + " " + y + " " + name.length());
+
+            countries2XPos.put(name, x);
+            countries2YPos.put(name, y);
+
+        }
+
+
+    }
     public static void init() {
-        initCountries();
+        countriesProper = new ArrayList<String>();
+        //initCountries();
         initCountryTextures();
+        initCountryPos();
 
         return;
 
     }
 
     public enum Textures {
-        WORLDMAP("geography/worldMap.png");
+        WORLDMAP("geography/worldMap.png"),
+        WORLDMAP2("geography/worldMap2.png");
 
         private final Texture texture;
         Textures(String image) {
