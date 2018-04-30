@@ -50,7 +50,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
     public static ArrayList<CorrectSprite> flagSpriteStr;
 
 
-    String answerString= "";
+    String answerString = "";
 
     PromptWords prompty;
     String thePrompt;
@@ -100,7 +100,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         Vector3 pos = new Vector3(0, 0, 0);
 
         int iter = 0;
-        for (String key : Assets.countries2XPos.keySet()){
+        for (String key : Assets.countries2XPos.keySet()) {
             String name = key;
             Double x = Assets.countries2XPos.get(key);
             Double y = Assets.countries2YPos.get(key);
@@ -111,9 +111,30 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
                 ++iter;
                 continue;
             }
-
+            float middleX = mapWidth / 2 + fakebackground.getX();
+            float middleY = mapWidth / 2 - fakebackground.getY();
+            float diffe;
+            pos.y = y.floatValue() * mapHeight + fakebackground.getY();
             pos.x = x.floatValue() * mapWidth + fakebackground.getX();
-            pos.y = (y.floatValue()) * mapHeight + fakebackground.getY();
+            if (pos.x < middleX) {
+                pos.x = x.floatValue() * mapWidth + fakebackground.getX();
+                diffe = middleX - pos.x;
+                pos.x = pos.x - diffe / 3;
+            } else if (pos.x > middleX || pos.x == middleX) {
+                pos.x = x.floatValue() * mapWidth + fakebackground.getX();
+                diffe = pos.x - middleX;
+                pos.x = pos.x + diffe / 3;
+            }
+            if (pos.y < middleY) {
+                pos.y = y.floatValue() * mapHeight + fakebackground.getY();
+                diffe = middleY - pos.y;
+                pos.y = pos.y - diffe / 4;
+            } else if (pos.y > middleY || pos.y == middleY) {
+                pos.y = y.floatValue() * mapHeight + fakebackground.getY();
+                diffe = pos.y - middleY;
+                pos.y = pos.y + diffe / 4;
+            }
+
             pos.z = 0;
             //pos = camera.unproject(pos);
 
@@ -127,17 +148,17 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
             CorrectSprite theCorrectSprite = new CorrectSprite(namePNG, flagButton);
             flagSpriteStr.add(theCorrectSprite);
             flagButtons[iter].setPosition(pos.x, pos.y);
+            flagButtons[iter].setSize(8, 6);
 
             ++iter;
         }
-
-
 
 
         ploty = Plot.getAPlot();
         prompty = ploty.getAPrompt();
         thePrompt = prompty.getPromptWord();
         theSprite = prompty.getSpriteName();
+
 
         Rectangle rect = background.getBoundingRectangle();
         Gdx.app.log("X:", "" + rect.x);
@@ -186,63 +207,61 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
 
         if (atAllTouched) {
+
             for (int i = 0; i < ploty.size(); ++i) {
                 Gdx.app.log("helpME:", "in the class");
 
                 Sprite flag = null;
 
-                for (int j = 0; j<flagSpriteStr.size(); j++){
-                    if (flagSpriteStr.get(j).getSpriteName().equals(theSprite)){
+                for (int j = 0; j < flagSpriteStr.size(); j++) {
+                    if (flagSpriteStr.get(j).getSpriteName().equals(theSprite)) {
                         flag = flagSpriteStr.get(j).getCorrectSprite();
+                    }
+
+
+                    //No getName function for sprites. Cannot check for equality using sprites.
+                    if (Intersector.intersectRectangles(flag.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
+                        answerString = "Congratulations, you found the country!";
+                        prompty = ploty.getAPrompt();
+                        thePrompt = prompty.getPromptWord();
+                        theSprite = prompty.getSpriteName();
+
+
+                        atAllTouched = false;
+                    } else {
+                        answerString = "YOU WRONG!!!";
                     }
                 }
 
-                //No getName function for sprites. Cannot check for equality using sprites.
-            if (Intersector.intersectRectangles(flag.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
-            answerString = "Congratulations, you found the country!";
-            prompty = ploty.getAPrompt();
-            thePrompt = prompty.getPromptWord();
-            theSprite = prompty.getSpriteName();
-
-            Gdx.app.log("helpME:", "in the if!");
-
-            atAllTouched = false;
-             }
-
-            else {
-              answerString = "YOU WRONG!!!";
-
-}
             }
-                lastTouched = false;
-            }
+            lastTouched = false;
+        }
 
-    }
+    } 
 
+        @Override
+        public void resize ( int width, int height){
+        }
 
-    @Override
-    public void resize(int width, int height) {
-    }
+        @Override
+        public void show () {
+        }
 
-    @Override
-    public void show() {
-    }
+        @Override
+        public void hide () {
+        }
 
-    @Override
-    public void hide() {
-    }
+        @Override
+        public void pause () {
+        }
 
-    @Override
-    public void pause() {
-    }
+        @Override
+        public void resume () {
+        }
 
-    @Override
-    public void resume() {
-    }
-
-    @Override
-    public void dispose() {
-    }
+        @Override
+        public void dispose () {
+        }
 
         @Override
         public boolean touchDown ( float x, float y, int pointer, int button){
