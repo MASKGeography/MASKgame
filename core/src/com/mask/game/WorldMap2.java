@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.input.GestureDetector;
@@ -17,6 +18,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 /**
@@ -41,6 +44,10 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
     Sprite[] flagButtons;
 
     int toFind = 1;
+
+    public static HashMap<String, Texture> flagSprites;
+
+    public static ArrayList<CorrectSprite> flagSpriteStr;
 
 
     String answerString = "";
@@ -133,8 +140,13 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
             Gdx.app.log("name", name);
 
-
-            flagButtons[iter] = new Sprite(Assets.flagSprites.get(name));
+            Sprite flagButton = new Sprite(Assets.flagSprites.get(name));
+            flagButtons[iter] = flagButton;
+            flagSpriteStr = new ArrayList<CorrectSprite>();
+            String namePNG = name + ".png";
+            Gdx.app.log("helpME:", namePNG);
+            CorrectSprite theCorrectSprite = new CorrectSprite(namePNG, flagButton);
+            flagSpriteStr.add(theCorrectSprite);
             flagButtons[iter].setPosition(pos.x, pos.y);
             flagButtons[iter].setSize(8, 6);
 
@@ -193,16 +205,27 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
             flagClicker.setPosition(pos.x, pos.y);
         }
 
+
         if (atAllTouched) {
-            for (int i = 0; i < 10; ++i) {
-                Sprite flag = flagButtons[i];
-                if (Intersector.intersectRectangles(flag.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
-                    if (i == toFind - 1) {
+
+            for (int i = 0; i < ploty.size(); ++i) {
+                Gdx.app.log("helpME:", "in the class");
+
+                Sprite flag = null;
+
+                for (int j = 0; j < flagSpriteStr.size(); j++) {
+                    if (flagSpriteStr.get(j).getSpriteName().equals(theSprite)) {
+                        flag = flagSpriteStr.get(j).getCorrectSprite();
+                    }
+
+
+                    //No getName function for sprites. Cannot check for equality using sprites.
+                    if (Intersector.intersectRectangles(flag.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
                         answerString = "Congratulations, you found the country!";
                         prompty = ploty.getAPrompt();
                         thePrompt = prompty.getPromptWord();
                         theSprite = prompty.getSpriteName();
-                        toFind = toFind % 10 + 1;
+
 
                         atAllTouched = false;
                     } else {
@@ -211,11 +234,10 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
                 }
 
             }
-
-
             lastTouched = false;
         }
-    }
+
+    } 
 
         @Override
         public void resize ( int width, int height){
