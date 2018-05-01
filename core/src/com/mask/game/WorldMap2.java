@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.input.GestureDetector;
@@ -17,6 +18,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 /**
@@ -39,6 +42,20 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
     Sprite flagClicker;
 
     Sprite[] flagButtons;
+
+    int toFind = 1;
+
+    public static HashMap<String, Texture> flagSprites;
+
+    public static ArrayList<CorrectSprite> flagSpriteStr;
+
+
+    String answerString = "";
+
+    PromptWords prompty;
+    String thePrompt;
+    String theSprite;
+    Prompt ploty;
 
 
     public WorldMap2(MASKgame gam) {
@@ -90,7 +107,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         Vector3 pos = new Vector3(0, 0, 0);
 
         int iter = 0;
-        for (String key : Assets.countries2XPos.keySet()){
+        for (String key : Assets.countries2XPos.keySet()) {
             String name = key;
             Double x = Assets.countries2XPos.get(key);
             Double y = Assets.countries2YPos.get(key);
@@ -108,14 +125,21 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
             pos.x = x.floatValue() * fakebackground.getWidth() * scale + (Gdx.graphics.getWidth() - fakebackground.getWidth() * scale) / 2;
             pos.y = y.floatValue() * fakebackground.getHeight() * scale + (Gdx.graphics.getHeight() - fakebackground.getHeight() * scale) / 2;
 
+
             pos.z = 0;
             //pos = camera.unproject(pos);
 
             Gdx.app.log("name", name);
 
-
-            flagButtons[iter] = new Sprite(Assets.flagSprites.get(name));
+            Sprite flagButton = new Sprite(Assets.flagSprites.get(name));
+            flagButtons[iter] = flagButton;
+            flagSpriteStr = new ArrayList<CorrectSprite>();
+            String namePNG = name + ".png";
+            Gdx.app.log("helpME:", namePNG);
+            CorrectSprite theCorrectSprite = new CorrectSprite(namePNG, flagButton);
+            flagSpriteStr.add(theCorrectSprite);
             flagButtons[iter].setPosition(pos.x, pos.y);
+
             flagButtons[iter].setScale(0.5f);
 //            flagButtons[iter].setCenterX(pos.x);
 //            flagButtons[iter].setCenterY(pos.y);
@@ -123,15 +147,19 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
             ++iter;
         }
 
+
         Gdx.app.log("fakex", "" + fakebackground.getX());
         Gdx.app.log("fakey", "" + fakebackground.getY());
+        ploty = Plot.getAPlot();
+        prompty = ploty.getAPrompt();
+        thePrompt = prompty.getPromptWord();
+        theSprite = prompty.getSpriteName();
 
         Rectangle rect = background.getBoundingRectangle();
         Gdx.app.log("X:", "" + rect.x);
         Gdx.app.log("Y:", "" + rect.y);
         Gdx.app.log("W:", "" + rect.width);
         Gdx.app.log("H:", "" + rect.height);
-
     }
 
     @Override
@@ -144,6 +172,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         game.batch.begin();
 
         background.draw(game.batch);
+
         //fakebackground.draw(game.batch);
         for (Sprite button : flagButtons) button.draw(game.batch);
 
@@ -151,8 +180,14 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         font.getData().setScale(3);
 
 
+        font.draw(game.batch, "Prompt: " + thePrompt + "(" + theSprite + ")", 1000, 800);
+        font.draw(game.batch, answerString, 1000, 600);
         font.draw(game.batch, "x = " + flagClicker.getX(), 500, 400);
         font.draw(game.batch, "y = " + flagClicker.getY(), 500, 500);
+
+//        font.draw(game.batch, "x = " + flagClicker.getX(), 500, 400);
+//        font.draw(game.batch, "y = " + flagClicker.getY(), 500, 500);
+
 
         if (atAllTouched) {
             flagClicker.draw(game.batch);
@@ -168,61 +203,87 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
             flagClicker.setCenterY(pos.y);
         }
 
+
         if (atAllTouched) {
 
+            for (int i = 0; i < ploty.size(); ++i) {
+                Gdx.app.log("helpME:", "in the class");
+
+                Sprite flag = null;
+
+                for (int j = 0; j < flagSpriteStr.size(); j++) {
+                    if (flagSpriteStr.get(j).getSpriteName().equals(theSprite)) {
+                        flag = flagSpriteStr.get(j).getCorrectSprite();
+                    }
+
+
+                    //No getName function for sprites. Cannot check for equality using sprites.
+                    if (Intersector.intersectRectangles(flag.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
+                        answerString = "Congratulations, you found the country!";
+                        prompty = ploty.getAPrompt();
+                        thePrompt = prompty.getPromptWord();
+                        theSprite = prompty.getSpriteName();
+
+
+                        atAllTouched = false;
+                    } else {
+                        answerString = "YOU WRONG!!!";
+                    }
+                }
+
+            }
+            lastTouched = false;
         }
 
+    } 
 
-        lastTouched = false;
-    }
+        @Override
+        public void resize ( int width, int height){
+        }
 
-    @Override
-    public void resize(int width, int height) {
-    }
+        @Override
+        public void show () {
+        }
 
-    @Override
-    public void show() {
-    }
+        @Override
+        public void hide () {
+        }
 
-    @Override
-    public void hide() {
-    }
+        @Override
+        public void pause () {
+        }
 
-    @Override
-    public void pause() {
-    }
+        @Override
+        public void resume () {
+        }
 
-    @Override
-    public void resume() {
-    }
+        @Override
+        public void dispose () {
+        }
 
-    @Override
-    public void dispose() {
-    }
+        @Override
+        public boolean touchDown ( float x, float y, int pointer, int button){
+            return false;
+        }
 
-    @Override
-    public boolean touchDown(float x, float y, int pointer, int button) {
-        return false;
-    }
+        @Override
+        public boolean tap ( float x, float y, int count, int button){
+            atAllTouched = true;
+            lastTouched = true;
+            touchX = x;
+            touchY = y;
+            return false;
+        }
 
-    @Override
-    public boolean tap(float x, float y, int count, int button) {
-        atAllTouched = true;
-        lastTouched = true;
-        touchX = x;
-        touchY = y;
-        return false;
-    }
+        @Override
+        public boolean longPress ( float x, float y){
+            return false;
+        }
 
-    @Override
-    public boolean longPress(float x, float y) {
-        return false;
-    }
-
-    @Override
-    public boolean fling(float velocityX, float velocityY, int button) {
-        return false;
-    }
+        @Override
+        public boolean fling ( float velocityX, float velocityY, int button){
+            return false;
+        }
 
     public void pinchStop() {
 
@@ -256,11 +317,11 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         float deltaX = pointer2.x - pointer1.x;
         float deltaY = pointer2.y - pointer1.y;
 
-        float angle = (float)Math.atan2((double)deltaY,(double)deltaX) * MathUtils.radiansToDegrees;
+        float angle = (float) Math.atan2((double) deltaY, (double) deltaX) * MathUtils.radiansToDegrees;
 
         angle += 90f;
 
-        if(angle < 0)
+        if (angle < 0)
             angle = 360f - (-angle);
 
 

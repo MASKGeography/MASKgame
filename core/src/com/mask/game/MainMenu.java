@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.mask.tutorial.Drop2;
 import com.mask.tutorial.GameScreen;
 
@@ -14,6 +17,8 @@ import com.mask.tutorial.GameScreen;
 public class MainMenu implements Screen {
     private final MASKgame game;
     private OrthographicCamera camera;
+    Skin skin;
+    //TextButton button = new TextButton("Hi People", skin);
 
     public MainMenu(final MASKgame gam) {
         game = gam;
@@ -31,8 +36,9 @@ public class MainMenu implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        Assets.Fonts.DEFAULT.get().draw(game.batch, "Where in the world? ", 100, 150);
-        Assets.Fonts.DEFAULT.get().draw(game.batch, "Tap anywhere to begin!", 100, 100);
+        Assets.Fonts.DEFAULT.get().draw(game.batch, "Where in the world? ", 300, 400);
+        Assets.Fonts.DEFAULT.get().draw(game.batch, "Tap anywhere to begin!", 300, 350);
+        Assets.Fonts.DEFAULT.get().draw(game.batch, "Where in the world? ", 300, 300);
 
         if (Gdx.input.isTouched()) {
             game.setScreen(new WorldMap2(game));
