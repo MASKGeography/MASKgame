@@ -50,8 +50,6 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
     public static HashMap<String, Texture> flagSprites;
 
-    public static ArrayList<CorrectSprite> flagSpriteStr;
-
 
     String answerString = "";
 
@@ -139,11 +137,10 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
             Sprite flagButton = new Sprite(Assets.flagSprites.get(name));
             flagButtons[iter] = flagButton;
             buttonNames[iter] = name;
-            flagSpriteStr = new ArrayList<CorrectSprite>();
+
             String namePNG = name + ".png";
             Gdx.app.log("helpME:", namePNG);
-            CorrectSprite theCorrectSprite = new CorrectSprite(namePNG, flagButton);
-            flagSpriteStr.add(theCorrectSprite);
+
             flagButtons[iter].setPosition(pos.x, pos.y);
 
             flagButtons[iter].setScale(0.5f);
