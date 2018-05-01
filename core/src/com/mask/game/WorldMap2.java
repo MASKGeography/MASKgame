@@ -42,6 +42,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
     Sprite flagClicker;
 
     Sprite[] flagButtons;
+    String[] buttonNames;
 
     int toFind = 1;
 
@@ -97,6 +98,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         flagClicker = new Sprite(Assets.flagSprites.get(Assets.countries.get(0)));
 
         flagButtons = new Sprite[Assets.countries2XPos.keySet().size()];
+        buttonNames = new String[Assets.countries2XPos.keySet().size()];
         Vector3 pos = new Vector3(0, 0, 0);
 
         int iter = 0;
@@ -142,6 +144,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
             Sprite flagButton = new Sprite(Assets.flagSprites.get(name));
             flagButtons[iter] = flagButton;
+            buttonNames[iter] = name;
             flagSpriteStr = new ArrayList<CorrectSprite>();
             String namePNG = name + ".png";
             Gdx.app.log("helpME:", namePNG);
@@ -208,36 +211,42 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
         if (atAllTouched) {
 
-            for (int i = 0; i < ploty.size(); ++i) {
-                Gdx.app.log("helpME:", "in the class");
+            for (int j = 0; j < flagButtons.length; ++j) {
+                Sprite flag = flagButtons[j];
+                String name = buttonNames[j];
 
-                Sprite flag = null;
-
-                for (int j = 0; j < flagSpriteStr.size(); j++) {
-                    if (flagSpriteStr.get(j).getSpriteName().equals(theSprite)) {
-                        flag = flagSpriteStr.get(j).getCorrectSprite();
-                    }
-
-
-                    //No getName function for sprites. Cannot check for equality using sprites.
-                    if (Intersector.intersectRectangles(flag.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
+                if (Intersector.intersectRectangles(flag.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
+                    if (theSprite.equals(name + ".png")) {
                         answerString = "Congratulations, you found the country!";
+
+                        //get new prompts
                         prompty = ploty.getAPrompt();
                         thePrompt = prompty.getPromptWord();
                         theSprite = prompty.getSpriteName();
 
-
-                        atAllTouched = false;
-                    } else {
+                        Gdx.app.log("Switching to new prompt", theSprite);
+                    }
+                    else {
+                        Gdx.app.log("Phsyche", "hello world");
                         answerString = "YOU WRONG!!!";
                     }
+
+                    Gdx.app.log("name", "" + name.length());
+                    Gdx.app.log("filename", "" + theSprite.length());
+
+
+                    Gdx.app.log("Intersection detected", name);
+
+                    atAllTouched = false;
                 }
 
             }
+
+
             lastTouched = false;
         }
 
-    } 
+    }
 
         @Override
         public void resize ( int width, int height){

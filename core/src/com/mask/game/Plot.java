@@ -118,7 +118,7 @@ public class Plot {
             prompt.addOverview(tokens[0]);
             Gdx.app.log("QQQ Overview:", tokens[0]);
 
-            for (int i = 1; i < tokens.length; i=i+2) {
+            for (int i = 1; i < tokens.length - 1; i=i+2) {
                 if (!tokens[i].equals("")) {
                     PromptWords promptWords = new PromptWords();
                     promptWords.setPromptWord(tokens[i]);
