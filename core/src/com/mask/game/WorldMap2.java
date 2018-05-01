@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import static javax.swing.text.html.HTML.Tag.HEAD;
+
 /**
  * Created by Neel on 4/12/2018.
  */
@@ -119,6 +121,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
                 continue;
             }
 
+
             Gdx.app.log("Fake Width", "" + fakebackground.getWidth());
             Gdx.app.log("Fake Height", "" + fakebackground.getHeight());
 
@@ -150,10 +153,14 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
         Gdx.app.log("fakex", "" + fakebackground.getX());
         Gdx.app.log("fakey", "" + fakebackground.getY());
+
+
         ploty = Plot.getAPlot();
         prompty = ploty.getAPrompt();
         thePrompt = prompty.getPromptWord();
         theSprite = prompty.getSpriteName();
+
+
 
         Rectangle rect = background.getBoundingRectangle();
         Gdx.app.log("X:", "" + rect.x);
@@ -178,6 +185,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
         BitmapFont font = Assets.Fonts.DEFAULT.get();
         font.getData().setScale(3);
+
 
 
         font.draw(game.batch, "Prompt: " + thePrompt + "(" + theSprite + ")", 1000, 800);
@@ -206,32 +214,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
         if (atAllTouched) {
 
-            for (int i = 0; i < ploty.size(); ++i) {
-                Gdx.app.log("helpME:", "in the class");
 
-                Sprite flag = null;
-
-                for (int j = 0; j < flagSpriteStr.size(); j++) {
-                    if (flagSpriteStr.get(j).getSpriteName().equals(theSprite)) {
-                        flag = flagSpriteStr.get(j).getCorrectSprite();
-                    }
-
-
-                    //No getName function for sprites. Cannot check for equality using sprites.
-                    if (Intersector.intersectRectangles(flag.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
-                        answerString = "Congratulations, you found the country!";
-                        prompty = ploty.getAPrompt();
-                        thePrompt = prompty.getPromptWord();
-                        theSprite = prompty.getSpriteName();
-
-
-                        atAllTouched = false;
-                    } else {
-                        answerString = "YOU WRONG!!!";
-                    }
-                }
-
-            }
             lastTouched = false;
         }
 
