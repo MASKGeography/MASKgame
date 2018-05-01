@@ -191,8 +191,8 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
 
 
-        font.draw(game.batch, "Prompt: " + thePrompt + "(" + theSprite + ")", 1000, 800);
-        font.draw(game.batch, answerString, 1000, 600);
+        font.draw(game.batch, "Prompt: " + thePrompt + "(" + theSprite + ")", 100, 800);
+        font.draw(game.batch, answerString, 100, 600);
         font.draw(game.batch, "x = " + flagClicker.getX(), 500, 400);
         font.draw(game.batch, "y = " + flagClicker.getY(), 500, 500);
 
@@ -217,35 +217,35 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
         if (atAllTouched) {
 
-            for (int j = 0; j < flagButtons.length; ++j) {
-                Sprite flag = flagButtons[j];
-                String name = buttonNames[j];
+            if (lastTouched) {
+                for (int j = 0; j < flagButtons.length; ++j) {
+                    Sprite flag = flagButtons[j];
+                    String name = buttonNames[j];
 
-                if (Intersector.intersectRectangles(flag.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
-                    if (theSprite.equals(name + ".png")) {
-                        answerString = "Congratulations, you found the country!";
+                    if (Intersector.intersectRectangles(flag.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
+                        if (theSprite.equals(name + ".png")) {
+                            answerString = "Congratulations, you found the country!";
 
-                        //get new prompts
-                        prompty = ploty.getAPrompt();
-                        thePrompt = prompty.getPromptWord();
-                        theSprite = prompty.getSpriteName();
+                            //get new prompts
+                            prompty = ploty.getAPrompt();
+                            thePrompt = prompty.getPromptWord();
+                            theSprite = prompty.getSpriteName();
 
-                        Gdx.app.log("Switching to new prompt", theSprite);
+                            Gdx.app.log("Switching to new prompt", theSprite);
+                            break;
+                        } else {
+                            Gdx.app.log("Phsyche", "hello world");
+                            answerString = "YOU WRONG!!!";
+                        }
+
+                        Gdx.app.log("name", "" + name.length());
+                        Gdx.app.log("filename", "" + theSprite.length());
+
+
+                        Gdx.app.log("Intersection detected", name);
                     }
-                    else {
-                        Gdx.app.log("Phsyche", "hello world");
-                        answerString = "YOU WRONG!!!";
-                    }
 
-                    Gdx.app.log("name", "" + name.length());
-                    Gdx.app.log("filename", "" + theSprite.length());
-
-
-                    Gdx.app.log("Intersection detected", name);
-
-                    atAllTouched = false;
                 }
-
             }
 
             lastTouched = false;
