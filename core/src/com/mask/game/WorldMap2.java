@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import static javax.swing.text.html.HTML.Tag.HEAD;
+
 /**
  * Created by Neel on 4/12/2018.
  */
@@ -42,12 +44,11 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
     Sprite flagClicker;
 
     Sprite[] flagButtons;
+    String[] buttonNames;
 
     int toFind = 1;
 
     public static HashMap<String, Texture> flagSprites;
-
-    public static ArrayList<CorrectSprite> flagSpriteStr;
 
 
     String answerString = "";
@@ -86,17 +87,25 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         background.setScale(scale);
         fakebackground.setScale(scale);
 
+        Gdx.app.log("Scale", "" + scale);
+
         background.setCenterX(camera.position.x);
         background.setCenterY(camera.position.y);
+
+        Gdx.app.log("Camera x", "" + camera.position.x);
+        Gdx.app.log("Camera y", "" + camera.position.y);
+
 
         fakebackground.setCenterX(camera.position.x);
         fakebackground.setCenterY(camera.position.y);
 
         Gdx.input.setInputProcessor(new GestureDetector(this));
 
-        flagClicker = new Sprite(Assets.flagSprites.get(Assets.countries.get(0)));
+        flagClicker = new Sprite(Assets.Textures.PLANE.get());
+        flagClicker.setScale(0.125f);
 
         flagButtons = new Sprite[Assets.countries2XPos.keySet().size()];
+        buttonNames = new String[Assets.countries2XPos.keySet().size()];
         Vector3 pos = new Vector3(0, 0, 0);
 
         int iter = 0;
@@ -111,29 +120,14 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
                 ++iter;
                 continue;
             }
-            float middleX = mapWidth / 2 + fakebackground.getX();
-            float middleY = mapWidth / 2 - fakebackground.getY();
-            float diffe;
-            pos.y = y.floatValue() * mapHeight + fakebackground.getY();
-            pos.x = x.floatValue() * mapWidth + fakebackground.getX();
-            if (pos.x < middleX) {
-                pos.x = x.floatValue() * mapWidth + fakebackground.getX();
-                diffe = middleX - pos.x;
-                pos.x = pos.x - diffe / 3;
-            } else if (pos.x > middleX || pos.x == middleX) {
-                pos.x = x.floatValue() * mapWidth + fakebackground.getX();
-                diffe = pos.x - middleX;
-                pos.x = pos.x + diffe / 3;
-            }
-            if (pos.y < middleY) {
-                pos.y = y.floatValue() * mapHeight + fakebackground.getY();
-                diffe = middleY - pos.y;
-                pos.y = pos.y - diffe / 4;
-            } else if (pos.y > middleY || pos.y == middleY) {
-                pos.y = y.floatValue() * mapHeight + fakebackground.getY();
-                diffe = pos.y - middleY;
-                pos.y = pos.y + diffe / 4;
-            }
+
+
+            Gdx.app.log("Fake Width", "" + fakebackground.getWidth());
+            Gdx.app.log("Fake Height", "" + fakebackground.getHeight());
+
+            pos.x = x.floatValue() * fakebackground.getWidth() * scale + (Gdx.graphics.getWidth() - fakebackground.getWidth() * scale) / 2;
+            pos.y = y.floatValue() * fakebackground.getHeight() * scale + (Gdx.graphics.getHeight() - fakebackground.getHeight() * scale) / 2;
+
 
             pos.z = 0;
             //pos = camera.unproject(pos);
@@ -142,22 +136,30 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
             Sprite flagButton = new Sprite(Assets.flagSprites.get(name));
             flagButtons[iter] = flagButton;
-            flagSpriteStr = new ArrayList<CorrectSprite>();
+            buttonNames[iter] = name;
+
             String namePNG = name + ".png";
             Gdx.app.log("helpME:", namePNG);
-            CorrectSprite theCorrectSprite = new CorrectSprite(namePNG, flagButton);
-            flagSpriteStr.add(theCorrectSprite);
+
             flagButtons[iter].setPosition(pos.x, pos.y);
-            flagButtons[iter].setSize(8, 6);
+
+            flagButtons[iter].setScale(0.5f);
+//            flagButtons[iter].setCenterX(pos.x);
+//            flagButtons[iter].setCenterY(pos.y);
 
             ++iter;
         }
+
+
+        Gdx.app.log("fakex", "" + fakebackground.getX());
+        Gdx.app.log("fakey", "" + fakebackground.getY());
 
 
         ploty = Plot.getAPlot();
         prompty = ploty.getAPrompt();
         thePrompt = prompty.getPromptWord();
         theSprite = prompty.getSpriteName();
+
 
 
         Rectangle rect = background.getBoundingRectangle();
@@ -185,13 +187,15 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         font.getData().setScale(3);
 
 
-        font.draw(game.batch, "Prompt: " + thePrompt + "(" + theSprite + ")", 1000, 800);
-        font.draw(game.batch, answerString, 1000, 600);
+
+        font.draw(game.batch, "Prompt: " + thePrompt + "(" + theSprite + ")", 100, 800);
+        font.draw(game.batch, answerString, 100, 600);
         font.draw(game.batch, "x = " + flagClicker.getX(), 500, 400);
         font.draw(game.batch, "y = " + flagClicker.getY(), 500, 500);
 
 //        font.draw(game.batch, "x = " + flagClicker.getX(), 500, 400);
 //        font.draw(game.batch, "y = " + flagClicker.getY(), 500, 500);
+
 
         if (atAllTouched) {
             flagClicker.draw(game.batch);
@@ -202,42 +206,49 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         if (lastTouched) {
             Vector3 pos = new Vector3(touchX, touchY, 0);
             pos = camera.unproject(pos);
-            flagClicker.setPosition(pos.x, pos.y);
+            //flagClicker.setPosition(pos.x, pos.y);
+            flagClicker.setCenterX(pos.x);
+            flagClicker.setCenterY(pos.y);
         }
 
 
         if (atAllTouched) {
 
-            for (int i = 0; i < ploty.size(); ++i) {
-                Gdx.app.log("helpME:", "in the class");
+            if (lastTouched) {
+                for (int j = 0; j < flagButtons.length; ++j) {
+                    Sprite flag = flagButtons[j];
+                    String name = buttonNames[j];
 
-                Sprite flag = null;
-
-                for (int j = 0; j < flagSpriteStr.size(); j++) {
-                    if (flagSpriteStr.get(j).getSpriteName().equals(theSprite)) {
-                        flag = flagSpriteStr.get(j).getCorrectSprite();
-                    }
-
-
-                    //No getName function for sprites. Cannot check for equality using sprites.
                     if (Intersector.intersectRectangles(flag.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
-                        answerString = "Congratulations, you found the country!";
-                        prompty = ploty.getAPrompt();
-                        thePrompt = prompty.getPromptWord();
-                        theSprite = prompty.getSpriteName();
+                        if (theSprite.equals(name + ".png")) {
+                            answerString = "Congratulations, you found the country!";
+
+                            //get new prompts
+                            prompty = ploty.getAPrompt();
+                            thePrompt = prompty.getPromptWord();
+                            theSprite = prompty.getSpriteName();
+
+                            Gdx.app.log("Switching to new prompt", theSprite);
+                            break;
+                        } else {
+                            Gdx.app.log("Phsyche", "hello world");
+                            answerString = "YOU WRONG!!!";
+                        }
+
+                        Gdx.app.log("name", "" + name.length());
+                        Gdx.app.log("filename", "" + theSprite.length());
 
 
-                        atAllTouched = false;
-                    } else {
-                        answerString = "YOU WRONG!!!";
+                        Gdx.app.log("Intersection detected", name);
                     }
-                }
 
+                }
             }
+
             lastTouched = false;
         }
 
-    } 
+    }
 
         @Override
         public void resize ( int width, int height){
@@ -306,7 +317,9 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
     @Override
     public boolean zoom(float initialDistance, float distance) {
         //camera.zoom *= (initialDistance / distance) * 0.0001;
-        camera.zoom = (initialDistance / distance);
+        camera.zoom *= (initialDistance / distance);
+        camera.zoom = Math.min(1.0f, camera.zoom);
+        camera.zoom = Math.max(1/10.0f, camera.zoom);
         camera.update();
         return false;
     }
