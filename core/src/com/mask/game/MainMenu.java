@@ -2,13 +2,10 @@ package com.mask.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.mask.tutorial.Drop2;
-import com.mask.tutorial.GameScreen;
 
 /**
  * Created by Neel on 4/2/2018.
@@ -18,13 +15,18 @@ public class MainMenu implements Screen {
     private final MASKgame game;
     private OrthographicCamera camera;
     Skin skin;
-    //TextButton button = new TextButton("Hi People", skin);
+
+
 
     public MainMenu(final MASKgame gam) {
         game = gam;
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
+
+        //skin = new Skin
+
+
     }
 
     @Override
@@ -40,8 +42,10 @@ public class MainMenu implements Screen {
         Assets.Fonts.DEFAULT.get().draw(game.batch, "Tap anywhere to begin!", 300, 350);
         Assets.Fonts.DEFAULT.get().draw(game.batch, "Where in the world? ", 300, 300);
 
+//        button.draw(game.batch, 1.0f);
+
         if (Gdx.input.isTouched()) {
-            game.setScreen(new WorldMap2(game));
+            game.setScreen(new Cutscene(game));
             dispose();
         }
 
