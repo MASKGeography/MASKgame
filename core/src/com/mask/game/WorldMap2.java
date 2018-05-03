@@ -44,24 +44,22 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
     Sprite flagClicker;
 
     Sprite[] flagButtons;
+    String[] buttonNames;
 
     int toFind = 1;
 
     public static HashMap<String, Texture> flagSprites;
 
-    public static ArrayList<CorrectSprite> flagSpriteStr;
-
 
     String answerString = "";
-
-    PromptWords prompty;
     String thePrompt;
     String theSprite;
-    Prompt ploty;
 
 
-    public WorldMap2(MASKgame gam) {
+    public WorldMap2(MASKgame gam, String prompt, String sprite) {
         game = gam;
+        thePrompt = prompt;
+        theSprite = sprite;
 
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
@@ -106,6 +104,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         flagClicker.setScale(0.125f);
 
         flagButtons = new Sprite[Assets.countries2XPos.keySet().size()];
+        buttonNames = new String[Assets.countries2XPos.keySet().size()];
         Vector3 pos = new Vector3(0, 0, 0);
 
         int iter = 0;
@@ -136,11 +135,11 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
             Sprite flagButton = new Sprite(Assets.flagSprites.get(name));
             flagButtons[iter] = flagButton;
-            flagSpriteStr = new ArrayList<CorrectSprite>();
+            buttonNames[iter] = name;
+
             String namePNG = name + ".png";
             Gdx.app.log("helpME:", namePNG);
-            CorrectSprite theCorrectSprite = new CorrectSprite(namePNG, flagButton);
-            flagSpriteStr.add(theCorrectSprite);
+
             flagButtons[iter].setPosition(pos.x, pos.y);
 
             flagButtons[iter].setScale(0.5f);
@@ -153,13 +152,6 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
         Gdx.app.log("fakex", "" + fakebackground.getX());
         Gdx.app.log("fakey", "" + fakebackground.getY());
-
-
-        ploty = Plot.getAPlot();
-        prompty = ploty.getAPrompt();
-        thePrompt = prompty.getPromptWord();
-        theSprite = prompty.getSpriteName();
-
 
 
         Rectangle rect = background.getBoundingRectangle();
@@ -187,9 +179,8 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         font.getData().setScale(3);
 
 
-
-        font.draw(game.batch, "Prompt: " + thePrompt + "(" + theSprite + ")", 1000, 800);
-        font.draw(game.batch, answerString, 1000, 600);
+        font.draw(game.batch, "Prompt: " + thePrompt + "(" + theSprite + ")", 100, 800);
+        font.draw(game.batch, answerString, 100, 600);
         font.draw(game.batch, "x = " + flagClicker.getX(), 500, 400);
         font.draw(game.batch, "y = " + flagClicker.getY(), 500, 500);
 
@@ -214,59 +205,88 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
         if (atAllTouched) {
 
+            if (lastTouched) {
+                for (int j = 0; j < flagButtons.length; ++j) {
+                    Sprite flag = flagButtons[j];
+                    String name = buttonNames[j];
+
+                    if (Intersector.intersectRectangles(flag.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
+                        if (theSprite.equals(name + ".png")) {
+                            answerString = "Congratulations, you found the country!";
+
+                            //get new prompts
+                            game.setScreen(new Cutscene(game));
+
+                            Gdx.app.log("Switching to new prompt", theSprite);
+                            dispose();
+                            break;
+                        } else {
+                            Gdx.app.log("Phsyche", "hello world");
+                            answerString = "YOU WRONG!!!";
+                        }
+
+                        Gdx.app.log("name", "" + name.length());
+                        Gdx.app.log("filename", "" + theSprite.length());
+
+
+                        Gdx.app.log("Intersection detected", name);
+                    }
+
+                }
+            }
 
             lastTouched = false;
         }
 
-    } 
+    }
 
-        @Override
-        public void resize ( int width, int height){
-        }
+    @Override
+    public void resize(int width, int height) {
+    }
 
-        @Override
-        public void show () {
-        }
+    @Override
+    public void show() {
+    }
 
-        @Override
-        public void hide () {
-        }
+    @Override
+    public void hide() {
+    }
 
-        @Override
-        public void pause () {
-        }
+    @Override
+    public void pause() {
+    }
 
-        @Override
-        public void resume () {
-        }
+    @Override
+    public void resume() {
+    }
 
-        @Override
-        public void dispose () {
-        }
+    @Override
+    public void dispose() {
+    }
 
-        @Override
-        public boolean touchDown ( float x, float y, int pointer, int button){
-            return false;
-        }
+    @Override
+    public boolean touchDown(float x, float y, int pointer, int button) {
+        return false;
+    }
 
-        @Override
-        public boolean tap ( float x, float y, int count, int button){
-            atAllTouched = true;
-            lastTouched = true;
-            touchX = x;
-            touchY = y;
-            return false;
-        }
+    @Override
+    public boolean tap(float x, float y, int count, int button) {
+        atAllTouched = true;
+        lastTouched = true;
+        touchX = x;
+        touchY = y;
+        return false;
+    }
 
-        @Override
-        public boolean longPress ( float x, float y){
-            return false;
-        }
+    @Override
+    public boolean longPress(float x, float y) {
+        return false;
+    }
 
-        @Override
-        public boolean fling ( float velocityX, float velocityY, int button){
-            return false;
-        }
+    @Override
+    public boolean fling(float velocityX, float velocityY, int button) {
+        return false;
+    }
 
     public void pinchStop() {
 
@@ -289,25 +309,13 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         //camera.zoom *= (initialDistance / distance) * 0.0001;
         camera.zoom *= (initialDistance / distance);
         camera.zoom = Math.min(1.0f, camera.zoom);
-        camera.zoom = Math.max(1/10.0f, camera.zoom);
+        camera.zoom = Math.max(1 / 10.0f, camera.zoom);
         camera.update();
         return false;
     }
 
     @Override
     public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
-        //TODO: No idea where this is from
-        float deltaX = pointer2.x - pointer1.x;
-        float deltaY = pointer2.y - pointer1.y;
-
-        float angle = (float) Math.atan2((double) deltaY, (double) deltaX) * MathUtils.radiansToDegrees;
-
-        angle += 90f;
-
-        if (angle < 0)
-            angle = 360f - (-angle);
-
-
         return true;
     }
 
