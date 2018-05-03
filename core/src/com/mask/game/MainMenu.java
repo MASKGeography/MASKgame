@@ -31,7 +31,7 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
     private final MASKgame game;
     private OrthographicCamera camera;
 
-    Texture yoButton;
+    Texture yoTexture;
     Sprite yoSprite;
 
     boolean lastTouched = false;
@@ -51,8 +51,8 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
 
         Vector3 pos = new Vector3(0,0,0);
 
-        yoButton = new Texture(Gdx.files.internal("geography/mainMenuButtons/yo.png"));
-        yoSprite = new Sprite(yoButton);
+        yoTexture = new Texture(Gdx.files.internal("geography/mainMenuButtons/yo.png"));
+        yoSprite = new Sprite(yoTexture);
 
         yoSprite.setPosition(300, 200);
 
@@ -102,15 +102,15 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
 
         if (atAllTouched) {
             if (lastTouched) {
-                for (int k = 0; k < 10; ++k) {
+              Sprite button = yoSprite;
                     Gdx.app.log("MAINMENYU", "atalltouchedFOR");
-                    if (Intersector.intersectRectangles(yoSprite.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
+                    if (Intersector.intersectRectangles(button.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
                         game.setScreen(new WorldMap2(game));
                         dispose();
                         Gdx.app.log("MAINMENYU", "touching");
-                        break;
+
                     }
-                }
+
             }
         lastTouched = false;
         }
