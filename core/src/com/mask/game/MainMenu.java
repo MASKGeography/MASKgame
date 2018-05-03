@@ -2,8 +2,10 @@ package com.mask.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -40,9 +42,6 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
 
     Sprite flagClicker;
 
-
-
-
     public MainMenu(final MASKgame gam) {
         game = gam;
 
@@ -77,14 +76,7 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
         Assets.Fonts.DEFAULT.get().draw(game.batch, "Tap anywhere to begin!", 300, 350);
         Assets.Fonts.DEFAULT.get().draw(game.batch, "Where in the world? ", 300, 300);
 
-        BitmapFont font = Assets.Fonts.DEFAULT.get();
-        font.getData().setScale(3);
-        font.draw(game.batch, "x = " + flagClicker.getX(), 500, 400);
-        font.draw(game.batch, "y = " + flagClicker.getY(), 500, 500);
-
         yoSprite.draw(game.batch);
-        //flagClicker.draw(game.batch);
-
 
         if (atAllTouched) {
             flagClicker.draw(game.batch);
@@ -104,15 +96,18 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
             if (lastTouched) {
               Sprite button = yoSprite;
                     Gdx.app.log("MAINMENYU", "atalltouchedFOR");
+
                     if (Intersector.intersectRectangles(button.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
-                        game.setScreen(new WorldMap2(game));
+                        game.setScreen(new Cutscene(game));
+
                         dispose();
                         Gdx.app.log("MAINMENYU", "touching");
 
                     }
 
             }
-        lastTouched = false;
+
+            lastTouched = false;
         }
 
 
@@ -191,19 +186,7 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
 
     @Override
     public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
-        //TODO: No idea where this is from
-        float deltaX = pointer2.x - pointer1.x;
-        float deltaY = pointer2.y - pointer1.y;
-
-        float angle = (float) Math.atan2((double) deltaY, (double) deltaX) * MathUtils.radiansToDegrees;
-
-        angle += 90f;
-
-        if (angle < 0)
-            angle = 360f - (-angle);
-
-
-        return true;
+            return false;
     }
 
 }
