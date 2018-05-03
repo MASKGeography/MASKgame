@@ -50,7 +50,6 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
         yoButton = new Texture(Gdx.files.internal("geography/mainMenuButtons/yo.png"));
         yoSprite = new Sprite(yoButton);
 
-
         yoSprite.setPosition(300, 200);
 
     }
