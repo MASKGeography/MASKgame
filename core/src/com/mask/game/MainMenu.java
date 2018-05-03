@@ -33,8 +33,10 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
     private final MASKgame game;
     private OrthographicCamera camera;
 
-    Texture yoButton;
     Sprite yoSprite;
+    Sprite playSprite;
+    Sprite htpSprite;
+    Sprite a4gSprite;
 
     boolean lastTouched = false;
     boolean atAllTouched = false;
@@ -50,10 +52,17 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
 
         Vector3 pos = new Vector3(0,0,0);
 
-        yoButton = new Texture(Gdx.files.internal("geography/mainMenuButtons/yo.png"));
-        yoSprite = new Sprite(yoButton);
-
+        yoSprite = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/yo.png")));
         yoSprite.setPosition(300, 200);
+
+        playSprite = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/play.png")));
+        playSprite.setPosition(350, 200);
+
+        htpSprite = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/howtoplay.png")));
+        htpSprite.setPosition(400, 200);
+
+        a4gSprite = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/abouta4g.png")));
+        a4gSprite.setPosition(450, 200);
 
         Gdx.input.setInputProcessor(new GestureDetector(this));
 
@@ -77,6 +86,9 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
         Assets.Fonts.DEFAULT.get().draw(game.batch, "Where in the world? ", 300, 300);
 
         yoSprite.draw(game.batch);
+        playSprite.draw(game.batch);
+        htpSprite.draw(game.batch);
+        a4gSprite.draw(game.batch);
 
         if (atAllTouched) {
             flagClicker.draw(game.batch);
@@ -94,15 +106,38 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
 
         if (atAllTouched) {
             if (lastTouched) {
-                for (int k = 0; k < 10; ++k) {
                     Gdx.app.log("MAINMENYU", "atalltouchedFOR");
+
                     if (Intersector.intersectRectangles(yoSprite.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
                         game.setScreen(new Cutscene(game));
+
                         dispose();
                         Gdx.app.log("MAINMENYU", "touching");
-                        break;
+
                     }
+
+                else if (Intersector.intersectRectangles(playSprite.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
+                    game.setScreen(new Cutscene(game));
+
+                    dispose();
+                    Gdx.app.log("MAINMENYU", "touching");
+
                 }
+
+                else if (Intersector.intersectRectangles(htpSprite.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
+                     game.setScreen(new HowToPlay(game));
+                     dispose();
+                     Gdx.app.log("MAINMENYU", "touching");
+                 }
+
+               else if (Intersector.intersectRectangles(a4gSprite.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
+                        game.setScreen(new Cutscene(game));
+
+                        dispose();
+                        Gdx.app.log("MAINMENYU", "touching");
+
+                 }
+
             }
 
             lastTouched = false;
@@ -163,9 +198,7 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
     }
 
     @Override
-    public boolean pan(float x, float y, float deltaX, float deltaY) {
-        camera.translate(-deltaX * camera.zoom, deltaY * camera.zoom);
-        camera.update();
+    public boolean pan(float x, float y, float deltaX, float deltaY){
         return false;
     }
 
@@ -176,15 +209,12 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
 
     @Override
     public boolean zoom(float initialDistance, float distance) {
-        //camera.zoom *= (initialDistance / distance) * 0.0001;
-        camera.zoom = (initialDistance / distance);
-        camera.update();
         return false;
     }
 
     @Override
     public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
-            return false;
+            return true;
     }
 
 }
