@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -36,7 +38,9 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
     boolean atAllTouched = false;
     float touchX = -1, touchY = -1;
 
-    Sprite flagClicker = new Sprite(Assets.flagSprites.get(Assets.countries.get(0)));
+    Sprite flagClicker;
+
+
 
 
     public MainMenu(final MASKgame gam) {
@@ -45,11 +49,17 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
 
+        Vector3 pos = new Vector3(0,0,0);
+
         yoButton = new Texture(Gdx.files.internal("geography/mainMenuButtons/yo.png"));
         yoSprite = new Sprite(yoButton);
 
-
         yoSprite.setPosition(300, 200);
+
+        Gdx.input.setInputProcessor(new GestureDetector(this));
+
+        flagClicker = new Sprite(Assets.Textures.PLANE.get());
+        flagClicker.setScale(0.125f);
 
     }
 
@@ -67,24 +77,44 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
         Assets.Fonts.DEFAULT.get().draw(game.batch, "Tap anywhere to begin!", 300, 350);
         Assets.Fonts.DEFAULT.get().draw(game.batch, "Where in the world? ", 300, 300);
 
-
+        BitmapFont font = Assets.Fonts.DEFAULT.get();
+        font.getData().setScale(3);
+        font.draw(game.batch, "x = " + flagClicker.getX(), 500, 400);
+        font.draw(game.batch, "y = " + flagClicker.getY(), 500, 500);
 
         yoSprite.draw(game.batch);
+        //flagClicker.draw(game.batch);
 
-        if (Gdx.input.isTouched()) {
-            game.setScreen(new WorldMap2(game));
-            dispose();
+
+        if (atAllTouched) {
+            flagClicker.draw(game.batch);
+        }
+
+        game.batch.end();
+
+        if (lastTouched) {
+            Vector3 pos = new Vector3(touchX, touchY, 0);
+            pos = camera.unproject(pos);
+            //flagClicker.setPosition(pos.x, pos.y);
+            flagClicker.setCenterX(pos.x);
+            flagClicker.setCenterY(pos.y);
         }
 
         if (atAllTouched) {
-
-            if (Intersector.intersectRectangles(yoSprite.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
-                Gdx.app.log("MAINMENYU", "touching");
-
+            if (lastTouched) {
+                for (int k = 0; k < 10; ++k) {
+                    Gdx.app.log("MAINMENYU", "atalltouchedFOR");
+                    if (Intersector.intersectRectangles(yoSprite.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
+                        game.setScreen(new WorldMap2(game));
+                        dispose();
+                        Gdx.app.log("MAINMENYU", "touching");
+                        break;
+                    }
+                }
             }
-
+        lastTouched = false;
         }
-        game.batch.end();
+
 
     }
 
