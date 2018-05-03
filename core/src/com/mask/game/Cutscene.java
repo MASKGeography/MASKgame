@@ -3,6 +3,8 @@ package com.mask.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.Screen;
@@ -14,10 +16,11 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
     float height, width;
 
     boolean switchBack = false;
-    float time = 0;
 
     String thePrompt;
     String theSprite;
+
+    Sprite sprite;
 
     public Cutscene(MASKgame gam) {
         game=gam;
@@ -26,9 +29,10 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
         width = Gdx.graphics.getWidth();
 
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, height, width);
+        camera.setToOrtho(false, width, height);
 
         Gdx.input.setInputProcessor(new GestureDetector(this));
+        sprite = new Sprite(Assets.Textures.FISHERMAN.get());
 
         game.updatePlotsNStuff();
         thePrompt = game.getThePrompt();
@@ -40,16 +44,25 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
         Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        if (switchBack) {
+        camera.update();
+        game.batch.setProjectionMatrix(camera.combined);
+        game.batch.begin();
 
+        BitmapFont font = Assets.Fonts.DEFAULT.get();
+
+        Gdx.app.log("Should be printing", thePrompt);
+        font.getData().setScale(3);
+        font.draw(game.batch, thePrompt, 100, 800);
+
+        Gdx.app.log("Draw da sprite", "what he said");
+        sprite.draw(game.batch);
+
+        game.batch.end();
+
+
+        if (switchBack) {
             game.setScreen(new WorldMap2(game, thePrompt, theSprite));
         }
-
-        time += Gdx.graphics.getDeltaTime();
-
-        if (time >= 5) switchBack = true;
-
-
 
     }
 
