@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -16,6 +17,7 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -38,8 +40,7 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
     boolean atAllTouched = false;
     float touchX = -1, touchY = -1;
 
-    Sprite flagClicker = new Sprite(Assets.flagSprites.get(Assets.countries.get(0)));
-
+    Sprite flagClicker;
 
     public MainMenu(final MASKgame gam) {
         game = gam;
@@ -47,10 +48,17 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
 
+        Vector3 pos = new Vector3(0,0,0);
+
         yoButton = new Texture(Gdx.files.internal("geography/mainMenuButtons/yo.png"));
         yoSprite = new Sprite(yoButton);
 
         yoSprite.setPosition(300, 200);
+
+        Gdx.input.setInputProcessor(new GestureDetector(this));
+
+        flagClicker = new Sprite(Assets.Textures.PLANE.get());
+        flagClicker.setScale(0.125f);
 
     }
 
@@ -70,20 +78,36 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
 
         yoSprite.draw(game.batch);
 
-        if (Gdx.input.isTouched()) {
-            game.setScreen(new Cutscene(game));
-            dispose();
+        if (atAllTouched) {
+            flagClicker.draw(game.batch);
+        }
+
+        game.batch.end();
+
+        if (lastTouched) {
+            Vector3 pos = new Vector3(touchX, touchY, 0);
+            pos = camera.unproject(pos);
+            //flagClicker.setPosition(pos.x, pos.y);
+            flagClicker.setCenterX(pos.x);
+            flagClicker.setCenterY(pos.y);
         }
 
         if (atAllTouched) {
-
-            if (Intersector.intersectRectangles(yoSprite.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
-                Gdx.app.log("MAINMENYU", "touching");
-
+            if (lastTouched) {
+                for (int k = 0; k < 10; ++k) {
+                    Gdx.app.log("MAINMENYU", "atalltouchedFOR");
+                    if (Intersector.intersectRectangles(yoSprite.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
+                        game.setScreen(new Cutscene(game));
+                        dispose();
+                        Gdx.app.log("MAINMENYU", "touching");
+                        break;
+                    }
+                }
             }
 
+            lastTouched = false;
         }
-        game.batch.end();
+
 
     }
 
@@ -160,19 +184,7 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
 
     @Override
     public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
-        //TODO: No idea where this is from
-        float deltaX = pointer2.x - pointer1.x;
-        float deltaY = pointer2.y - pointer1.y;
-
-        float angle = (float) Math.atan2((double) deltaY, (double) deltaX) * MathUtils.radiansToDegrees;
-
-        angle += 90f;
-
-        if (angle < 0)
-            angle = 360f - (-angle);
-
-
-        return true;
+            return false;
     }
 
 }
