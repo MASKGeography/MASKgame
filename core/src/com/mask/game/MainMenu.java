@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Intersector;
@@ -46,14 +47,17 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
         Vector3 pos = new Vector3(0,0,0);
 
 
-        playSprite = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/play.png")));
-        playSprite.setPosition((float) (width*0.25-playSprite.getWidth()*0.5), 200);
+        playSprite = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/playButton.png")));
+        playSprite.setPosition((float) (width*0.25-playSprite.getWidth()*0.5), (float) (height*0.25));
+        playSprite.setScale((float) (width*0.002));
 
-        htpSprite = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/howtoplay.png")));
-        htpSprite.setPosition((float) (width*0.5-htpSprite.getWidth()*0.5), 200);
+        htpSprite = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/htpButton.png")));
+        htpSprite.setPosition((float) (width*0.5-htpSprite.getWidth()*0.5), (float) (height*0.25));
+        htpSprite.setScale((float) (width*0.002));
 
-        a4gSprite = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/abouta4g.png")));
-        a4gSprite.setPosition((float) (width*0.75-a4gSprite.getWidth()*0.5), 200);
+        a4gSprite = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/aboutButton.png")));
+        a4gSprite.setPosition((float) (width*0.75-a4gSprite.getWidth()*0.5), (float) (height*0.25));
+        a4gSprite.setScale((float) (width*0.002));
 
         Gdx.input.setInputProcessor(new GestureDetector(this));
 
@@ -73,7 +77,6 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        Assets.Fonts.DEFAULT.get().draw(game.batch, "Where in the world? ", width/2, height/2);
 
         playSprite.draw(game.batch);
         htpSprite.draw(game.batch);
@@ -82,6 +85,11 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
         if (atAllTouched) {
             flagClicker.draw(game.batch);
         }
+
+        BitmapFont font = Assets.Fonts.DEFAULT.get();
+        font.getData().setScale((float) (width*0.004));
+        font.draw(game.batch, "Where in the world? ", 0, (float) (height*0.75), Gdx.graphics.getWidth(), 1, false);
+        font.getData().setScale(1);
 
         game.batch.end();
 
