@@ -15,12 +15,12 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
     OrthographicCamera camera;
     float height, width;
 
-    boolean switchBack = false;
-
     String thePrompt;
     String theSprite;
 
     Sprite sprite;
+
+    int mode = 0;
 
     public Cutscene(MASKgame gam) {
         game=gam;
@@ -33,6 +33,10 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
 
         Gdx.input.setInputProcessor(new GestureDetector(this));
         sprite = new Sprite(Assets.Textures.FISHERMAN.get());
+
+        sprite.setCenterX(0.2f * width);
+        sprite.setCenterY(0.5f * height);
+        sprite.setScale(2);
 
         game.updatePlotsNStuff();
         thePrompt = game.getThePrompt();
@@ -48,19 +52,22 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
 
-        BitmapFont font = Assets.Fonts.DEFAULT.get();
-
-        Gdx.app.log("Should be printing", thePrompt);
-        font.getData().setScale(3);
-        font.draw(game.batch, thePrompt, 100, 800);
-
         Gdx.app.log("Draw da sprite", "what he said");
         sprite.draw(game.batch);
+
+        if (mode >= 1) {
+            BitmapFont font = Assets.Fonts.DEFAULT.get();
+
+            Gdx.app.log("Should be printing", thePrompt);
+            font.getData().setScale(3);
+
+            font.draw(game.batch, thePrompt, 100, 800);
+        }
 
         game.batch.end();
 
 
-        if (switchBack) {
+        if (mode == 2) {
             game.setScreen(new WorldMap2(game, thePrompt, theSprite));
         }
 
@@ -97,8 +104,8 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
+        ++mode;
         Gdx.app.log("Cutscene", "switching back");
-        switchBack = true;
         return false;
     }
 

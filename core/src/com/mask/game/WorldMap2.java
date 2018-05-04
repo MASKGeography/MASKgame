@@ -181,11 +181,6 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
         font.draw(game.batch, "Prompt: " + thePrompt + "(" + theSprite + ")", 100, 800);
         font.draw(game.batch, answerString, 100, 600);
-        font.draw(game.batch, "x = " + flagClicker.getX(), 500, 400);
-        font.draw(game.batch, "y = " + flagClicker.getY(), 500, 500);
-
-//        font.draw(game.batch, "x = " + flagClicker.getX(), 500, 400);
-//        font.draw(game.batch, "y = " + flagClicker.getY(), 500, 500);
 
 
         if (atAllTouched) {
