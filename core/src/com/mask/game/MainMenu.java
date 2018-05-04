@@ -121,7 +121,7 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
                  }
 
                else if (Intersector.intersectRectangles(a4gSprite.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
-                        game.setScreen(new Cutscene(game));
+                        game.setScreen(new About(game));
 
                         dispose();
                         Gdx.app.log("MAINMENYU", "touching");
