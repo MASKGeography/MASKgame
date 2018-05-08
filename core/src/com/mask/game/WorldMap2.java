@@ -217,7 +217,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
                             break;
                         } else {
                             Gdx.app.log("Phsyche", "hello world");
-                            answerString = "YOU WRONG!!!";
+                            answerString = "You stranded the person in the wrong place! \nPlease help them get to " + name + "!";
                         }
 
                         Gdx.app.log("name", "" + name.length());
