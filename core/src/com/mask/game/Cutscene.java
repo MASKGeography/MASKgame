@@ -22,6 +22,8 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
 
     int mode = 0;
 
+
+
     public Cutscene(MASKgame gam) {
         game=gam;
 
@@ -41,6 +43,7 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
         game.updatePlotsNStuff();
         thePrompt = game.getThePrompt();
         theSprite = game.getTheSprite();
+
     }
 
     @Override
@@ -52,13 +55,11 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
 
-        Gdx.app.log("Draw da sprite", "what he said");
         sprite.draw(game.batch);
 
         if (mode >= 1) {
             BitmapFont font = Assets.Fonts.DEFAULT.get();
 
-            Gdx.app.log("Should be printing", thePrompt);
             font.getData().setScale(3);
 
             font.draw(game.batch, thePrompt, 100, 800);
