@@ -100,7 +100,8 @@ public class Assets {
         WORLDMAP("geography/worldMap.png"),
         WORLDMAP2("geography/worldMap2.png"),
         PLANE("geography/plane.png"),
-        FISHERMAN("geography/fisherman.png");
+        FISHERMAN("geography/fisherman.png"),
+        PERSON("geography/person.png");
 
         private final Texture texture;
         Textures(String image) {

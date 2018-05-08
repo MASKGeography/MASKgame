@@ -34,7 +34,7 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
         camera.setToOrtho(false, width, height);
 
         Gdx.input.setInputProcessor(new GestureDetector(this));
-        sprite = new Sprite(Assets.Textures.FISHERMAN.get());
+        sprite = new Sprite(Assets.Textures.PERSON.get());
 
         sprite.setCenterX(0.2f * width);
         sprite.setCenterY(0.5f * height);
@@ -48,7 +48,7 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1);
+        Gdx.gl.glClearColor(0.0f, 0.0f, 1.0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         camera.update();
@@ -62,7 +62,7 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
 
             font.getData().setScale(3);
 
-            font.draw(game.batch, thePrompt, 100, 800);
+            font.draw(game.batch, "A person needs your help!", 100, 800);
         }
 
         game.batch.end();
