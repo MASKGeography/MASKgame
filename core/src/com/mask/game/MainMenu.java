@@ -2,28 +2,16 @@ package com.mask.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.mask.tutorial.Drop2;
-import com.mask.tutorial.GameScreen;
 
 /**
  * Created by Neel on 4/2/2018.
@@ -33,10 +21,10 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
     private final MASKgame game;
     private OrthographicCamera camera;
 
-    Sprite yoSprite;
     Sprite playSprite;
     Sprite htpSprite;
     Sprite a4gSprite;
+
 
     boolean lastTouched = false;
     boolean atAllTouched = false;
@@ -44,25 +32,32 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
 
     Sprite flagClicker;
 
+    private float width, height;
+
     public MainMenu(final MASKgame gam) {
         game = gam;
 
+        width = Gdx.graphics.getWidth();
+        height = Gdx.graphics.getHeight();
+
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
+        camera.setToOrtho(false, width, height);
+
 
         Vector3 pos = new Vector3(0,0,0);
 
-        yoSprite = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/yo.png")));
-        yoSprite.setPosition(300, 200);
 
-        playSprite = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/play.png")));
-        playSprite.setPosition(350, 200);
+        playSprite = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/playButton.png")));
+        playSprite.setPosition((float) (width*0.25-playSprite.getWidth()*0.5), (float) (height*0.25));
+        playSprite.setScale((float) (width*0.002));
 
-        htpSprite = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/howtoplay.png")));
-        htpSprite.setPosition(400, 200);
+        htpSprite = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/htpButton.png")));
+        htpSprite.setPosition((float) (width*0.5-htpSprite.getWidth()*0.5), (float) (height*0.25));
+        htpSprite.setScale((float) (width*0.002));
 
-        a4gSprite = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/abouta4g.png")));
-        a4gSprite.setPosition(450, 200);
+        a4gSprite = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/aboutButton.png")));
+        a4gSprite.setPosition((float) (width*0.75-a4gSprite.getWidth()*0.5), (float) (height*0.25));
+        a4gSprite.setScale((float) (width*0.002));
 
         Gdx.input.setInputProcessor(new GestureDetector(this));
 
@@ -77,15 +72,12 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        Assets.Fonts.DEFAULT.get().draw(game.batch, "Where in the world? ", 300, 400);
-        Assets.Fonts.DEFAULT.get().draw(game.batch, "Tap anywhere to begin!", 300, 350);
-        Assets.Fonts.DEFAULT.get().draw(game.batch, "Where in the world? ", 300, 300);
 
-        yoSprite.draw(game.batch);
         playSprite.draw(game.batch);
         htpSprite.draw(game.batch);
         a4gSprite.draw(game.batch);
@@ -93,6 +85,11 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
         if (atAllTouched) {
             flagClicker.draw(game.batch);
         }
+
+        BitmapFont font = Assets.Fonts.DEFAULT.get();
+        font.getData().setScale((float) (width*0.004));
+        font.draw(game.batch, "Where in the world? ", 0, (float) (height*0.75), Gdx.graphics.getWidth(), 1, false);
+        font.getData().setScale(1);
 
         game.batch.end();
 
@@ -108,15 +105,8 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
             if (lastTouched) {
                     Gdx.app.log("MAINMENYU", "atalltouchedFOR");
 
-                    if (Intersector.intersectRectangles(yoSprite.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
-                        game.setScreen(new Cutscene(game));
 
-                        dispose();
-                        Gdx.app.log("MAINMENYU", "touching");
-
-                    }
-
-                else if (Intersector.intersectRectangles(playSprite.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
+                if (Intersector.intersectRectangles(playSprite.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
                     game.setScreen(new Cutscene(game));
 
                     dispose();
@@ -131,7 +121,7 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
                  }
 
                else if (Intersector.intersectRectangles(a4gSprite.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
-                        game.setScreen(new Cutscene(game));
+                        game.setScreen(new About(game));
 
                         dispose();
                         Gdx.app.log("MAINMENYU", "touching");

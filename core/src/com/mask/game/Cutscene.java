@@ -3,6 +3,8 @@ package com.mask.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.Screen;
@@ -13,11 +15,14 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
     OrthographicCamera camera;
     float height, width;
 
-    boolean switchBack = false;
-    float time = 0;
-
     String thePrompt;
     String theSprite;
+
+    Sprite sprite;
+
+    int mode = 0;
+
+
 
     public Cutscene(MASKgame gam) {
         game=gam;
@@ -26,13 +31,19 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
         width = Gdx.graphics.getWidth();
 
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, height, width);
+        camera.setToOrtho(false, width, height);
 
         Gdx.input.setInputProcessor(new GestureDetector(this));
+        sprite = new Sprite(Assets.Textures.FISHERMAN.get());
+
+        sprite.setCenterX(0.2f * width);
+        sprite.setCenterY(0.5f * height);
+        sprite.setScale(2);
 
         game.updatePlotsNStuff();
         thePrompt = game.getThePrompt();
         theSprite = game.getTheSprite();
+
     }
 
     @Override
@@ -40,16 +51,26 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
         Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        if (switchBack) {
+        camera.update();
+        game.batch.setProjectionMatrix(camera.combined);
+        game.batch.begin();
 
-            game.setScreen(new WorldMap2(game, thePrompt, theSprite));
+        sprite.draw(game.batch);
+
+        if (mode >= 1) {
+            BitmapFont font = Assets.Fonts.DEFAULT.get();
+
+            font.getData().setScale(3);
+
+            font.draw(game.batch, thePrompt, 100, 800);
         }
 
-        time += Gdx.graphics.getDeltaTime();
-
-        if (time >= 5) switchBack = true;
+        game.batch.end();
 
 
+        if (mode == 2) {
+            game.setScreen(new WorldMap2(game, thePrompt, theSprite));
+        }
 
     }
 
@@ -84,8 +105,8 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
+        ++mode;
         Gdx.app.log("Cutscene", "switching back");
-        switchBack = true;
         return false;
     }
 
