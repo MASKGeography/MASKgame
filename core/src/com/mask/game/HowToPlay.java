@@ -4,9 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
@@ -18,13 +21,14 @@ public class HowToPlay implements Screen, GestureDetector.GestureListener {
 
     private final MASKgame game;
     private OrthographicCamera camera;
-
     private float width, height;
     Sprite background;
-
     boolean lastTouched = false;
     boolean atAllTouched = false;
     float touchX = -1, touchY = -1;
+    Texture yoButton;
+    Sprite yoSprite;
+    Sprite flagClicker;
 
     public HowToPlay(MASKgame gam) {
         game = gam;
@@ -36,7 +40,14 @@ public class HowToPlay implements Screen, GestureDetector.GestureListener {
         background = new Sprite(Assets.Textures.WORLDMAP2.get());
         background.setCenterX(camera.position.x);
         background.setCenterY(camera.position.y);
+
+        yoButton = new Texture(Gdx.files.internal("geography/mainMenuButtons/yo.png"));
+        yoSprite = new Sprite(yoButton);
+        yoSprite.setPosition(Gdx.graphics.getWidth() * 1/ 8, Gdx.graphics.getHeight() * 27/32);
+        yoSprite.setScale(3);
         Gdx.input.setInputProcessor(new GestureDetector(this));
+        flagClicker = new Sprite(Assets.Textures.PLANE.get());
+        flagClicker.setScale(0.125f);
     }
 
     @Override
@@ -47,18 +58,57 @@ public class HowToPlay implements Screen, GestureDetector.GestureListener {
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
         BitmapFont font = Assets.Fonts.DEFAULT.get();
-        font.getData().setScale(3);
+        double grrr = 2560/4;
+        double grrrr = Gdx.graphics.getWidth()/Gdx.graphics.getDensity();
+        double scalish = grrr/grrrr;
+        float scaler = (float)scalish;
+        font.getData().setScale(6 * scaler);
         font.draw(game.batch, "Welcome to How To Play", 0, Gdx.graphics.getHeight() * 7 / 8, Gdx.graphics.getWidth(), 1, false);
         font.draw(game.batch, "Welcome to How To Play. To play, follow steps blank blank blank blank and blank. Welcome to How To Play. To play, follow steps blank blank blank blank and blank. Welcome to How To Play. To play, follow steps blank blank blank blank and blank.Welcome to How To Play. To play, follow steps blank blank blank blank and blank.Welcome to How To Play. To play, follow steps blank blank blank blank and blank.Welcome to How To Play. To play, follow steps blank blank blank blank and blank.Welcome to How To Play. To play, follow steps blank blank blank blank and blank.", 0, Gdx.graphics.getHeight() * 6 / 8, Gdx.graphics.getWidth(), 1, true);
-        game.batch.end();
+        font.draw(game.batch, Gdx.graphics.getDensity() + " ", 300,300);
+        font.draw(game.batch, Gdx.graphics.getWidth() + " ", 300,400);
+        /*game.batch.end();
         if (lastTouched) {
             Vector3 pos = new Vector3(touchX, touchY, 0);
             pos = camera.unproject(pos);
         }
         if (atAllTouched) {
-            lastTouched = false;
+            lastTouched = false;*/
+
+            yoSprite.draw(game.batch);
+
+            if (atAllTouched) {
+                flagClicker.draw(game.batch);
+            }
+
+            game.batch.end();
+
+            if (lastTouched) {
+                Vector3 pos = new Vector3(touchX, touchY, 0);
+                pos = camera.unproject(pos);
+                //flagClicker.setPosition(pos.x, pos.y);
+                flagClicker.setCenterX(pos.x);
+                flagClicker.setCenterY(pos.y);
+            }
+
+            if (atAllTouched) {
+                if (lastTouched) {
+                    for (int k = 0; k < 10; ++k) {
+                        Gdx.app.log("MAINMENYU", "atalltouchedFOR");
+                        if (Intersector.intersectRectangles(yoSprite.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
+                            game.setScreen(new MainMenu(game));
+                            dispose();
+                            Gdx.app.log("MAINMENYU", "touching");
+                            break;
+                        }
+                    }
+                }
+
+                lastTouched = false;
+            }
+
         }
-    }
+
 
     @Override
     public void resize (int width, int height){ }
