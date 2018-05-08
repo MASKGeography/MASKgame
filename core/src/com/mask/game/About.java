@@ -28,9 +28,13 @@ public class About implements Screen, GestureDetector.GestureListener {
     boolean lastTouched = false;
     boolean atAllTouched = false;
     float touchX = -1, touchY = -1;
-    String credits;
     Sprite back;
     Sprite flagClicker;
+
+    String credits;
+    String abouta4g;
+    String aboutTC;
+    String purpose;
 
     public About(MASKgame gam) {
         game = gam;
@@ -52,7 +56,7 @@ public class About implements Screen, GestureDetector.GestureListener {
 
         back = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/backButton.png")));
         back.setScale((float) (width*0.0015));
-        back.setPosition(back.getWidth(), height-back.getHeight()*2);
+        back.setPosition((float) (back.getWidth()*width*0.0015), height-back.getHeight()*2);
 
         credits = "The following resources were used to find information for prompts:\n" +
             "\n"+
@@ -113,13 +117,22 @@ public class About implements Screen, GestureDetector.GestureListener {
             "Ever In Transit:\n" +
             "http://www.everintransit.com/exotic-fruits/\n" +
             "\n" +
-            "\n" +
             "Arch Daily:\n" +
             "https://www.archdaily.com/779178/these-are-the-worlds-25-tallest-buildings\n" +
             "\n" +
             "TripAdvisor.com:\n" +
             "https://www.tripadvisor.com/TravelersChoice-Attractions-cAmusementParks-g1\n" +
             "https://www.themeparktourist.com/features/20140228/16441/top-50-theme-parks-world?page=4\n";
+
+        abouta4g = "Apps For Good provides course content for teachers to use in their classrooms. Their goal is to inspire collaboration and self-confidence in people aged 10-18, and prepare them to make a difference in the world.";
+
+        aboutTC = "We are a group of four juniors from the Massachusetts Academy of Math and Science at WPI. We designed this game for our Apps For Good assignment in our Computer Science class, where we were tasked to create an app that addresses a need in our community. \n" +
+            "Shashvat: optimist, skilled coder (ssrivastava2@wpi.edu) \n" +
+            "Matthew: problem solver, motivated worker (maedwards@wpi.edu)\n" +
+            "Kelly: efficient researcher, organizer (kamiller@wpi.edu) \n" +
+            "Alex: effective communicator, perseverer (alholmes@wpi.edu) ";
+
+        purpose = "The purpose of our app is to fill the gap in the geography knowledge of American middle school students. We hope to provide players with a rewarding, low risk environment by utilizing a scavenger hunt style game, rather than a stressful environment like those created by quiz-style study apps.";
 
         Gdx.input.setInputProcessor(new GestureDetector(this));
     }
@@ -135,9 +148,17 @@ public class About implements Screen, GestureDetector.GestureListener {
 
         BitmapFont font = Assets.Fonts.DEFAULT.get();
         font.getData().setScale((float) (width*0.003));
-        font.draw(game.batch, "Credits:", 0, Gdx.graphics.getHeight() * 7 / 8, Gdx.graphics.getWidth(), 1, false);
+        font.draw(game.batch, "About Apps for Good:", 0, Gdx.graphics.getHeight() * 7 / 8, Gdx.graphics.getWidth(), 1, false);
+        font.draw(game.batch, "About the Creators:", 0, Gdx.graphics.getHeight() * 5 / 8, Gdx.graphics.getWidth(), 1, false);
+        font.draw(game.batch, "Our Purpose:", 0, Gdx.graphics.getHeight() * 1 / 8, Gdx.graphics.getWidth(), 1, false);
+        font.draw(game.batch, "Credits:", 0, Gdx.graphics.getHeight() * -1 / 8, Gdx.graphics.getWidth(), 1, false);
+
         font.getData().setScale((float) (width*0.0012));
-        font.draw(game.batch, credits, 0, Gdx.graphics.getHeight() * 3 / 4);
+        font.draw(game.batch, abouta4g, 0, Gdx.graphics.getHeight() * 6/ 8,   Gdx.graphics.getWidth(), -1, true);
+        font.draw(game.batch, aboutTC, 0, Gdx.graphics.getHeight() * 4 / 8,   Gdx.graphics.getWidth(), -1, true);
+        font.draw(game.batch, purpose, 0, Gdx.graphics.getHeight() * 0 / 8,   Gdx.graphics.getWidth(), -1, true);
+        font.draw(game.batch, credits, 0, Gdx.graphics.getHeight() * -2 / 8,   Gdx.graphics.getWidth(), -1, true);
+
         back.draw(game.batch);
 
         if (atAllTouched) {
@@ -223,8 +244,9 @@ public class About implements Screen, GestureDetector.GestureListener {
 
     @Override
     public boolean pan(float x, float y, float deltaX, float deltaY) {
+        //if(deltaY*camera.zoom<=0){
         camera.translate(0, deltaY * camera.zoom);
-        camera.update();
+        camera.update();//}
         return false;
     }
 
