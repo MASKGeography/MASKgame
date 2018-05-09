@@ -37,7 +37,6 @@ public class Plot {
 			Prompt input = promptList.get(i);
 			plots.add(input);
 		}
-		randomize();
 	}
 	
 	//methods
@@ -72,7 +71,7 @@ public class Plot {
 	}
 	
 	/**
-	 * Shuffles the "deck" of plots.
+	 * Shuffles the "deck" of plots. (Might not use.)
 	 */
 	public static void randomize() {
 		Random randy = new Random();
@@ -91,16 +90,6 @@ public class Plot {
 	 * @return a plot
 	 */
 	public static Prompt getAPlot() {
-      /*  if (size == 0) {
-            PromptWords promptFail = new PromptWords("FAIL", "failSprite");
-            Prompt fail = new Prompt(promptFail, "failOverview");
-            return fail;
-        }
-        else {
-            size=size-1;
-            return plots.get(size);
-        }*/
-      i = (i+1) % size();
       return plots.get(i);
     }
 

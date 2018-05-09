@@ -61,7 +61,6 @@ public class Prompt {
 			PromptWords input = somePromptWords.get(i);
 			prompts.add(input);
 		}
-		randomize();
 	}
 	
 	/**
@@ -76,7 +75,6 @@ public class Prompt {
 			PromptWords input = somePromptWords.get(i);
 			prompts.add(input);
 		}
-		randomize();
 	}
 	
 	//methods
@@ -126,7 +124,7 @@ public class Prompt {
 	}
 	
 	/**
-	 * Shuffles the "deck" of prompts.
+	 * Shuffles the "deck" of prompts. (Not used.)
 	 */
 	public void randomize() {
 		Random randy = new Random();
@@ -145,14 +143,6 @@ public class Prompt {
 	 * @return a prompt
 	 */
 	public PromptWords getAPrompt() {
-		/*	if (size == 0) {
-                PromptWords promptFail = new PromptWords("FAIL", "failSprite");
-                return promptFail;
-			}
-			else {
-				size=size-1;
-				return prompts.get(size);
-			} */
         i = (i+1)%size();
       return prompts.get(i);
 	}
