@@ -56,7 +56,7 @@ public class About implements Screen, GestureDetector.GestureListener {
 
         back = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/backButton.png")));
         back.setScale((float) (width*0.0015));
-        back.setPosition((float) (back.getWidth()*width*0.0015), height-back.getHeight()*2);
+        back.setPosition((float) (back.getWidth()*width*0.0015), Gdx.graphics.getHeight() * 13/16);
 
         credits = "The following resources were used to find information for prompts:\n" +
             "\n"+
@@ -147,17 +147,18 @@ public class About implements Screen, GestureDetector.GestureListener {
         game.batch.begin();
 
         BitmapFont font = Assets.Fonts.DEFAULT.get();
-        font.getData().setScale((float) (width*0.003));
-        font.draw(game.batch, "About Apps for Good:", 0, Gdx.graphics.getHeight() * 7 / 8, Gdx.graphics.getWidth(), 1, false);
-        font.draw(game.batch, "About the Creators:", 0, Gdx.graphics.getHeight() * 5 / 8, Gdx.graphics.getWidth(), 1, false);
-        font.draw(game.batch, "Our Purpose:", 0, Gdx.graphics.getHeight() * 1 / 8, Gdx.graphics.getWidth(), 1, false);
-        font.draw(game.batch, "Credits:", 0, Gdx.graphics.getHeight() * -1 / 8, Gdx.graphics.getWidth(), 1, false);
 
-        font.getData().setScale((float) (width*0.0012));
-        font.draw(game.batch, abouta4g, 0, Gdx.graphics.getHeight() * 6/ 8,   Gdx.graphics.getWidth(), -1, true);
-        font.draw(game.batch, aboutTC, 0, Gdx.graphics.getHeight() * 4 / 8,   Gdx.graphics.getWidth(), -1, true);
-        font.draw(game.batch, purpose, 0, Gdx.graphics.getHeight() * 0 / 8,   Gdx.graphics.getWidth(), -1, true);
-        font.draw(game.batch, credits, 0, Gdx.graphics.getHeight() * -2 / 8,   Gdx.graphics.getWidth(), -1, true);
+        font.getData().setScale(6 * ((640)/(Gdx.graphics.getWidth()/Gdx.graphics.getDensity())));
+        font.draw(game.batch, "About Apps for Good:", 0, Gdx.graphics.getHeight() * 7 / 8, Gdx.graphics.getWidth(), 1, false);
+        font.draw(game.batch, "About the Creators:", 0, Gdx.graphics.getHeight() * 4 / 8, Gdx.graphics.getWidth(), 1, false);
+        font.draw(game.batch, "Our Purpose:", 0, Gdx.graphics.getHeight() * -2 / 8, Gdx.graphics.getWidth(), 1, false);
+        font.draw(game.batch, "Credits:", 0, Gdx.graphics.getHeight() * -6 / 8, Gdx.graphics.getWidth(), 1, false);
+
+        font.getData().setScale(4 * ((640)/(Gdx.graphics.getWidth()/Gdx.graphics.getDensity())));
+        font.draw(game.batch, abouta4g, 0, Gdx.graphics.getHeight() * 6 / 8,   Gdx.graphics.getWidth(), -1, true);
+        font.draw(game.batch, aboutTC, 0, Gdx.graphics.getHeight() * 3 / 8,   Gdx.graphics.getWidth(), -1, true);
+        font.draw(game.batch, purpose, 0, Gdx.graphics.getHeight() * -3 / 8,   Gdx.graphics.getWidth(), -1, true);
+        font.draw(game.batch, credits, 0, Gdx.graphics.getHeight() * -7 / 8,   Gdx.graphics.getWidth(), -1, true);
 
         back.draw(game.batch);
 
