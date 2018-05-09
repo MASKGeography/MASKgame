@@ -42,6 +42,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
     float touchX = -1, touchY = -1;
 
     Sprite flagClicker;
+    Sprite back;
 
     Sprite[] flagButtons;
     String[] buttonNames;
@@ -55,10 +56,15 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
     String thePrompt;
     String theSprite;
 
+
     public WorldMap2(MASKgame gam, String prompt, String sprite) {
         game = gam;
         thePrompt = prompt;
         theSprite = sprite;
+
+        back = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/backButton.png")));
+        back.setScale(1);
+        back.setPosition(0, 800);
 
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
@@ -175,22 +181,25 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
         background.draw(game.batch);
 
+        //fakebackground.draw(game.batch);
         for (Sprite button : flagButtons) button.draw(game.batch);
 
         BitmapFont font = Assets.Fonts.DEFAULT.get();
         font.getData().setScale(3);
 
+
         font.draw(game.batch, "Prompt: " + thePrompt, 0, Gdx.graphics.getHeight() * 7 / 8, Gdx.graphics.getWidth(), 1, true);
         font.draw(game.batch, answerString, 0, Gdx.graphics.getHeight() * 5 / 8, Gdx.graphics.getWidth(), 1, true);
 
+        game.time += Gdx.graphics.getDeltaTime();
+
+        back.draw(game.batch);
 
         if (atAllTouched) {
             flagClicker.draw(game.batch);
         }
 
         game.batch.end();
-
-        game.time += Gdx.graphics.getDeltaTime();
 
         if (lastTouched) {
             Vector3 pos = new Vector3(touchX, touchY, 0);
@@ -200,23 +209,31 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
             flagClicker.setCenterY(pos.y);
         }
 
-
         if (atAllTouched) {
 
             if (lastTouched) {
+                Gdx.app.log("MAINMENYU", "atalltouchedFOR");
 
-                boolean hastouchedaflag = false;
+                if (Intersector.intersectRectangles(back.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
+                    game.setScreen(new MainMenu(game));
+
+                    dispose();
+                    Gdx.app.log("MAINMENYU", "touchingBack");
+
+                }
+
+
+                boolean anyflagtouched = false;
                 for (int j = 0; j < flagButtons.length; ++j) {
                     Sprite flag = flagButtons[j];
                     String name = buttonNames[j];
 
                     if (Intersector.intersectRectangles(flag.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
-                        hastouchedaflag = true;
+                        anyflagtouched = true;
                         if (theSprite.equals(name + ".png")) {
                             answerString = "Congratulations, you found the country!";
 
                             //get new prompts
-                            game.score += 1;
                             game.setScreen(new Cutscene(game));
 
                             Gdx.app.log("Switching to new prompt", theSprite);
@@ -236,12 +253,10 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
                 }
 
-                if (!hastouchedaflag) {
-                    answerString = "";
-                }
-
-
+                if (!anyflagtouched) answerString = "";
             }
+
+
 
             lastTouched = false;
         }
