@@ -26,8 +26,7 @@ public class HowToPlay implements Screen, GestureDetector.GestureListener {
     boolean lastTouched = false;
     boolean atAllTouched = false;
     float touchX = -1, touchY = -1;
-    Texture yoButton;
-    Sprite yoSprite;
+    Sprite back;
     Sprite flagClicker;
 
     public HowToPlay(MASKgame gam) {
@@ -41,10 +40,9 @@ public class HowToPlay implements Screen, GestureDetector.GestureListener {
         background.setCenterX(camera.position.x);
         background.setCenterY(camera.position.y);
 
-        yoButton = new Texture(Gdx.files.internal("geography/mainMenuButtons/yo.png"));
-        yoSprite = new Sprite(yoButton);
-        yoSprite.setPosition(Gdx.graphics.getWidth() * 1/ 8, Gdx.graphics.getHeight() * 27/32);
-        yoSprite.setScale(3);
+        back = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/backButton.png")));
+        back.setPosition(Gdx.graphics.getWidth() * 1/ 8, Gdx.graphics.getHeight() * 27/32);
+        back.setScale((float) (width*0.0015));
         Gdx.input.setInputProcessor(new GestureDetector(this));
         flagClicker = new Sprite(Assets.Textures.PLANE.get());
         flagClicker.setScale(0.125f);
@@ -65,17 +63,9 @@ public class HowToPlay implements Screen, GestureDetector.GestureListener {
         font.getData().setScale(6 * scaler);
         font.draw(game.batch, "Welcome to How To Play", 0, Gdx.graphics.getHeight() * 7 / 8, Gdx.graphics.getWidth(), 1, false);
         font.draw(game.batch, "Welcome to How To Play. To play, follow steps blank blank blank blank and blank. Welcome to How To Play. To play, follow steps blank blank blank blank and blank. Welcome to How To Play. To play, follow steps blank blank blank blank and blank.Welcome to How To Play. To play, follow steps blank blank blank blank and blank.Welcome to How To Play. To play, follow steps blank blank blank blank and blank.Welcome to How To Play. To play, follow steps blank blank blank blank and blank.Welcome to How To Play. To play, follow steps blank blank blank blank and blank.", 0, Gdx.graphics.getHeight() * 6 / 8, Gdx.graphics.getWidth(), 1, true);
-        font.draw(game.batch, Gdx.graphics.getDensity() + " ", 300,300);
-        font.draw(game.batch, Gdx.graphics.getWidth() + " ", 300,400);
-        /*game.batch.end();
-        if (lastTouched) {
-            Vector3 pos = new Vector3(touchX, touchY, 0);
-            pos = camera.unproject(pos);
-        }
-        if (atAllTouched) {
-            lastTouched = false;*/
 
-            yoSprite.draw(game.batch);
+
+            back.draw(game.batch);
 
             if (atAllTouched) {
                 flagClicker.draw(game.batch);
@@ -95,7 +85,7 @@ public class HowToPlay implements Screen, GestureDetector.GestureListener {
                 if (lastTouched) {
                     for (int k = 0; k < 10; ++k) {
                         Gdx.app.log("MAINMENYU", "atalltouchedFOR");
-                        if (Intersector.intersectRectangles(yoSprite.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
+                        if (Intersector.intersectRectangles(back.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
                             game.setScreen(new MainMenu(game));
                             dispose();
                             Gdx.app.log("MAINMENYU", "touching");

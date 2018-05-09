@@ -179,7 +179,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         font.getData().setScale(3);
 
 
-        font.draw(game.batch, "Prompt: " + thePrompt + "(" + theSprite + ")", 100, 800);
+        font.draw(game.batch, "Prompt: " + thePrompt, 100, 800);
         font.draw(game.batch, answerString, 100, 600);
 
 
@@ -217,7 +217,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
                             break;
                         } else {
                             Gdx.app.log("Phsyche", "hello world");
-                            answerString = "YOU WRONG!!!";
+                            answerString = "You stranded the person in " + name + "\nPlease help them get to " + theSprite.substring(0, theSprite.length() - 4) + "!";
                         }
 
                         Gdx.app.log("name", "" + name.length());
