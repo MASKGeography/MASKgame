@@ -42,6 +42,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
     float touchX = -1, touchY = -1;
 
     Sprite flagClicker;
+    Sprite back;
 
     Sprite[] flagButtons;
     String[] buttonNames;
@@ -60,6 +61,10 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         game = gam;
         thePrompt = prompt;
         theSprite = sprite;
+
+        back = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/backButton.png")));
+        back.setScale(1);
+        back.setPosition(0, 800);
 
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
@@ -182,6 +187,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         font.draw(game.batch, "Prompt: " + thePrompt, 100, 800);
         font.draw(game.batch, answerString, 100, 600);
 
+        back.draw(game.batch);
 
         if (atAllTouched) {
             flagClicker.draw(game.batch);
@@ -195,6 +201,22 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
             //flagClicker.setPosition(pos.x, pos.y);
             flagClicker.setCenterX(pos.x);
             flagClicker.setCenterY(pos.y);
+        }
+
+        if (atAllTouched) {
+            if (lastTouched) {
+                Gdx.app.log("MAINMENYU", "atalltouchedFOR");
+
+                if (Intersector.intersectRectangles(back.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
+                    game.setScreen(new MainMenu(game));
+
+                    dispose();
+                    Gdx.app.log("MAINMENYU", "touchingBack");
+
+                }
+
+            }
+            lastTouched = false;
         }
 
 
