@@ -68,10 +68,18 @@ public class MASKgame extends Game {
         int tmp = (int)time;
         int seconds = tmp % 60;
         int minutes = (tmp - seconds) / 60;
-        int milli = (int)((tmp - time) * 1000);
+        int milli = (int)((time - tmp) * 1000);
 
+        String strSeconds = "" + seconds;
+        if (strSeconds.length() == 1) {
+            strSeconds = "0" + strSeconds;
+        }
 
-        String ans = "Score: " + score + " Time: " + minutes + ":" + seconds + ":" + milli;
+        String strMilli = "" + milli;
+        while (strMilli.length() != 3) strMilli = "0" + strMilli;
+
+        String ans = "Score: " + score + " Time: " + minutes + ":" + strSeconds + ":" + strMilli;
+
         return ans;
     }
 
