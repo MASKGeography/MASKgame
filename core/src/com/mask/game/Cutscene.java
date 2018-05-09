@@ -17,6 +17,7 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
 
     String thePrompt;
     String theSprite;
+    String overview;
 
     Sprite sprite;
 
@@ -43,6 +44,7 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
         game.updatePlotsNStuff();
         thePrompt = game.getThePrompt();
         theSprite = game.getTheSprite();
+        overview = game.getOverview();
 
     }
 
@@ -62,7 +64,7 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
 
             font.getData().setScale(3);
 
-            font.draw(game.batch, "A person needs your help!", 100, 800);
+            font.draw(game.batch, "A person needs your help!" + overview, 0, Gdx.graphics.getHeight() * 6 / 8, Gdx.graphics.getWidth(), 1, true);
         }
 
         game.batch.end();
