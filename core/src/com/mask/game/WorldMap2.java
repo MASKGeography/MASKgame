@@ -171,6 +171,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         Gdx.app.log("time", "" + game.time);
         Gdx.app.log("time", game.scoreString());
         Gdx.app.log("time", "" + Gdx.graphics.getDeltaTime());
+        Gdx.app.log("time", "" + (int)game.time);
 
         Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -188,6 +189,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         font.getData().setScale(3);
 
 
+        font.draw(game.batch, game.scoreString(), 0, Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 1, true);
         font.draw(game.batch, "Prompt: " + thePrompt, 0, Gdx.graphics.getHeight() * 7 / 8, Gdx.graphics.getWidth(), 1, true);
         font.draw(game.batch, answerString, 0, Gdx.graphics.getHeight() * 5 / 8, Gdx.graphics.getWidth(), 1, true);
 

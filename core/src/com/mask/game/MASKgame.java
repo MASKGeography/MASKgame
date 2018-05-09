@@ -65,10 +65,13 @@ public class MASKgame extends Game {
     }
 
     public String scoreString() {
-        int seconds = (int)score;
-        int minutes = seconds % 60;
+        int tmp = (int)time;
+        int seconds = tmp % 60;
+        int minutes = (tmp - seconds) / 60;
+        int milli = (int)((tmp - time) * 1000);
 
-        String ans = "Score: " + score + " Time: " + minutes + ":" + seconds;
+
+        String ans = "Score: " + score + " Time: " + minutes + ":" + seconds + ":" + milli;
         return ans;
     }
 
