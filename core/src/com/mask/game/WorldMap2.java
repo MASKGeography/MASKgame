@@ -240,6 +240,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
                             switchPlot = true;
 
                             //get new prompts
+                            game.updatePlotsNStuff();
                             game.setScreen(new Cutscene(game));
 
                             Gdx.app.log("Switching to new prompt", theSprite);
