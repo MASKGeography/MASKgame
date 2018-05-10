@@ -48,7 +48,7 @@ public class MASKgame extends Game {
     //one way to fix skipping problem would be to add fake prompts in all the places where the app is skipping them
     //  that would be dangerous though because it's like cheat coding
     //haven't been able to test boolean switchPlot yet but could solve problem, need a bit of help tho bc idk how to transfer
-    //  data between classes without a getter method? do u need one?
+    //  data between classes without a getter method? do u even need one?
     //pls no touch this class until we are together tomorrow because it is sensitive and likes to crash the whole app :(
 
     public void updatePlotsNStuff() {
@@ -62,12 +62,13 @@ public class MASKgame extends Game {
         theSprite = prompty.getSpriteName();
         overview = ploty.getOverview();
         if (thePrompt.equals(thePlots.get(promptNumber).getLastPrompt().getPromptWord())){
-           if (switchPlot==true) {
+         //  if (switchPlot==true) {
                promptNumber++;
-           }
+          // }
         }
         if (thePrompt.equals(thePlots.get(thePlots.size()-1).getLastPrompt().getPromptWord())){
             if (switchPlot==true) {
+                //game wont end rn because boolean switchPlot doesn't actually work!
                 //end game
             }
         }
