@@ -29,13 +29,11 @@ public class Assets {
         String[] lines = file.readString().split("\n");
 
         for (String line : lines) {
-            Gdx.app.log("CSV line", line);
             String[] tokens = line.split(",");
 
             for (int i = 1; i < tokens.length; ++i) {
                 if (!tokens[i].equals("")) {
                     countriesProper.add(tokens[i]);
-                    Gdx.app.log("Country", tokens[i]);
                 }
             }
 
@@ -51,14 +49,11 @@ public class Assets {
 
 
         for (String line : lines) {
-            Gdx.app.log("CSV line", line);
             line = line.replaceAll("\r", "");
             String[] tokens = line.split(",");
 
             for (int i = 1; i < tokens.length; ++i) {
                 countries.add(tokens[i]);
-                Gdx.app.log("Country", tokens[i]);
-                Gdx.app.log("Country name size", "" + tokens[i].length());
                 flagSprites.put(tokens[i], new Texture(Gdx.files.internal("geography/flagSprites/real/" + tokens[i] + ".png")));
             }
 
@@ -77,7 +72,6 @@ public class Assets {
             Double x = Double.parseDouble(tokens[1]);
             Double y = Double.parseDouble(tokens[2]);
 
-            Gdx.app.log("CountryPos", name + " " + x + " " + y + " " + name.length());
 
             countries2XPos.put(name, x);
             countries2YPos.put(name, y);

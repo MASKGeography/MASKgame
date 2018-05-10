@@ -116,12 +116,10 @@ public class Plot {
         String[] lines = file.readString().split("\n");
 
         for (String line : lines) {
-            Gdx.app.log("QQQ CSV line prompts", line);
             Prompt prompt = new Prompt();
             String[] tokens = line.split(",");
 
             prompt.addOverview(tokens[0]);
-            Gdx.app.log("QQQ Overview:", tokens[0]);
 
             for (int i = 1; i < tokens.length - 1; i=i+2) {
                 if (!tokens[i].equals("")) {
@@ -129,12 +127,9 @@ public class Plot {
                     promptWords.setPromptWord(tokens[i]);
                     promptWords.setSpriteName(tokens[i+1]);
                     prompt.addPrompt(promptWords);
-                    Gdx.app.log("QQQ Prompt:", tokens[i]);
-                    Gdx.app.log("QQQ PromptSpriteName:", tokens[i+1]);
                 }
             }
             plots.addPlot(prompt);
-            Gdx.app.log("QQQ Num Prompts", Integer.toString(plots.size));
 
         }
 

@@ -57,7 +57,6 @@ public class MASKgame extends Game {
         theSprite = prompty.getSpriteName();
         overview = ploty.getOverview();
 
-        Gdx.app.log("WhyNoWork", "" + thePrompt);
 
         if (thePrompt.equals(thePlots.get(plotNumber).getLastPrompt().getPromptWord())){
             plotNumber = (plotNumber + 1) % thePlots.size();

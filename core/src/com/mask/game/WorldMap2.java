@@ -71,9 +71,6 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
 
-        Gdx.app.log("Width", "" + width);
-        Gdx.app.log("Height", "" + height);
-
         camera = new OrthographicCamera();
         camera.setToOrtho(false, width, height);
 
@@ -93,13 +90,10 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         background.setScale(scale);
         fakebackground.setScale(scale);
 
-        Gdx.app.log("Scale", "" + scale);
 
         background.setCenterX(camera.position.x);
         background.setCenterY(camera.position.y);
 
-        Gdx.app.log("Camera x", "" + camera.position.x);
-        Gdx.app.log("Camera y", "" + camera.position.y);
 
 
         fakebackground.setCenterX(camera.position.x);
@@ -120,7 +114,6 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
             Double x = Assets.countries2XPos.get(key);
             Double y = Assets.countries2YPos.get(key);
 
-            Gdx.app.log("DEBUG", name + " " + x + " " + y + " " + name.length());
 
             if (x == null || y == null) {
                 ++iter;
@@ -128,8 +121,6 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
             }
 
 
-            Gdx.app.log("Fake Width", "" + fakebackground.getWidth());
-            Gdx.app.log("Fake Height", "" + fakebackground.getHeight());
 
             pos.x = x.floatValue() * fakebackground.getWidth() * scale + (Gdx.graphics.getWidth() - fakebackground.getWidth() * scale) / 2;
             pos.y = y.floatValue() * fakebackground.getHeight() * scale + (Gdx.graphics.getHeight() - fakebackground.getHeight() * scale) / 2;
@@ -138,14 +129,12 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
             pos.z = 0;
             //pos = camera.unproject(pos);
 
-            Gdx.app.log("name", name);
 
             Sprite flagButton = new Sprite(Assets.flagSprites.get(name));
             flagButtons[iter] = flagButton;
             buttonNames[iter] = name;
 
             String namePNG = name + ".png";
-            Gdx.app.log("helpME:", namePNG);
 
             flagButtons[iter].setPosition(pos.x, pos.y);
 
@@ -157,23 +146,13 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         }
 
 
-        Gdx.app.log("fakex", "" + fakebackground.getX());
-        Gdx.app.log("fakey", "" + fakebackground.getY());
 
 
         Rectangle rect = background.getBoundingRectangle();
-        Gdx.app.log("X:", "" + rect.x);
-        Gdx.app.log("Y:", "" + rect.y);
-        Gdx.app.log("W:", "" + rect.width);
-        Gdx.app.log("H:", "" + rect.height);
     }
 
     @Override
     public void render(float delta) {
-        Gdx.app.log("time", "" + game.time);
-        Gdx.app.log("time", game.scoreString());
-        Gdx.app.log("time", "" + Gdx.graphics.getDeltaTime());
-        Gdx.app.log("time", "" + (int)game.time);
 
         Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -216,13 +195,11 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         if (atAllTouched) {
 
             if (lastTouched) {
-                Gdx.app.log("MAINMENYU", "atalltouchedFOR");
 
                 if (Intersector.intersectRectangles(back.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
                     game.setScreen(new MainMenu(game));
 
                     dispose();
-                    Gdx.app.log("MAINMENYU", "touchingBack");
 
                 }
 
@@ -250,20 +227,15 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
                                 game.setScreen(new Cutscene(game));
                             }
 
-                            Gdx.app.log("Switching to new prompt", theSprite);
                             dispose();
                             break;
                         } else {
-                            Gdx.app.log("Phsyche", "hello world");
                             answerString = "You stranded the person in " + name + "! Please help them get to " + theSprite.substring(0, theSprite.length() - 4) + "!";
                             switchPlot = false;
                         }
 
-                        Gdx.app.log("name", "" + name.length());
-                        Gdx.app.log("filename", "" + theSprite.length());
 
 
-                        Gdx.app.log("Intersection detected", name);
                     }
 
                 }

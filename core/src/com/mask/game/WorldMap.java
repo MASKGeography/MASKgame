@@ -68,7 +68,6 @@ public class WorldMap implements Screen, GestureDetector.GestureListener {
         game.batch.draw(Assets.Textures.WORLDMAP.get(), 0, 0);
         Assets.Fonts.DEFAULT.get().draw(game.batch, "Welcome to the world map! ", 100, 100);
 
-        Gdx.app.log("Hola", "" + Assets.countriesProper.size() + " " + Assets.countries.size());
 
         for (int i = 0; i < 10; ++i) {
             Assets.Fonts.DEFAULT.get().draw(game.batch, Assets.countries.get(randarr[i]), 100, 150+20*i);
@@ -145,7 +144,6 @@ public class WorldMap implements Screen, GestureDetector.GestureListener {
 
         camera.translate(x / 20, y / 20);
         camera.update();
-        Gdx.app.log("Hello, world", "x: " + x + "y: " + y);
 
         return true;
     }

@@ -178,13 +178,11 @@ public class About implements Screen, GestureDetector.GestureListener {
 
         if (atAllTouched) {
             if (lastTouched) {
-                Gdx.app.log("MAINMENYU", "atalltouchedFOR");
 
                 if (Intersector.intersectRectangles(back.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
                     game.setScreen(new MainMenu(game));
 
                     dispose();
-                    Gdx.app.log("MAINMENYU", "touching");
 
                 }
 
