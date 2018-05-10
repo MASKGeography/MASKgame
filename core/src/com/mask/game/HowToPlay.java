@@ -58,7 +58,9 @@ public class HowToPlay implements Screen, GestureDetector.GestureListener {
         BitmapFont font = Assets.Fonts.DEFAULT.get();
         font.getData().setScale(6 * ((640)/(Gdx.graphics.getWidth()/Gdx.graphics.getDensity())));
         font.draw(game.batch, "Welcome to How To Play", 0, Gdx.graphics.getHeight() * 7 / 8, Gdx.graphics.getWidth(), 1, false);
-        font.draw(game.batch, "Welcome to How To Play. To play, follow steps blank blank blank blank and blank. Welcome to How To Play. To play, follow steps blank blank blank blank and blank. Welcome to How To Play. To play, follow steps blank blank blank blank and blank.Welcome to How To Play. To play, follow steps blank blank blank blank and blank.Welcome to How To Play. To play, follow steps blank blank blank blank and blank.Welcome to How To Play. To play, follow steps blank blank blank blank and blank.Welcome to How To Play. To play, follow steps blank blank blank blank and blank.", 0, Gdx.graphics.getHeight() * 6 / 8, Gdx.graphics.getWidth(), 1, true);
+        font.getData().setScale(4 * ((640)/(Gdx.graphics.getWidth()/Gdx.graphics.getDensity())));
+        font.draw(game.batch, "1. Read the prompt and click on the country that answers the prompt.\n" +
+            "2. Congratulations, you can now begin playing!", 0, Gdx.graphics.getHeight() * 6 / 8, Gdx.graphics.getWidth(), -1, true);
 
 
             back.draw(game.batch);
