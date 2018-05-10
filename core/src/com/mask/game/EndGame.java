@@ -19,9 +19,10 @@ public class EndGame implements Screen, GestureDetector.GestureListener {
     float height, width;
 
     int mode = 0;
+    float time = 0;
 
     public EndGame(MASKgame gam) {
-        game=gam;
+        game = gam;
 
         height = Gdx.graphics.getHeight();
         width = Gdx.graphics.getWidth();
@@ -35,7 +36,7 @@ public class EndGame implements Screen, GestureDetector.GestureListener {
 
     @Override
     public void render(float delta) {
-        //flass 3 times faster
+        time += Gdx.graphics.getDeltaTime();
 
         Gdx.gl.glClearColor(0.0f, 0.0f, 1.0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -47,10 +48,10 @@ public class EndGame implements Screen, GestureDetector.GestureListener {
         BitmapFont font = Assets.Fonts.DEFAULT.get();
         font.getData().setScale(3);
         font.draw(game.batch, "Congratulations! You finished the game!\n" + game.scoreString(), 0, height);
+
         game.batch.end();
-
-
-        if (mode == 1) {
+        
+        if (mode >= 1 && time >= 3) {
             game.restart();
             game.setScreen(new MainMenu(game));
         }
