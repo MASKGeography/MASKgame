@@ -130,7 +130,6 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
     @Override
     public boolean tap(float x, float y, int count, int button) {
         ++mode;
-        Gdx.app.log("Cutscene", "switching back");
         return false;
     }
 
