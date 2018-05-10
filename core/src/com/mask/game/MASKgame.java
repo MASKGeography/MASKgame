@@ -20,6 +20,8 @@ public class MASKgame extends Game {
     private String theSprite;
     private String overview;
     Prompt ploty;
+    int promptNumber = 0;
+    private ArrayList<Prompt> thePlots;
 
 
 
@@ -32,20 +34,19 @@ public class MASKgame extends Game {
         this.setScreen(new MainMenu(this));
 
         updatePlotsNStuff();
-       // if
-
 
     }
 
     public void updatePlotsNStuff() {
-       /* if (ploty.getAPrompt().getPromptWord()==){
-            Plot.changePlot();
-        }*/
-        ploty = Plot.getAPlot();
+        thePlots = Plot.getThePlots();
+        ploty = thePlots.get(promptNumber);
         prompty = ploty.getAPrompt();
         thePrompt = prompty.getPromptWord();
         theSprite = prompty.getSpriteName();
         overview = ploty.getOverview();
+        if (thePrompt.equals(thePlots.get(promptNumber).getLastPrompt().getPromptWord())){
+            promptNumber++;
+        }
     }
 
     public String getThePrompt() {

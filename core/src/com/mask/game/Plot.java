@@ -95,6 +95,14 @@ public class Plot {
     }
 
     /**
+     * Returns the whole array list of prompts!
+     * @return an array list of prompt objects
+     */
+    public static ArrayList<Prompt> getThePlots() {
+        return plots;
+    }
+
+    /**
      * Changes plot.
      */
     public static void changePlot() {

@@ -146,7 +146,15 @@ public class Prompt {
         PROMPTi = (PROMPTi+1)%getSize();
       return prompts.get(PROMPTi);
 	}
-	
+
+    /**
+     * Returns the last prompt.
+     * @return the last prompt.
+     */
+    public PromptWords getLastPrompt() {
+        return prompts.get(getSize()-1);
+    }
+
 	/**
 	 * Displays the contents of the class as a String.
 	 */
