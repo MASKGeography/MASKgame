@@ -235,6 +235,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
                     if (Intersector.intersectRectangles(flag.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
                         anyflagtouched = true;
                         if (theSprite.equals(name + ".png")) {
+                            ++game.score;
                             answerString = "Congratulations, you found the country!";
 
                             switchPlot = true;
