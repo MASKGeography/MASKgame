@@ -56,6 +56,8 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
     String thePrompt;
     String theSprite;
 
+    float initX, initY;
+
 
     public WorldMap2(MASKgame gam, String prompt, String sprite) {
         game = gam;
@@ -73,6 +75,9 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, width, height);
+
+        initX = camera.position.x;
+        initY = camera.position.y;
 
         //use new square version of map
         background = new Sprite(Assets.Textures.WORLDMAP2.get());
@@ -167,12 +172,35 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         for (Sprite button : flagButtons) button.draw(game.batch);
 
         BitmapFont font = Assets.Fonts.DEFAULT.get();
-        font.getData().setScale(4 * ((640)/(Gdx.graphics.getWidth()/Gdx.graphics.getDensity())));
+        font.getData().setScale((4 * ((640)/(Gdx.graphics.getWidth()/Gdx.graphics.getDensity()))) * camera.zoom);
+
+        float posX = 0 + (camera.position.x - initX);
+        float posY = Gdx.graphics.getHeight() * 3 / 16 + (camera.position.y - initY);
+        posY = camera.position.y + (posY - camera.position.y) * camera.zoom;
+
+        font.draw(game.batch, game.scoreString(), posX, posY, Gdx.graphics.getWidth(), 1, true);
+
+        posX = 0 + (camera.position.x - initX);
+        posY = Gdx.graphics.getHeight() * 31 /32 + (camera.position.y - initY);
+        posY = camera.position.y + (posY - camera.position.y) * camera.zoom;
+
+        font.draw(game.batch, "Prompt: " + thePrompt, posX, posY, Gdx.graphics.getWidth(), 1, true);
+
+        posX = 0 + (camera.position.x - initX);
+        posY = Gdx.graphics.getHeight() * 2 / 16 + (camera.position.y - initY);
+        posY = camera.position.y + (posY - camera.position.y) * camera.zoom;
+
+        font.draw(game.batch, answerString, posX, posY, Gdx.graphics.getWidth(), 1, true);
+
+        posX = Gdx.graphics.getWidth() * 3 / 64 + (camera.position.x - initX);
+        posX = camera.position.x + (posX - camera.position.x) * camera.zoom;
+        posY = Gdx.graphics.getHeight() * 8 / 16 + (camera.position.y - initY);
+        posY = camera.position.y + (posY - camera.position.y) * camera.zoom;
+        back.setScale(1.5f*camera.zoom);
+        back.setCenterX(posX);
+        back.setCenterY(posY);
 
 
-        font.draw(game.batch, game.scoreString(), 0, Gdx.graphics.getHeight() * 2 / 16, Gdx.graphics.getWidth(), 1, true);
-        font.draw(game.batch, "Prompt: " + thePrompt, 0, Gdx.graphics.getHeight() * 31 /32, Gdx.graphics.getWidth(), 1, true);
-        font.draw(game.batch, answerString, 0, Gdx.graphics.getHeight() * 1 / 16, Gdx.graphics.getWidth(), 1, true);
 
         game.time += Gdx.graphics.getDeltaTime();
 
