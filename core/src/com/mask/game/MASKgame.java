@@ -12,7 +12,6 @@ import java.util.ArrayList;
  */
 
 public class MASKgame extends Game {
-
     public SpriteBatch batch;
 
     PromptWords prompty;
@@ -20,11 +19,10 @@ public class MASKgame extends Game {
     private String theSprite;
     private String overview;
     Prompt ploty;
+
     int promptNumber = 0;
     private ArrayList<Prompt> thePlots;
     public static boolean switchPlot;
-
-
 
     public void create() {
         Gdx.app.setLogLevel(Application.LOG_INFO);
