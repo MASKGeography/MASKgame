@@ -143,7 +143,7 @@ public class Prompt {
 	 * @return a prompt
 	 */
 	public PromptWords getAPrompt() {
-        PROMPTi = (PROMPTi+1)%getSize();
+	 PROMPTi = (PROMPTi+1)%getSize();
       return prompts.get(PROMPTi);
 	}
 

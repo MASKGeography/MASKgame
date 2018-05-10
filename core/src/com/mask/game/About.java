@@ -148,13 +148,13 @@ public class About implements Screen, GestureDetector.GestureListener {
 
         BitmapFont font = Assets.Fonts.DEFAULT.get();
 
-        font.getData().setScale(6 * ((640)/(Gdx.graphics.getWidth()/Gdx.graphics.getDensity())));
+        font.getData().setScale((float) (0.004 * (Gdx.graphics.getWidth())));
         font.draw(game.batch, "About Apps for Good:", 0, Gdx.graphics.getHeight() * 7 / 8, Gdx.graphics.getWidth(), 1, false);
         font.draw(game.batch, "About the Creators:", 0, Gdx.graphics.getHeight() * 4 / 8, Gdx.graphics.getWidth(), 1, false);
         font.draw(game.batch, "Our Purpose:", 0, Gdx.graphics.getHeight() * -2 / 8, Gdx.graphics.getWidth(), 1, false);
         font.draw(game.batch, "Credits:", 0, Gdx.graphics.getHeight() * -6 / 8, Gdx.graphics.getWidth(), 1, false);
 
-        font.getData().setScale(4 * ((640)/(Gdx.graphics.getWidth()/Gdx.graphics.getDensity())));
+        font.getData().setScale((float) (0.002 * (Gdx.graphics.getWidth())));
         font.draw(game.batch, abouta4g, 0, Gdx.graphics.getHeight() * 6 / 8,   Gdx.graphics.getWidth(), -1, true);
         font.draw(game.batch, aboutTC, 0, Gdx.graphics.getHeight() * 3 / 8,   Gdx.graphics.getWidth(), -1, true);
         font.draw(game.batch, purpose, 0, Gdx.graphics.getHeight() * -3 / 8,   Gdx.graphics.getWidth(), -1, true);
