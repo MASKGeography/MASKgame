@@ -20,6 +20,7 @@ public class Plot {
 	private static int size;
 
 	private static int i = 0;
+
 	
 	//constructor
 	public Plot() {
@@ -91,6 +92,21 @@ public class Plot {
 	 */
 	public static Prompt getAPlot() {
       return plots.get(i);
+    }
+
+    /**
+     * Returns the whole array list of prompts!
+     * @return an array list of prompt objects
+     */
+    public static ArrayList<Prompt> getThePlots() {
+        return plots;
+    }
+
+    /**
+     * Changes plot.
+     */
+    public static void changePlot() {
+        i = (i+1)%size();
     }
 
 	public static Plot init(){

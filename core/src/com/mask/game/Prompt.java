@@ -13,13 +13,13 @@ import java.util.Random;
 public class Prompt {
 	
 	//data
-	private ArrayList<PromptWords> prompts;
+	public ArrayList<PromptWords> prompts;
 	
 	private String overview;
 	
 	private int size;
 
-	public int i = 0;
+	int PROMPTi = -1;
 	
 	//constructor
 	/**
@@ -108,7 +108,7 @@ public class Prompt {
 	 * Returns the number of "undealt" prompts.
 	 * @return number of "undealt" prompts
 	 */
-	public int size() {
+	public int getSize() {
 		return size;
 	}
 	
@@ -143,10 +143,26 @@ public class Prompt {
 	 * @return a prompt
 	 */
 	public PromptWords getAPrompt() {
-        i = (i+1)%size();
-      return prompts.get(i);
+        PROMPTi = (PROMPTi+1)%getSize();
+      return prompts.get(PROMPTi);
 	}
-	
+
+    /**
+     * Returns the last prompt.
+     * @return the last prompt.
+     */
+    public PromptWords getLastPrompt() {
+        return prompts.get(getSize()-1);
+    }
+
+    /**
+     * Returns the first prompt.
+     * @return the first prompt.
+     */
+    public PromptWords getFirstPrompt() {
+        return prompts.get(0);
+    }
+
 	/**
 	 * Displays the contents of the class as a String.
 	 */
