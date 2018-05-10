@@ -27,6 +27,8 @@ public class MASKgame extends Game {
     boolean completed = false;
     boolean almostCompleted = false;
 
+
+
     public void create() {
         Gdx.app.setLogLevel(Application.LOG_INFO);
 

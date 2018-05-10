@@ -38,7 +38,7 @@ public class EndGame implements Screen, GestureDetector.GestureListener {
     public void render(float delta) {
         time += Gdx.graphics.getDeltaTime();
 
-        Gdx.gl.glClearColor(0.0f, 0.0f, 1.0f, 1);
+        Gdx.gl.glClearColor(100/255.0f, 150/255.0f, 200/255.0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         camera.update();
@@ -50,7 +50,7 @@ public class EndGame implements Screen, GestureDetector.GestureListener {
         font.draw(game.batch, "Congratulations! You finished the game!\n" + game.scoreString(), 0, height);
 
         game.batch.end();
-        
+
         if (mode >= 1 && time >= 3) {
             game.restart();
             game.setScreen(new MainMenu(game));
