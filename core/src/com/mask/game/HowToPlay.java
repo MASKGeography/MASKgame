@@ -41,7 +41,7 @@ public class HowToPlay implements Screen, GestureDetector.GestureListener {
         background.setCenterY(camera.position.y);
 
         back = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/backButton.png")));
-        back.setPosition(Gdx.graphics.getWidth() * 1/ 8, Gdx.graphics.getHeight() * 13/16);
+        back.setPosition(Gdx.graphics.getWidth() * 1/ 16, Gdx.graphics.getHeight() * 13/16);
         back.setScale((float) (width*0.0015));
         Gdx.input.setInputProcessor(new GestureDetector(this));
         flagClicker = new Sprite(Assets.Textures.PLANE.get());
@@ -59,8 +59,8 @@ public class HowToPlay implements Screen, GestureDetector.GestureListener {
         font.getData().setScale(6 * ((640)/(Gdx.graphics.getWidth()/Gdx.graphics.getDensity())));
         font.draw(game.batch, "Welcome to How To Play", 0, Gdx.graphics.getHeight() * 7 / 8, Gdx.graphics.getWidth(), 1, false);
         font.getData().setScale(4 * ((640)/(Gdx.graphics.getWidth()/Gdx.graphics.getDensity())));
-        font.draw(game.batch, "1. Read the prompt and click on the country that answers the prompt.\n" +
-            "2. Congratulations, you can now begin playing!", 0, Gdx.graphics.getHeight() * 6 / 8, Gdx.graphics.getWidth(), -1, true);
+        font.draw(game.batch, "1. Read the prompt and click on the country that answers the prompt. Pinch with two fingers to zoom in and out, and scroll with one finger.\n" +
+            "2. Congratulations, you can now begin playing!", 0, Gdx.graphics.getHeight() * 5 / 8, Gdx.graphics.getWidth(), -1, true);
 
 
             back.draw(game.batch);
