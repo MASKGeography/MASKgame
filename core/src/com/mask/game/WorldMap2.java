@@ -66,7 +66,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
         back = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/backButton.png")));
         back.setScale(1);
-        back.setPosition(0, 800);
+        back.setPosition(Gdx.graphics.getWidth() * 1 / 32, Gdx.graphics.getHeight() * 7 /16);
 
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
@@ -188,12 +188,12 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         for (Sprite button : flagButtons) button.draw(game.batch);
 
         BitmapFont font = Assets.Fonts.DEFAULT.get();
-        font.getData().setScale(3);
+        font.getData().setScale(4 * ((640)/(Gdx.graphics.getWidth()/Gdx.graphics.getDensity())));
 
 
-        font.draw(game.batch, game.scoreString(), 0, Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 1, true);
-        font.draw(game.batch, "Prompt: " + thePrompt, 0, Gdx.graphics.getHeight() * 7 / 8, Gdx.graphics.getWidth(), 1, true);
-        font.draw(game.batch, answerString, 0, Gdx.graphics.getHeight() * 5 / 8, Gdx.graphics.getWidth(), 1, true);
+        font.draw(game.batch, game.scoreString(), 0, Gdx.graphics.getHeight() * 2 / 16, Gdx.graphics.getWidth(), 1, true);
+        font.draw(game.batch, "Prompt: " + thePrompt, 0, Gdx.graphics.getHeight() * 31 /32, Gdx.graphics.getWidth(), 1, true);
+        font.draw(game.batch, answerString, 0, Gdx.graphics.getHeight() * 1 / 16, Gdx.graphics.getWidth(), 1, true);
 
         game.time += Gdx.graphics.getDeltaTime();
 
@@ -255,7 +255,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
                             break;
                         } else {
                             Gdx.app.log("Phsyche", "hello world");
-                            answerString = "You stranded the person in " + name + "!\nPlease help them get to " + theSprite.substring(0, theSprite.length() - 4) + "!";
+                            answerString = "You stranded the person in " + name + "! Please help them get to " + theSprite.substring(0, theSprite.length() - 4) + "!";
                             switchPlot = false;
                         }
 
