@@ -42,8 +42,8 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
         Gdx.input.setInputProcessor(new GestureDetector(this));
         sprite = new Sprite(Assets.Textures.PERSON.get());
 
-        sprite.setCenterX(0.2f * width);
-        sprite.setCenterY(0.5f * height);
+        sprite.setCenterX(0.15f * width);
+        sprite.setCenterY(0.4f * height);
         sprite.setScale(2);
 
         thePrompt = game.getThePrompt();
@@ -76,12 +76,12 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
 
             font.getData().setScale(3);
 
-            font.draw(game.batch, "A person needs your help!" + overview, 0, Gdx.graphics.getHeight() * 6 / 8, Gdx.graphics.getWidth(), 1, true);
+            font.draw(game.batch, "A person needs your help!" + overview, 0, Gdx.graphics.getHeight() * 27/32   , Gdx.graphics.getWidth(), 1, true);
 
             if (drawRed) font.setColor(Color.RED);
             else font.setColor(Color.BLACK);
             font.getData().setScale(9);
-            font.draw(game.batch, game.scoreString(), 0, Gdx.graphics.getHeight() * 7 / 8, Gdx.graphics.getWidth(), 1, true);
+            font.draw(game.batch, game.scoreString(), 0, Gdx.graphics.getHeight() * 31/32, Gdx.graphics.getWidth(), 1, true);
 
             font.setColor(Color.WHITE);
 
