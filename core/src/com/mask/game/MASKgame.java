@@ -18,6 +18,7 @@ public class MASKgame extends Game {
     PromptWords prompty;
     private String thePrompt;
     private String theSprite;
+    private String overview;
     Prompt ploty;
 
 
@@ -44,6 +45,7 @@ public class MASKgame extends Game {
         prompty = ploty.getAPrompt();
         thePrompt = prompty.getPromptWord();
         theSprite = prompty.getSpriteName();
+        overview = ploty.getOverview();
     }
 
     public String getThePrompt() {
@@ -54,6 +56,12 @@ public class MASKgame extends Game {
         return theSprite;
     }
 
+    public String getOverview() {
+        return overview;
+    }
+
+    public int score = 0;
+    public float time = 0;
 
 
     public void render() {
@@ -63,5 +71,27 @@ public class MASKgame extends Game {
     public void dispose() {
 
     }
+
+    public String scoreString() {
+        int tmp = (int)time;
+        int seconds = tmp % 60;
+        int minutes = (tmp - seconds) / 60;
+        int milli = (int)((time - tmp) * 1000);
+
+        String strSeconds = "" + seconds;
+        if (strSeconds.length() == 1) {
+            strSeconds = "0" + strSeconds;
+        }
+
+        String strMilli = "" + milli;
+        while (strMilli.length() != 3) strMilli = "0" + strMilli;
+
+        String ans = "Score: " + score + " Time: " + minutes + ":" + strSeconds + ":" + strMilli;
+
+        return ans;
+    }
+
+
+
 
 }

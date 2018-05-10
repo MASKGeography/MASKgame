@@ -1,6 +1,7 @@
 package com.mask.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -19,10 +20,13 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
 
     String thePrompt;
     String theSprite;
+    String overview;
 
     Sprite sprite;
 
     int mode = 0;
+
+    float tstart = 0;
 
 
 
@@ -45,12 +49,20 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
         game.updatePlotsNStuff();
         thePrompt = game.getThePrompt();
         theSprite = game.getTheSprite();
+        overview = game.getOverview();
 
 
     }
 
     @Override
     public void render(float delta) {
+        //flass 3 times faster
+        tstart += 3 * Gdx.graphics.getDeltaTime();
+        boolean drawRed = false;
+        if ((int)tstart % 2 == 0) {
+            drawRed = true;
+        }
+
         Gdx.gl.glClearColor(0.0f, 0.0f, 1.0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -65,8 +77,18 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
 
             font.getData().setScale(3);
 
-            font.draw(game.batch, "A person needs your help!", 100, 800);
+            font.draw(game.batch, "A person needs your help!" + overview, 0, Gdx.graphics.getHeight() * 6 / 8, Gdx.graphics.getWidth(), 1, true);
+
+            if (drawRed) font.setColor(Color.RED);
+            else font.setColor(Color.BLACK);
+            font.getData().setScale(9);
+            font.draw(game.batch, game.scoreString(), 0, Gdx.graphics.getHeight() * 7 / 8, Gdx.graphics.getWidth(), 1, true);
+
+            font.setColor(Color.WHITE);
+
         }
+
+
 
         game.batch.end();
 
