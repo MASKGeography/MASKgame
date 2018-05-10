@@ -47,6 +47,9 @@ public class MASKgame extends Game {
         if (thePrompt.equals(thePlots.get(promptNumber).getLastPrompt().getPromptWord())){
             promptNumber++;
         }
+        if (thePrompt.equals(thePlots.get(thePlots.size()-1).getLastPrompt().getPromptWord())){
+            //end game
+        }
     }
 
     public String getThePrompt() {
