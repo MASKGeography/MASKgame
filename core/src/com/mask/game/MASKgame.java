@@ -5,6 +5,8 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import java.util.ArrayList;
+
 /**
  * Created by Neel on 3/23/2018.
  */
@@ -19,6 +21,7 @@ public class MASKgame extends Game {
     Prompt ploty;
 
 
+
     public void create() {
         Gdx.app.setLogLevel(Application.LOG_INFO);
 
@@ -28,10 +31,15 @@ public class MASKgame extends Game {
         this.setScreen(new MainMenu(this));
 
         updatePlotsNStuff();
+       // if
+
 
     }
 
     public void updatePlotsNStuff() {
+       /* if (ploty.getAPrompt().getPromptWord()==){
+            Plot.changePlot();
+        }*/
         ploty = Plot.getAPlot();
         prompty = ploty.getAPrompt();
         thePrompt = prompty.getPromptWord();

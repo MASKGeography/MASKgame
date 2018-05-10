@@ -20,6 +20,7 @@ public class Plot {
 	private static int size;
 
 	private static int i = 0;
+
 	
 	//constructor
 	public Plot() {
@@ -91,6 +92,13 @@ public class Plot {
 	 */
 	public static Prompt getAPlot() {
       return plots.get(i);
+    }
+
+    /**
+     * Changes plot.
+     */
+    public static void changePlot() {
+        i = (i+1)%size();
     }
 
 	public static Plot init(){

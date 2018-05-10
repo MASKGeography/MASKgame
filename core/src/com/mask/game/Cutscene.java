@@ -9,6 +9,8 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.Screen;
 
+import java.util.ArrayList;
+
 public class Cutscene implements Screen, GestureDetector.GestureListener {
     private MASKgame game;
 
@@ -43,6 +45,7 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
         game.updatePlotsNStuff();
         thePrompt = game.getThePrompt();
         theSprite = game.getTheSprite();
+
 
     }
 
