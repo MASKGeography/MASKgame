@@ -22,6 +22,7 @@ public class MASKgame extends Game {
     Prompt ploty;
     int promptNumber = 0;
     private ArrayList<Prompt> thePlots;
+    public static boolean switchPlot;
 
 
 
@@ -37,18 +38,38 @@ public class MASKgame extends Game {
 
     }
 
+    //ALEX'S NOTES
+    //app is skipping very first prompt because somehow gets called right when app opens, then again after play is clicked
+    //app is skipping last prompt of each plotline because that's how i'm changing the plotline
+    //tried making it skip when the app looped back to the first prompt, but couldn't distinguish whether it was the first
+    //  or second time the first prompt was being called
+    //app is crashing after very last prompt, probably because there is no where to go after but we will add an end game screen
+    //  and allow game to reset, redirect to main menu, so when play is pressed game restarts
+    //one way to fix skipping problem would be to add fake prompts in all the places where the app is skipping them
+    //  that would be dangerous though because it's like cheat coding
+    //haven't been able to test boolean switchPlot yet but could solve problem, need a bit of help tho bc idk how to transfer
+    //  data between classes without a getter method? do u need one?
+    //pls no touch this class until we are together tomorrow because it is sensitive and likes to crash the whole app :(
+
     public void updatePlotsNStuff() {
         thePlots = Plot.getThePlots();
         ploty = thePlots.get(promptNumber);
         prompty = ploty.getAPrompt();
         thePrompt = prompty.getPromptWord();
+
+        Gdx.app.log("WhyNoWork", "" + thePrompt);
+
         theSprite = prompty.getSpriteName();
         overview = ploty.getOverview();
         if (thePrompt.equals(thePlots.get(promptNumber).getLastPrompt().getPromptWord())){
-            promptNumber++;
+           if (switchPlot==true) {
+               promptNumber++;
+           }
         }
         if (thePrompt.equals(thePlots.get(thePlots.size()-1).getLastPrompt().getPromptWord())){
-            //end game
+            if (switchPlot==true) {
+                //end game
+            }
         }
     }
 

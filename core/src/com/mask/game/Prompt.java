@@ -155,6 +155,14 @@ public class Prompt {
         return prompts.get(getSize()-1);
     }
 
+    /**
+     * Returns the first prompt.
+     * @return the first prompt.
+     */
+    public PromptWords getFirstPrompt() {
+        return prompts.get(0);
+    }
+
 	/**
 	 * Displays the contents of the class as a String.
 	 */

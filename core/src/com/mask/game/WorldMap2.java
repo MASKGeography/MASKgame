@@ -49,7 +49,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
     int toFind = 1;
 
-    public static HashMap<String, Texture> flagSprites;
+    public static boolean switchPlot;
 
 
     String answerString = "";
@@ -61,6 +61,8 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         game = gam;
         thePrompt = prompt;
         theSprite = sprite;
+
+        switchPlot = false;
 
         back = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/backButton.png")));
         back.setScale(1);
@@ -235,6 +237,8 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
                         if (theSprite.equals(name + ".png")) {
                             answerString = "Congratulations, you found the country!";
 
+                            switchPlot = true;
+
                             //get new prompts
                             game.setScreen(new Cutscene(game));
 
@@ -244,6 +248,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
                         } else {
                             Gdx.app.log("Phsyche", "hello world");
                             answerString = "You stranded the person in " + name + "!\nPlease help them get to " + theSprite.substring(0, theSprite.length() - 4) + "!";
+                            switchPlot = false;
                         }
 
                         Gdx.app.log("name", "" + name.length());
