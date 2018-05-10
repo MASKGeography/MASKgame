@@ -55,14 +55,14 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
 
     @Override
     public void render(float delta) {
-        //flass 3 times faster
+        //flash 3 times faster
         tstart += 3 * Gdx.graphics.getDeltaTime();
         boolean drawRed = false;
         if ((int)tstart % 2 == 0) {
             drawRed = true;
         }
 
-        Gdx.gl.glClearColor(0.0f, 0.0f, 1.0f, 1);
+        Gdx.gl.glClearColor(100/255.0f, 150/255.0f, 200/255.0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         camera.update();
