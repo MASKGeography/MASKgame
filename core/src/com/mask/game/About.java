@@ -56,7 +56,7 @@ public class About implements Screen, GestureDetector.GestureListener {
 
         back = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/backButton.png")));
         back.setScale((float) (width*0.0015));
-        back.setPosition((float) (back.getWidth()*width*0.0015), Gdx.graphics.getHeight() * 13/16);
+        back.setPosition(Gdx.graphics.getWidth() * 1/ 16, Gdx.graphics.getHeight() * 13/16);
 
         credits = "The following resources were used to find information for prompts:\n" +
             "\n"+

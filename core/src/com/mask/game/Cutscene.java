@@ -46,7 +46,6 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
         sprite.setCenterY(0.4f * height);
         sprite.setScale(2);
 
-        game.updatePlotsNStuff();
         thePrompt = game.getThePrompt();
         theSprite = game.getTheSprite();
         overview = game.getOverview();

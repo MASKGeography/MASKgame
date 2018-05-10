@@ -24,7 +24,7 @@ public class Plot {
 	
 	//constructor
 	public Plot() {
-		plots = new ArrayList<Prompt>();
+	    plots = new ArrayList<Prompt>();
 	}
 	
 	public Plot(Prompt aPrompt) {
@@ -91,7 +91,7 @@ public class Plot {
 	 * @return a plot
 	 */
 	public static Prompt getAPlot() {
-      return plots.get(i);
+	    return plots.get(i);
     }
 
     /**
