@@ -242,7 +242,13 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
                             //get new prompts
                             game.updatePlotsNStuff();
-                            game.setScreen(new Cutscene(game));
+
+                            if (game.completed) {
+                                game.setScreen(new EndGame(game));
+                            }
+                            else {
+                                game.setScreen(new Cutscene(game));
+                            }
 
                             Gdx.app.log("Switching to new prompt", theSprite);
                             dispose();

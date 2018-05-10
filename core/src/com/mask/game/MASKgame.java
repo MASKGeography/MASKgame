@@ -20,9 +20,12 @@ public class MASKgame extends Game {
     private String overview;
     Prompt ploty;
 
-    int promptNumber = 0;
+    int plotNumber = 0;
     private ArrayList<Prompt> thePlots;
     public static boolean switchPlot;
+
+    boolean completed = false;
+    boolean almostCompleted = false;
 
     public void create() {
         Gdx.app.setLogLevel(Application.LOG_INFO);
@@ -36,40 +39,34 @@ public class MASKgame extends Game {
 
     }
 
-    //ALEX'S NOTES
-    //app is skipping very first prompt because somehow gets called right when app opens, then again after play is clicked
-    //app is skipping last prompt of each plotline because that's how i'm changing the plotline
-    //tried making it skip when the app looped back to the first prompt, but couldn't distinguish whether it was the first
-    //  or second time the first prompt was being called
-    //app is crashing after very last prompt, probably because there is no where to go after but we will add an end game screen
-    //  and allow game to reset, redirect to main menu, so when play is pressed game restarts
-    //one way to fix skipping problem would be to add fake prompts in all the places where the app is skipping them
-    //  that would be dangerous though because it's like cheat coding
-    //haven't been able to test boolean switchPlot yet but could solve problem, need a bit of help tho bc idk how to transfer
-    //  data between classes without a getter method? do u even need one?
-    //pls no touch this class until we are together tomorrow because it is sensitive and likes to crash the whole app :(
+    public void restart() {
+        completed = false;
+        almostCompleted = false;
+        score = 0;
+        time = 0;
+    }
+
+
 
     public void updatePlotsNStuff() {
+        if (almostCompleted) completed = true;
         thePlots = Plot.getThePlots();
-        ploty = thePlots.get(promptNumber);
+        ploty = thePlots.get(plotNumber);
         prompty = ploty.getAPrompt();
         thePrompt = prompty.getPromptWord();
+        theSprite = prompty.getSpriteName();
+        overview = ploty.getOverview();
 
         Gdx.app.log("WhyNoWork", "" + thePrompt);
 
-        theSprite = prompty.getSpriteName();
-        overview = ploty.getOverview();
-        if (thePrompt.equals(thePlots.get(promptNumber).getLastPrompt().getPromptWord())){
-         //  if (switchPlot==true) {
-               promptNumber++;
-          // }
+        if (thePrompt.equals(thePlots.get(plotNumber).getLastPrompt().getPromptWord())){
+            plotNumber = (plotNumber + 1) % thePlots.size();
+            if (plotNumber == 0) almostCompleted = true;
         }
-        if (thePrompt.equals(thePlots.get(thePlots.size()-1).getLastPrompt().getPromptWord())){
-            if (switchPlot==true) {
-                //game wont end rn because boolean switchPlot doesn't actually work!
-                //end game
-            }
-        }
+
+        return;
+
+
     }
 
     public String getThePrompt() {
