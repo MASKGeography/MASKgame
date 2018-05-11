@@ -20,116 +20,76 @@ import com.badlogic.gdx.math.Vector3;
 public class MainMenu implements Screen, GestureDetector.GestureListener {
     private final MASKgame game;
     private OrthographicCamera camera;
-
     Sprite playSprite;
     Sprite htpSprite;
     Sprite a4gSprite;
-
-
     boolean lastTouched = false;
     boolean atAllTouched = false;
     float touchX = -1, touchY = -1;
-
     Sprite flagClicker;
-
     private float width, height;
-
     public MainMenu(final MASKgame gam) {
         game = gam;
-
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
-
         camera = new OrthographicCamera();
         camera.setToOrtho(false, width, height);
-
-
         Vector3 pos = new Vector3(0,0,0);
-
-
         playSprite = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/playButton.png")));
         playSprite.setPosition((float) (width*0.25-playSprite.getWidth()*0.5), (float) (height*0.25));
         playSprite.setScale((float) (width*0.002));
-
         htpSprite = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/htpButton.png")));
         htpSprite.setPosition((float) (width*0.5-htpSprite.getWidth()*0.5), (float) (height*0.25));
         htpSprite.setScale((float) (width*0.002));
-
         a4gSprite = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/aboutButton.png")));
         a4gSprite.setPosition((float) (width*0.75-a4gSprite.getWidth()*0.5), (float) (height*0.25));
         a4gSprite.setScale((float) (width*0.002));
-
         Gdx.input.setInputProcessor(new GestureDetector(this));
-
         flagClicker = new Sprite(Assets.Textures.PLANE.get());
         flagClicker.setScale(0.125f);
-
     }
-
 
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
-
         game.batch.begin();
-
         playSprite.draw(game.batch);
         htpSprite.draw(game.batch);
         a4gSprite.draw(game.batch);
-
         if (atAllTouched) {
             flagClicker.draw(game.batch);
         }
-
         BitmapFont font = Assets.Fonts.DEFAULT.get();
         font.getData().setScale((float) (width*0.004));
         font.draw(game.batch, "Where in the world? ", 0, (float) (height*0.75), Gdx.graphics.getWidth(), 1, false);
         font.getData().setScale(1);
-
         game.batch.end();
-
         if (lastTouched) {
             Vector3 pos = new Vector3(touchX, touchY, 0);
             pos = camera.unproject(pos);
-            //flagClicker.setPosition(pos.x, pos.y);
             flagClicker.setCenterX(pos.x);
             flagClicker.setCenterY(pos.y);
         }
-
         if (atAllTouched) {
             if (lastTouched) {
-
-
                 if (Intersector.intersectRectangles(playSprite.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
                     game.setScreen(new Cutscene(game));
-
                     dispose();
-
                 }
-
                 else if (Intersector.intersectRectangles(htpSprite.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
                      game.setScreen(new HowToPlay(game));
                      dispose();
                  }
-
                else if (Intersector.intersectRectangles(a4gSprite.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
                         game.setScreen(new About(game));
-
                         dispose();
-
                  }
-
             }
-
             lastTouched = false;
         }
-
-
     }
 
     @Override
@@ -180,7 +140,6 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
     }
 
     public void pinchStop() {
-
     }
 
     @Override
@@ -202,5 +161,4 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
     public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
             return true;
     }
-
 }

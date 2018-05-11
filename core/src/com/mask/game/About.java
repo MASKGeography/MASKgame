@@ -21,16 +21,13 @@ public class About implements Screen, GestureDetector.GestureListener {
 
     private final MASKgame game;
     private OrthographicCamera camera;
-
     private float width, height;
     Sprite background;
-
     boolean lastTouched = false;
     boolean atAllTouched = false;
     float touchX = -1, touchY = -1;
     Sprite back;
     Sprite flagClicker;
-
     String credits;
     String abouta4g;
     String aboutTC;
@@ -43,21 +40,16 @@ public class About implements Screen, GestureDetector.GestureListener {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, width, height);
         Vector3 pos = new Vector3(0,0,0);
-
         Gdx.input.setInputProcessor(new GestureDetector(this));
-
         flagClicker = new Sprite(Assets.Textures.PLANE.get());
         flagClicker.setScale(0.125f);
-
         //use new square version of map
         background = new Sprite(Assets.Textures.WORLDMAP2.get());
         background.setCenterX(camera.position.x);
         background.setCenterY(camera.position.y);
-
         back = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/backButton.png")));
         back.setScale((float) (width*0.0015));
         back.setPosition(Gdx.graphics.getWidth() * 1/ 16, Gdx.graphics.getHeight() * 13/16);
-
         credits = "The following resources were used to find information for prompts:\n" +
             "\n"+
             "The Telegraph Travel Destinations: \n " +
@@ -123,17 +115,13 @@ public class About implements Screen, GestureDetector.GestureListener {
             "TripAdvisor.com:\n" +
             "https://www.tripadvisor.com/TravelersChoice-Attractions-cAmusementParks-g1\n" +
             "https://www.themeparktourist.com/features/20140228/16441/top-50-theme-parks-world?page=4\n";
-
         abouta4g = "Apps For Good provides course content for teachers to use in their classrooms. Their goal is to inspire collaboration and self-confidence in people aged 10-18, and prepare them to make a difference in the world.";
-
         aboutTC = "We are a group of four juniors from the Massachusetts Academy of Math and Science at WPI. We designed this game for our Apps For Good assignment in our Computer Science class, where we were tasked to create an app that addresses a need in our community. \n" +
             "Shashvat: optimist, skilled coder (ssrivastava2@wpi.edu) \n" +
             "Matthew: problem solver, motivated worker (maedwards@wpi.edu)\n" +
             "Kelly: efficient researcher, organizer (kamiller@wpi.edu) \n" +
             "Alex: effective communicator, perseverer (alholmes@wpi.edu) ";
-
         purpose = "The purpose of our app is to fill the gap in the geography knowledge of American middle school students. We hope to provide players with a rewarding, low risk environment by utilizing a scavenger hunt style game, rather than a stressful environment like those created by quiz-style study apps.";
-
         Gdx.input.setInputProcessor(new GestureDetector(this));
     }
 
@@ -143,49 +131,35 @@ public class About implements Screen, GestureDetector.GestureListener {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
-
         game.batch.begin();
-
         BitmapFont font = Assets.Fonts.DEFAULT.get();
-
         font.getData().setScale((float) (0.004 * (Gdx.graphics.getWidth())));
         font.draw(game.batch, "About Apps for Good:", 0, Gdx.graphics.getHeight() * 7 / 8, Gdx.graphics.getWidth(), 1, false);
         font.draw(game.batch, "About the Creators:", 0, Gdx.graphics.getHeight() * 4 / 8, Gdx.graphics.getWidth(), 1, false);
         font.draw(game.batch, "Our Purpose:", 0, Gdx.graphics.getHeight() * -2 / 8, Gdx.graphics.getWidth(), 1, false);
         font.draw(game.batch, "Credits:", 0, Gdx.graphics.getHeight() * -6 / 8, Gdx.graphics.getWidth(), 1, false);
-
         font.getData().setScale((float) (0.002 * (Gdx.graphics.getWidth())));
         font.draw(game.batch, abouta4g, 0, Gdx.graphics.getHeight() * 6 / 8,   Gdx.graphics.getWidth(), -1, true);
         font.draw(game.batch, aboutTC, 0, Gdx.graphics.getHeight() * 3 / 8,   Gdx.graphics.getWidth(), -1, true);
         font.draw(game.batch, purpose, 0, Gdx.graphics.getHeight() * -3 / 8,   Gdx.graphics.getWidth(), -1, true);
         font.draw(game.batch, credits, 0, Gdx.graphics.getHeight() * -7 / 8,   Gdx.graphics.getWidth(), -1, true);
-
         back.draw(game.batch);
-
         if (atAllTouched) {
             flagClicker.draw(game.batch);
         }
-
         game.batch.end();
-
         if (lastTouched) {
             Vector3 pos = new Vector3(touchX, touchY, 0);
             pos = camera.unproject(pos);
-            //flagClicker.setPosition(pos.x, pos.y);
             flagClicker.setCenterX(pos.x);
             flagClicker.setCenterY(pos.y);
         }
-
         if (atAllTouched) {
             if (lastTouched) {
-
                 if (Intersector.intersectRectangles(back.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
                     game.setScreen(new MainMenu(game));
-
                     dispose();
-
                 }
-
             }
             lastTouched = false;
         }
@@ -223,12 +197,6 @@ public class About implements Screen, GestureDetector.GestureListener {
         return false;
     }
 
-
-
-
-
-
-
     @Override
     public boolean longPress ( float x, float y){
         return false;
@@ -243,7 +211,6 @@ public class About implements Screen, GestureDetector.GestureListener {
 
     @Override
     public boolean pan(float x, float y, float deltaX, float deltaY) {
-        //if(deltaY*camera.zoom<=0){
         camera.translate(0, deltaY * camera.zoom);
         camera.update();//}
         return false;

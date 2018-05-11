@@ -2,7 +2,6 @@ package com.mask.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -16,17 +15,17 @@ public class Plot {
 	//data
 
     public static ArrayList<Prompt> plots;
-	
+
 	private static int size;
 
 	private static int i = 0;
 
-	
+
 	//constructor
 	public Plot() {
 	    plots = new ArrayList<Prompt>();
 	}
-	
+
 	public Plot(Prompt aPrompt) {
 		plots = new ArrayList<Prompt>();
 		plots.add(aPrompt);
@@ -39,9 +38,9 @@ public class Plot {
 			plots.add(input);
 		}
 	}
-	
+
 	//methods
-	
+
 	/**
 	 * Adds a plot to the list of plots.
 	 * @param newPrompts a plot to be added to the list of plots
