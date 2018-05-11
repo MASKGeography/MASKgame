@@ -22,6 +22,7 @@ public class MASKgame extends Game {
     public static boolean switchPlot;
     boolean completed = false;
     boolean almostCompleted = false;
+
     public void create() {
         Gdx.app.setLogLevel(Application.LOG_INFO);
         Plot.init();
