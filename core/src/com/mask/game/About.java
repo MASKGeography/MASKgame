@@ -115,10 +115,10 @@ public class About implements Screen, GestureDetector.GestureListener {
             "TripAdvisor.com:\n" +
             "https://www.tripadvisor.com/TravelersChoice-Attractions-cAmusementParks-g1\n" +
             "https://www.themeparktourist.com/features/20140228/16441/top-50-theme-parks-world?page=4\n";
-        abouta4g = "Apps For Good provides course content for teachers to use in their classrooms. Their goal is to inspire collaboration and self-confidence in people aged 10-18, and prepare them to make a difference in the world.";
+        abouta4g = "Apps For Good provides course content for teachers to use in their classrooms. Their goal is to inspire collaboration and self-confidence in people aged 10-18, and to prepare them to make a difference in the world.";
         aboutTC = "We are a group of four juniors from the Massachusetts Academy of Math and Science at WPI. We designed this game for our Apps For Good assignment in our Computer Science class, where we were tasked to create an app that addresses a need in our community. \n" +
             "Shashvat: optimist, skilled coder (ssrivastava2@wpi.edu) \n" +
-            "Matthew: problem solver, motivated worker (maedwards@wpi.edu)\n" +
+            "Matt: problem solver, motivated worker (maedwards@wpi.edu)\n" +
             "Kelly: efficient researcher, organizer (kamiller@wpi.edu) \n" +
             "Alex: effective communicator, perseverer (alholmes@wpi.edu) ";
         purpose = "The purpose of our app is to fill the gap in the geography knowledge of American middle school students. We hope to provide players with a rewarding, low risk environment by utilizing a scavenger hunt style game, rather than a stressful environment like those created by quiz-style study apps.";

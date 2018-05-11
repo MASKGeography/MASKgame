@@ -172,6 +172,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         for (Sprite button : flagButtons) button.draw(game.batch);
 
         BitmapFont font = Assets.Fonts.DEFAULT.get();
+        font.setColor(Color.BLACK);
         font.getData().setScale((4 * ((640)/(Gdx.graphics.getWidth()/Gdx.graphics.getDensity()))) * camera.zoom);
 
         float posX = 0 + (camera.position.x - initX);
@@ -191,7 +192,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         posY = camera.position.y + (posY - camera.position.y) * camera.zoom;
 
         font.draw(game.batch, answerString, posX, posY, Gdx.graphics.getWidth(), 1, true);
-
+        font.setColor(Color.WHITE);
         posX = Gdx.graphics.getWidth() * 3 / 64 + (camera.position.x - initX);
         posX = camera.position.x + (posX - camera.position.x) * camera.zoom;
         posY = Gdx.graphics.getHeight() * 8 / 16 + (camera.position.y - initY);

@@ -52,11 +52,11 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
         sprite.draw(game.batch);
         if (mode >= 1) {
             BitmapFont font = Assets.Fonts.DEFAULT.get();
-            font.getData().setScale(3);
+            font.getData().setScale((float) (0.003 * (Gdx.graphics.getWidth())));
             font.draw(game.batch, "A person needs your help!" + overview, 0, Gdx.graphics.getHeight() * 27/32   , Gdx.graphics.getWidth(), 1, true);
             if (drawRed) font.setColor(Color.RED);
             else font.setColor(Color.BLACK);
-            font.getData().setScale(9);
+            font.getData().setScale((float) (0.005 * (Gdx.graphics.getWidth())));
             font.draw(game.batch, game.scoreString(), 0, Gdx.graphics.getHeight() * 31/32, Gdx.graphics.getWidth(), 1, true);
             font.setColor(Color.WHITE);
         }
