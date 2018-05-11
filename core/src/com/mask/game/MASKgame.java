@@ -37,6 +37,14 @@ public class MASKgame extends Game {
         almostCompleted = false;
         score = 0;
         time = 0;
+
+        //kindof a hack, but whatever
+        while (!completed) updatePlotsNStuff();
+
+        completed = false;
+        almostCompleted = false;
+        score = 0;
+        time = 0;
     }
 
     public void updatePlotsNStuff() {
