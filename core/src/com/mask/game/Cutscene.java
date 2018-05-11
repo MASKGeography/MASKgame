@@ -10,92 +10,60 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.Screen;
 
-import java.util.ArrayList;
-
 public class Cutscene implements Screen, GestureDetector.GestureListener {
     private MASKgame game;
-
     OrthographicCamera camera;
     float height, width;
-
     String thePrompt;
     String theSprite;
     String overview;
-
     Sprite sprite;
-
     int mode = 0;
-
     float tstart = 0;
-
-
 
     public Cutscene(MASKgame gam) {
         game=gam;
-
         height = Gdx.graphics.getHeight();
         width = Gdx.graphics.getWidth();
-
         camera = new OrthographicCamera();
         camera.setToOrtho(false, width, height);
-
         Gdx.input.setInputProcessor(new GestureDetector(this));
         sprite = new Sprite(Assets.Textures.PERSON.get());
-
         sprite.setCenterX(0.15f * width);
         sprite.setCenterY(0.4f * height);
         sprite.setScale(2);
-
         thePrompt = game.getThePrompt();
         theSprite = game.getTheSprite();
         overview = game.getOverview();
-
-
     }
 
     @Override
     public void render(float delta) {
-        //flash 3 times faster
         tstart += 3 * Gdx.graphics.getDeltaTime();
         boolean drawRed = false;
         if ((int)tstart % 2 == 0) {
             drawRed = true;
         }
-
         Gdx.gl.glClearColor(100/255.0f, 150/255.0f, 200/255.0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
-
         sprite.draw(game.batch);
-
         if (mode >= 1) {
             BitmapFont font = Assets.Fonts.DEFAULT.get();
-
             font.getData().setScale(3);
-
             font.draw(game.batch, "A person needs your help!" + overview, 0, Gdx.graphics.getHeight() * 27/32   , Gdx.graphics.getWidth(), 1, true);
-
             if (drawRed) font.setColor(Color.RED);
             else font.setColor(Color.BLACK);
             font.getData().setScale(9);
             font.draw(game.batch, game.scoreString(), 0, Gdx.graphics.getHeight() * 31/32, Gdx.graphics.getWidth(), 1, true);
-
             font.setColor(Color.WHITE);
-
         }
-
-
-
         game.batch.end();
-
-
         if (mode == 2) {
             game.setScreen(new WorldMap2(game, thePrompt, theSprite));
         }
-
     }
 
     @Override
@@ -144,7 +112,6 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
     }
 
     public void pinchStop() {
-
     }
 
     @Override
@@ -166,5 +133,4 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
     public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
         return false;
     }
-
 }
