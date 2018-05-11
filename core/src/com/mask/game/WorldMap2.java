@@ -193,7 +193,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
         font.draw(game.batch, answerString, posX, posY, Gdx.graphics.getWidth(), 1, true);
         font.setColor(Color.WHITE);
-        posX = Gdx.graphics.getWidth() * 3 / 64 + (camera.position.x - initX);
+        posX = Gdx.graphics.getWidth() * 4 / 64 + (camera.position.x - initX);
         posX = camera.position.x + (posX - camera.position.x) * camera.zoom;
         posY = Gdx.graphics.getHeight() * 8 / 16 + (camera.position.y - initY);
         posY = camera.position.y + (posY - camera.position.y) * camera.zoom;
@@ -348,7 +348,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
     @Override
     public boolean zoom(float initialDistance, float distance) {
         //camera.zoom *= (initialDistance / distance) * 0.0001;
-        camera.zoom *= (initialDistance / distance);
+        camera.zoom *= Math.sqrt(Math.sqrt(initialDistance / distance));
         camera.zoom = Math.min(1.0f, camera.zoom);
         camera.zoom = Math.max(1 / 10.0f, camera.zoom);
         camera.update();
