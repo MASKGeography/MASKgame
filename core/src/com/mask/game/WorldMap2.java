@@ -258,10 +258,9 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
                             dispose();
                             return;
                         } else {
-                            answerString = "You stranded the person in " + name + "! Please help them get to " + theSprite.substring(0, theSprite.length() - 4) + "!";
+                            answerString = "You stranded the person in " + Assets.makeProper(name) + "! Please help them get to " + Assets.makeProper(theSprite.substring(0, theSprite.length() - 4)) + "!";
                             switchPlot = false;
                         }
-
 
 
                     }
