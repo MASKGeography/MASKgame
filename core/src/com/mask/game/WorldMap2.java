@@ -256,7 +256,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
                             }
 
                             dispose();
-                            break;
+                            return;
                         } else {
                             answerString = "You stranded the person in " + name + "! Please help them get to " + theSprite.substring(0, theSprite.length() - 4) + "!";
                             switchPlot = false;
@@ -268,6 +268,9 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
                 }
 
+                if (anyflagtouched) {
+                    --game.score;
+                }
                 if (!anyflagtouched) answerString = "";
             }
 
