@@ -87,6 +87,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         float mapHeight = Assets.Textures.WORLDMAP.get().getHeight();
         float mapWidth = Assets.Textures.WORLDMAP.get().getWidth();
 
+
         float scale = width / mapWidth;
         if (mapHeight * scale > height) {
             scale = height / mapHeight;
@@ -200,8 +201,6 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         back.setScale(1.5f*camera.zoom);
         back.setCenterX(posX);
         back.setCenterY(posY);
-
-
 
         game.time += Gdx.graphics.getDeltaTime();
 
