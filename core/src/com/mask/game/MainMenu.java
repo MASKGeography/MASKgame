@@ -45,7 +45,7 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
         a4gSprite.setPosition((float) (width*0.75-a4gSprite.getWidth()*0.5), (float) (height*0.25));
         a4gSprite.setScale((float) (width*0.002));
         Gdx.input.setInputProcessor(new GestureDetector(this));
-        flagClicker = new Sprite(Assets.Textures.PLANE.get());
+        flagClicker = new Sprite(game.assets.PLANE);
         flagClicker.setScale(0.125f);
     }
 
@@ -62,7 +62,7 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
         if (atAllTouched) {
             flagClicker.draw(game.batch);
         }
-        BitmapFont font = Assets.Fonts.DEFAULT.get();
+        BitmapFont font = game.assets.DEFAULT;
         font.getData().setScale((float) (width*0.004));
         font.draw(game.batch, "Where in the world? ", 0, (float) (height*0.75), Gdx.graphics.getWidth(), 1, false);
         font.getData().setScale(1);

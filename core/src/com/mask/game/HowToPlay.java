@@ -36,7 +36,7 @@ public class HowToPlay implements Screen, GestureDetector.GestureListener {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, width, height);
         //use new square version of map
-        background = new Sprite(Assets.Textures.WORLDMAP2.get());
+        background = new Sprite(game.assets.WORLDMAP2);
         background.setCenterX(camera.position.x);
         background.setCenterY(camera.position.y);
 
@@ -44,7 +44,7 @@ public class HowToPlay implements Screen, GestureDetector.GestureListener {
         back.setPosition(Gdx.graphics.getWidth() * 1/ 16, Gdx.graphics.getHeight() * 13/16);
         back.setScale((float) (width*0.0015));
         Gdx.input.setInputProcessor(new GestureDetector(this));
-        flagClicker = new Sprite(Assets.Textures.PLANE.get());
+        flagClicker = new Sprite(game.assets.PLANE);
         flagClicker.setScale(0.125f);
     }
 
@@ -55,7 +55,7 @@ public class HowToPlay implements Screen, GestureDetector.GestureListener {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
-        BitmapFont font = Assets.Fonts.DEFAULT.get();
+        BitmapFont font = game.assets.DEFAULT;
         font.getData().setScale((float) (0.004 * (Gdx.graphics.getWidth())));
         font.draw(game.batch, "Welcome to How To Play", 0, Gdx.graphics.getHeight() * 6 / 8, Gdx.graphics.getWidth(), 1, false);
         font.getData().setScale((float) (0.003 * (Gdx.graphics.getWidth())));

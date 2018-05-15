@@ -23,10 +23,13 @@ public class MASKgame extends Game {
     boolean completed = false;
     boolean almostCompleted = false;
 
+    public Assets assets = new Assets();
+
+
     public void create() {
         Gdx.app.setLogLevel(Application.LOG_INFO);
         Plot.init();
-        Assets.init();
+        assets.init();
         batch = new SpriteBatch();
         this.setScreen(new MainMenu(this));
         updatePlotsNStuff();

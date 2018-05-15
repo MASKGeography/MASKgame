@@ -80,12 +80,12 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         initY = camera.position.y;
 
         //use new square version of map
-        background = new Sprite(Assets.Textures.WORLDMAP2.get());
-        fakebackground = new Sprite(Assets.Textures.WORLDMAP.get());
+        background = new Sprite(game.assets.WORLDMAP2);
+        fakebackground = new Sprite(game.assets.WORLDMAP);
 
         //use original map heights
-        float mapHeight = Assets.Textures.WORLDMAP.get().getHeight();
-        float mapWidth = Assets.Textures.WORLDMAP.get().getWidth();
+        float mapHeight = game.assets.WORLDMAP.getHeight();
+        float mapWidth = game.assets.WORLDMAP.getWidth();
 
 
         float scale = width / mapWidth;
@@ -107,18 +107,18 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
         Gdx.input.setInputProcessor(new GestureDetector(this));
 
-        flagClicker = new Sprite(Assets.Textures.PLANE.get());
+        flagClicker = new Sprite(game.assets.PLANE);
         flagClicker.setScale(0.125f);
 
-        flagButtons = new Sprite[Assets.countries2XPos.keySet().size()];
-        buttonNames = new String[Assets.countries2XPos.keySet().size()];
+        flagButtons = new Sprite[game.assets.countries2XPos.keySet().size()];
+        buttonNames = new String[game.assets.countries2XPos.keySet().size()];
         Vector3 pos = new Vector3(0, 0, 0);
 
         int iter = 0;
-        for (String key : Assets.countries2XPos.keySet()) {
+        for (String key : game.assets.countries2XPos.keySet()) {
             String name = key;
-            Double x = Assets.countries2XPos.get(key);
-            Double y = Assets.countries2YPos.get(key);
+            Double x = game.assets.countries2XPos.get(key);
+            Double y = game.assets.countries2YPos.get(key);
 
 
             if (x == null || y == null) {
@@ -136,7 +136,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
             //pos = camera.unproject(pos);
 
 
-            Sprite flagButton = new Sprite(Assets.flagSprites.get(name));
+            Sprite flagButton = new Sprite(game.assets.flagSprites.get(name));
             flagButtons[iter] = flagButton;
             buttonNames[iter] = name;
 
@@ -172,7 +172,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         //fakebackground.draw(game.batch);
         for (Sprite button : flagButtons) button.draw(game.batch);
 
-        BitmapFont font = Assets.Fonts.DEFAULT.get();
+        BitmapFont font = game.assets.DEFAULT;
         font.setColor(Color.BLACK);
         font.getData().setScale((4 * ((640)/(Gdx.graphics.getWidth()/Gdx.graphics.getDensity()))) * camera.zoom);
 
@@ -258,7 +258,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
                             dispose();
                             return;
                         } else {
-                            answerString = "You stranded the person in " + Assets.makeProper(name) + "! Please help them get to " + Assets.makeProper(theSprite.substring(0, theSprite.length() - 4)) + "!";
+                            answerString = "You stranded the person in " + game.assets.makeProper(name) + "! Please help them get to " + game.assets.makeProper(theSprite.substring(0, theSprite.length() - 4)) + "!";
                             switchPlot = false;
                         }
 

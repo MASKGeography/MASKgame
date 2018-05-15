@@ -41,10 +41,10 @@ public class About implements Screen, GestureDetector.GestureListener {
         camera.setToOrtho(false, width, height);
         Vector3 pos = new Vector3(0,0,0);
         Gdx.input.setInputProcessor(new GestureDetector(this));
-        flagClicker = new Sprite(Assets.Textures.PLANE.get());
+        flagClicker = new Sprite(game.assets.PLANE);
         flagClicker.setScale(0.125f);
         //use new square version of map
-        background = new Sprite(Assets.Textures.WORLDMAP2.get());
+        background = new Sprite(game.assets.WORLDMAP2);
         background.setCenterX(camera.position.x);
         background.setCenterY(camera.position.y);
         back = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/backButton.png")));
@@ -132,7 +132,7 @@ public class About implements Screen, GestureDetector.GestureListener {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
-        BitmapFont font = Assets.Fonts.DEFAULT.get();
+        BitmapFont font = game.assets.DEFAULT;
         font.getData().setScale((float) (0.004 * (Gdx.graphics.getWidth())));
         font.draw(game.batch, "About Apps for Good:", 0, Gdx.graphics.getHeight() * 7 / 8, Gdx.graphics.getWidth(), 1, false);
         font.draw(game.batch, "About the Creators:", 0, Gdx.graphics.getHeight() * 4 / 8, Gdx.graphics.getWidth(), 1, false);

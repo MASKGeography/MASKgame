@@ -36,12 +36,12 @@ public class WorldMap implements Screen, GestureDetector.GestureListener {
         game = gam;
 
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, Assets.Textures.WORLDMAP.get().getWidth(), Assets.Textures.WORLDMAP.get().getHeight());
+        camera.setToOrtho(false, game.assets.WORLDMAP.getWidth(), game.assets.WORLDMAP.getHeight());
 
         randarr = new int[10];
         randy = new Random();
         for (int i = 0; i < 10; ++i) {
-            randarr[i] = Math.abs(randy.nextInt()) % Assets.countries.size();
+            randarr[i] = Math.abs(randy.nextInt()) % game.assets.countries.size();
         }
 
         timer = new TimeUtils();
@@ -50,7 +50,7 @@ public class WorldMap implements Screen, GestureDetector.GestureListener {
 
         Gdx.input.setInputProcessor(new GestureDetector(this));
 
-        testFlagSprite = new Sprite(Assets.flagSprites.get(Assets.countries.get(2)));
+        testFlagSprite = new Sprite(game.assets.flagSprites.get(game.assets.countries.get(2)));
         //testFlagSprite.scale(2);
 
     }
@@ -65,20 +65,20 @@ public class WorldMap implements Screen, GestureDetector.GestureListener {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        game.batch.draw(Assets.Textures.WORLDMAP.get(), 0, 0);
-        Assets.Fonts.DEFAULT.get().draw(game.batch, "Welcome to the world map! ", 100, 100);
+        game.batch.draw(game.assets.WORLDMAP, 0, 0);
+        game.assets.DEFAULT.draw(game.batch, "Welcome to the world map! ", 100, 100);
 
 
         for (int i = 0; i < 10; ++i) {
-            Assets.Fonts.DEFAULT.get().draw(game.batch, Assets.countries.get(randarr[i]), 100, 150+20*i);
-            game.batch.draw(Assets.flagSprites.get(Assets.countries.get(randarr[i])), 1000, 150+20*i);
+            game.assets.DEFAULT.draw(game.batch, game.assets.countries.get(randarr[i]), 100, 150+20*i);
+            game.batch.draw(game.assets.flagSprites.get(game.assets.countries.get(randarr[i])), 1000, 150+20*i);
         }
 
         if (flagX != -1) {
             testFlagSprite.setCenter(flagX, flagY);
             testFlagSprite.draw(game.batch);
 
-            Assets.Fonts.DEFAULT.get().draw(game.batch, "XPos: " + flagX + " YPos:" + flagY, 1000, 500);
+            game.assets.DEFAULT.draw(game.batch, "XPos: " + flagX + " YPos:" + flagY, 1000, 500);
         }
 
         game.batch.end();
@@ -88,7 +88,7 @@ public class WorldMap implements Screen, GestureDetector.GestureListener {
             lastChanged = timer.millis();
 
             for (int i = 0; i < 10; ++i) {
-                randarr[i] = Math.abs(randy.nextInt()) % Assets.countries.size();
+                randarr[i] = Math.abs(randy.nextInt()) % game.assets.countries.size();
             }
         }
 

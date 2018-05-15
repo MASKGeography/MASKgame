@@ -15,14 +15,26 @@ import java.util.HashMap;
 
 public class Assets {
 
-    public static ArrayList<String> countriesProper;
-    public static ArrayList<String> countries;
-    public static HashMap<String, Texture> flagSprites;
+    public Assets() {
 
-    public static HashMap<String, Double> countries2XPos;
-    public static HashMap<String, Double> countries2YPos;
+    }
 
-    private static void initCountries() {
+    Texture WORLDMAP;
+    Texture WORLDMAP2;
+    Texture PLANE;
+    Texture FISHERMAN;
+    Texture PERSON;
+
+    BitmapFont DEFAULT;
+
+    public ArrayList<String> countriesProper;
+    public ArrayList<String> countries;
+    public HashMap<String, Texture> flagSprites;
+
+    public HashMap<String, Double> countries2XPos;
+    public HashMap<String, Double> countries2YPos;
+
+    private void initCountries() {
         countriesProper = new ArrayList<String>();
 
         FileHandle file = Gdx.files.internal("geography/grr.csv");
@@ -40,7 +52,7 @@ public class Assets {
         }
 
     }
-    private static void initCountryTextures() {
+    private void initCountryTextures() {
         FileHandle file = Gdx.files.internal("geography/listOfCountriesFormatted.csv");
         String[] lines = file.readString().split("\n");
 
@@ -59,7 +71,7 @@ public class Assets {
 
         }
     }
-    private static void initCountryPos() {
+    private void initCountryPos() {
         countries2XPos = new HashMap<String, Double>();
         countries2YPos = new HashMap<String, Double>();
 
@@ -79,7 +91,15 @@ public class Assets {
 
 
     }
-    public static void init() {
+    public void init() {
+        WORLDMAP = new Texture(Gdx.files.internal("geography/worldMap.png"));
+        WORLDMAP2 = new Texture(Gdx.files.internal("geography/worldMap2.png"));
+        PLANE = new Texture(Gdx.files.internal("geography/plane.png"));
+        FISHERMAN = new Texture(Gdx.files.internal("geography/fisherman.png"));
+        PERSON = new Texture(Gdx.files.internal("geography/person.png"));
+
+        DEFAULT = new BitmapFont();
+
         initCountries();
         initCountryTextures();
         initCountryPos();
@@ -88,7 +108,7 @@ public class Assets {
 
     }
 
-    public static String makeProper(String country) {
+    public String makeProper(String country) {
         String ans = "ERRRRRRROR";
         for (int i = 0; i < countries.size(); ++i) {
             if (country.equals(countries.get(i))) {
@@ -98,42 +118,6 @@ public class Assets {
 
         return ans;
     }
-
-    public enum Textures {
-        WORLDMAP("geography/worldMap.png"),
-        WORLDMAP2("geography/worldMap2.png"),
-        PLANE("geography/plane.png"),
-        FISHERMAN("geography/fisherman.png"),
-        PERSON("geography/person.png");
-
-        private final Texture texture;
-        Textures(String image) {
-            texture = new Texture(Gdx.files.internal(image));
-        }
-
-        public Texture get() {
-            return texture;
-        }
-    };
-
-    public enum Sounds {
-
-    };
-
-    public enum Fonts {
-        DEFAULT();
-
-        private BitmapFont font;
-        Fonts() {
-            font = new BitmapFont();
-        }
-
-        public BitmapFont get() {
-            return font;
-        }
-
-    };
-
 
 
 }

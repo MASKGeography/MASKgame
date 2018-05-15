@@ -28,7 +28,7 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, width, height);
         Gdx.input.setInputProcessor(new GestureDetector(this));
-        sprite = new Sprite(Assets.Textures.PERSON.get());
+        sprite = new Sprite(game.assets.PERSON);
         sprite.setCenterX(0.15f * width);
         sprite.setCenterY(0.4f * height);
         sprite.setScale(2);
@@ -51,7 +51,7 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
         game.batch.begin();
         sprite.draw(game.batch);
         if (mode >= 1) {
-            BitmapFont font = Assets.Fonts.DEFAULT.get();
+            BitmapFont font = game.assets.DEFAULT;
             font.getData().setScale((float) (0.003 * (Gdx.graphics.getWidth())));
             font.draw(game.batch, "A person needs your help!" + overview, 0, Gdx.graphics.getHeight() * 27/32   , Gdx.graphics.getWidth(), 1, true);
             if (drawRed) font.setColor(Color.RED);
