@@ -71,7 +71,7 @@ public class Plot {
 	}
 	
 	/**
-	 * Shuffles the "deck" of plots. (Might not use.)
+	 * Shuffles the "deck" of plots.
 	 */
 	public static void randomize() {
 		Random randy = new Random();

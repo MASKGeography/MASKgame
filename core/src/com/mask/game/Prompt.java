@@ -124,7 +124,7 @@ public class Prompt {
 	}
 	
 	/**
-	 * Shuffles the "deck" of prompts. (Not used.)
+	 * Shuffles the "deck" of prompts.
 	 */
 	public void randomize() {
 		Random randy = new Random();
