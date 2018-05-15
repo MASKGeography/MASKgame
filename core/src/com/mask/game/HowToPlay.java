@@ -1,6 +1,7 @@
 package com.mask.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -44,6 +45,7 @@ public class HowToPlay implements Screen, GestureDetector.GestureListener {
         back.setPosition(Gdx.graphics.getWidth() * 1/ 16, Gdx.graphics.getHeight() * 13/16);
         back.setScale((float) (width*0.0015));
         Gdx.input.setInputProcessor(new GestureDetector(this));
+        Gdx.input.setCatchBackKey(true);
         flagClicker = new Sprite(game.assets.PLANE);
         flagClicker.setScale(0.125f);
     }
@@ -70,8 +72,10 @@ public class HowToPlay implements Screen, GestureDetector.GestureListener {
             }
 
             game.batch.end();
+            backButtonPressed |= Gdx.input.isKeyPressed(Input.Keys.BACK);
 
-            if (lastTouched) {
+
+        if (lastTouched) {
                 Vector3 pos = new Vector3(touchX, touchY, 0);
                 pos = camera.unproject(pos);
                 //flagClicker.setPosition(pos.x, pos.y);
@@ -79,15 +83,17 @@ public class HowToPlay implements Screen, GestureDetector.GestureListener {
                 flagClicker.setCenterY(pos.y);
             }
 
+        if (backButtonPressed ||
+            (lastTouched && Intersector.intersectRectangles(back.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle()))) {
+            game.setScreen(new MainMenu(game));
+
+            dispose();
+            return;
+        }
+
             if (atAllTouched) {
                 if (lastTouched) {
-                    for (int k = 0; k < 10; ++k) {
-                        if (Intersector.intersectRectangles(back.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
-                            game.setScreen(new MainMenu(game));
-                            dispose();
-                            break;
-                        }
-                    }
+
                 }
 
                 lastTouched = false;
@@ -153,4 +159,13 @@ public class HowToPlay implements Screen, GestureDetector.GestureListener {
 
     @Override
     public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) { return true; }
+
+    boolean backButtonPressed = false;
+    public boolean keyDown(int keycode) {
+        if(keycode == Input.Keys.BACK){
+            // Do your optional back button handling (show pause menu?)
+            backButtonPressed = true;
+        }
+        return false;
+    }
 }

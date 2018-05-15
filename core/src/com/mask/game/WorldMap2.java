@@ -1,6 +1,7 @@
 package com.mask.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -106,6 +107,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         fakebackground.setCenterY(camera.position.y);
 
         Gdx.input.setInputProcessor(new GestureDetector(this));
+        Gdx.input.setCatchBackKey(true);
 
         flagClicker = new Sprite(game.assets.PLANE);
         flagClicker.setScale(0.125f);
@@ -212,6 +214,8 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
         game.batch.end();
 
+        backButtonPressed |= Gdx.input.isKeyPressed(Input.Keys.BACK);
+
         if (lastTouched) {
             Vector3 pos = new Vector3(touchX, touchY, 0);
             pos = camera.unproject(pos);
@@ -220,17 +224,16 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
             flagClicker.setCenterY(pos.y);
         }
 
+        if (backButtonPressed ||
+            (lastTouched && Intersector.intersectRectangles(back.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle()))) {
+            game.setScreen(new MainMenu(game));
+
+            dispose();
+            return;
+        }
+
         if (atAllTouched) {
-
             if (lastTouched) {
-
-                if (Intersector.intersectRectangles(back.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
-                    game.setScreen(new MainMenu(game));
-
-                    dispose();
-
-                }
-
 
                 boolean anyflagtouched = false;
                 for (int j = 0; j < flagButtons.length; ++j) {
@@ -357,6 +360,15 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
     @Override
     public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
         return true;
+    }
+
+    boolean backButtonPressed = false;
+    public boolean keyDown(int keycode) {
+        if(keycode == Input.Keys.BACK){
+            // Do your optional back button handling (show pause menu?)
+            backButtonPressed = true;
+        }
+        return false;
     }
 
 }
