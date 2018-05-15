@@ -1,6 +1,7 @@
 package com.mask.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -28,6 +29,7 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, width, height);
         Gdx.input.setInputProcessor(new GestureDetector(this));
+        Gdx.input.setCatchBackKey(true);
         sprite = new Sprite(game.assets.PERSON);
         sprite.setCenterX(0.15f * width);
         sprite.setCenterY(0.4f * height);
@@ -61,6 +63,12 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
             font.setColor(Color.WHITE);
         }
         game.batch.end();
+
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
+            --mode;
+            if (mode < 0) mode = 0;
+        }
+
         if (mode == 2) {
             game.setScreen(new WorldMap2(game, thePrompt, theSprite));
         }
@@ -133,4 +141,5 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
     public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
         return false;
     }
+
 }
