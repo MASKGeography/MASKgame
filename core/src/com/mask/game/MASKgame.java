@@ -41,7 +41,6 @@ public class MASKgame extends Game {
         score = 0;
         time = 0;
 
-        //kindof a hack, but whatever
         while (!completed) updatePlotsNStuff();
 
         completed = false;
@@ -65,20 +64,39 @@ public class MASKgame extends Game {
         return;
     }
 
+
+    /**
+     * Gets the updated Prompt as a String.
+     * @return the updated Prompt
+     */
     public String getThePrompt() {
         return thePrompt;
     }
 
+    /**
+     * Gets the updated Sprite as a String.
+     * @return the updated Sprite
+     */
     public String getTheSprite() {
         return theSprite;
     }
 
+    /**
+     * Gets the overview as a String.
+     * @return the overview
+     */
     public String getOverview() {
         return overview;
     }
 
+    /**
+     * The user's score.
+     */
     public int score = 0;
 
+    /**
+     * The user's time.
+     */
     public float time = 0;
 
     public void render() {
@@ -88,6 +106,10 @@ public class MASKgame extends Game {
     public void dispose() {
     }
 
+    /**
+     * Returns the user's time as a String.
+     * @return the user's time
+     */
     public String scoreString() {
         int tmp = (int)time;
         int seconds = tmp % 60;
