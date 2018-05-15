@@ -41,22 +41,30 @@ public class HowToPlay implements Screen, GestureDetector.GestureListener {
         background.setCenterX(camera.position.x);
         background.setCenterY(camera.position.y);
 
+        //Formatting back button
         back = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/backButton.png")));
         back.setPosition(Gdx.graphics.getWidth() * 1 / 16, Gdx.graphics.getHeight() * 13 / 16);
         back.setScale((float) (width * 0.0015));
+
+        //Gestures
         Gdx.input.setInputProcessor(new GestureDetector(this));
         Gdx.input.setCatchBackKey(true);
+
+        //Flag clicker
         flagClicker = new Sprite(game.assets.PLANE);
         flagClicker.setScale(0.125f);
     }
 
     @Override
     public void render(float delta) {
+
         Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
+
+        //Draws text
         BitmapFont font = game.assets.DEFAULT;
         font.getData().setScale((float) (0.004 * (Gdx.graphics.getWidth())));
         font.draw(game.batch, "Welcome to How To Play", 0, Gdx.graphics.getHeight() * 6 / 8, Gdx.graphics.getWidth(), 1, false);
@@ -64,17 +72,19 @@ public class HowToPlay implements Screen, GestureDetector.GestureListener {
         font.draw(game.batch, "1. Read the prompt and click on the flag of the country that answers the prompt. Pinch with two fingers to zoom in and out, and scroll with one finger.\n" +
             "2. Congratulations, you can now begin playing!", 0, Gdx.graphics.getHeight() * 5 / 8, Gdx.graphics.getWidth(), -1, true);
 
-
+        //Draws back button
         back.draw(game.batch);
 
+        //Draws the airplane when the screen is touched
         if (atAllTouched) {
             flagClicker.draw(game.batch);
         }
 
         game.batch.end();
+
         backButtonPressed |= Gdx.input.isKeyPressed(Input.Keys.BACK);
 
-
+        //Moves airplane to the last touched location
         if (lastTouched) {
             Vector3 pos = new Vector3(touchX, touchY, 0);
             pos = camera.unproject(pos);
@@ -83,6 +93,7 @@ public class HowToPlay implements Screen, GestureDetector.GestureListener {
             flagClicker.setCenterY(pos.y);
         }
 
+        //Returns to main menu when back button pressed
         if (backButtonPressed ||
             (lastTouched && Intersector.intersectRectangles(back.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle()))) {
             game.setScreen(new MainMenu(game));
@@ -90,7 +101,7 @@ public class HowToPlay implements Screen, GestureDetector.GestureListener {
             dispose();
             return;
         }
-
+        
         if (atAllTouched) {
             if (lastTouched) {
 
