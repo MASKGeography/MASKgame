@@ -101,7 +101,7 @@ public class HowToPlay implements Screen, GestureDetector.GestureListener {
             dispose();
             return;
         }
-        
+
         if (atAllTouched) {
             if (lastTouched) {
 

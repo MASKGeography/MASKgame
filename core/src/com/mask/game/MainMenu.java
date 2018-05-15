@@ -36,16 +36,26 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, width, height);
         Vector3 pos = new Vector3(0, 0, 0);
+
+        //Formats play button
         playSprite = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/playButton.png")));
         playSprite.setPosition((float) (width * 0.25 - playSprite.getWidth() * 0.5), (float) (height * 0.25));
         playSprite.setScale((float) (width * 0.002));
+
+        //Formats how to play button
         htpSprite = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/htpButton.png")));
         htpSprite.setPosition((float) (width * 0.5 - htpSprite.getWidth() * 0.5), (float) (height * 0.25));
         htpSprite.setScale((float) (width * 0.002));
+
+        //Formats about button
         a4gSprite = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/aboutButton.png")));
         a4gSprite.setPosition((float) (width * 0.75 - a4gSprite.getWidth() * 0.5), (float) (height * 0.25));
         a4gSprite.setScale((float) (width * 0.002));
+
+        //Gestures
         Gdx.input.setInputProcessor(new GestureDetector(this));
+
+        //Formats plane clicker
         flagClicker = new Sprite(game.assets.PLANE);
         flagClicker.setScale(0.125f);
     }
@@ -57,23 +67,33 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
+
+        //Draws buttons
         playSprite.draw(game.batch);
         htpSprite.draw(game.batch);
         a4gSprite.draw(game.batch);
+
+        //Draws airplane clicker
         if (atAllTouched) {
             flagClicker.draw(game.batch);
         }
+
+        //Draws text
         BitmapFont font = game.assets.DEFAULT;
         font.getData().setScale((float) (width * 0.004));
         font.draw(game.batch, "Where in the world? ", 0, (float) (height * 0.75), Gdx.graphics.getWidth(), 1, false);
         font.getData().setScale(1);
         game.batch.end();
+
+        //Moves airplane to the last touched location
         if (lastTouched) {
             Vector3 pos = new Vector3(touchX, touchY, 0);
             pos = camera.unproject(pos);
             flagClicker.setCenterX(pos.x);
             flagClicker.setCenterY(pos.y);
         }
+
+        //Switches to the appropriate screen when a button is pressed
         if (atAllTouched) {
             if (lastTouched) {
                 if (Intersector.intersectRectangles(playSprite.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
