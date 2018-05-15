@@ -6,24 +6,14 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.TimeUtils;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
-
-import static javax.swing.text.html.HTML.Tag.HEAD;
 
 /**
  * Created by Neel on 4/12/2018.
@@ -69,7 +59,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
         back = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/backButton.png")));
         back.setScale(1);
-        back.setPosition(Gdx.graphics.getWidth() * 1 / 32, Gdx.graphics.getHeight() * 7 /16);
+        back.setPosition(Gdx.graphics.getWidth() * 1 / 32, Gdx.graphics.getHeight() * 7 / 16);
 
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
@@ -102,7 +92,6 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         background.setCenterY(camera.position.y);
 
 
-
         fakebackground.setCenterX(camera.position.x);
         fakebackground.setCenterY(camera.position.y);
 
@@ -129,7 +118,6 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
             }
 
 
-
             pos.x = x.floatValue() * fakebackground.getWidth() * scale + (Gdx.graphics.getWidth() - fakebackground.getWidth() * scale) / 2;
             pos.y = y.floatValue() * fakebackground.getHeight() * scale + (Gdx.graphics.getHeight() - fakebackground.getHeight() * scale) / 2;
 
@@ -154,8 +142,6 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         }
 
 
-
-
         Rectangle rect = background.getBoundingRectangle();
     }
 
@@ -176,7 +162,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
         BitmapFont font = game.assets.DEFAULT;
         font.setColor(Color.BLACK);
-        font.getData().setScale((4 * ((640)/(Gdx.graphics.getWidth()/Gdx.graphics.getDensity()))) * camera.zoom);
+        font.getData().setScale((4 * ((640) / (Gdx.graphics.getWidth() / Gdx.graphics.getDensity()))) * camera.zoom);
 
         float posX = 0 + (camera.position.x - initX);
         float posY = Gdx.graphics.getHeight() * 3 / 16 + (camera.position.y - initY);
@@ -185,7 +171,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         font.draw(game.batch, game.scoreString(), posX, posY, Gdx.graphics.getWidth(), 1, true);
 
         posX = 0 + (camera.position.x - initX);
-        posY = Gdx.graphics.getHeight() * 31 /32 + (camera.position.y - initY);
+        posY = Gdx.graphics.getHeight() * 31 / 32 + (camera.position.y - initY);
         posY = camera.position.y + (posY - camera.position.y) * camera.zoom;
 
         font.draw(game.batch, "Prompt: " + thePrompt, posX, posY, Gdx.graphics.getWidth(), 1, true);
@@ -200,7 +186,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         posX = camera.position.x + (posX - camera.position.x) * camera.zoom;
         posY = Gdx.graphics.getHeight() * 8 / 16 + (camera.position.y - initY);
         posY = camera.position.y + (posY - camera.position.y) * camera.zoom;
-        back.setScale(1.5f*camera.zoom);
+        back.setScale(1.5f * camera.zoom);
         back.setCenterX(posX);
         back.setCenterY(posY);
 
@@ -253,8 +239,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
                             if (game.completed) {
                                 game.setScreen(new EndGame(game));
-                            }
-                            else {
+                            } else {
                                 game.setScreen(new Cutscene(game));
                             }
 
@@ -275,7 +260,6 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
                 }
                 if (!anyflagtouched) answerString = "";
             }
-
 
 
             lastTouched = false;
@@ -363,8 +347,9 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
     }
 
     boolean backButtonPressed = false;
+
     public boolean keyDown(int keycode) {
-        if(keycode == Input.Keys.BACK){
+        if (keycode == Input.Keys.BACK) {
             // Do your optional back button handling (show pause menu?)
             backButtonPressed = true;
         }

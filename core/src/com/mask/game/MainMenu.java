@@ -28,22 +28,23 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
     float touchX = -1, touchY = -1;
     Sprite flagClicker;
     private float width, height;
+
     public MainMenu(final MASKgame gam) {
         game = gam;
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, width, height);
-        Vector3 pos = new Vector3(0,0,0);
+        Vector3 pos = new Vector3(0, 0, 0);
         playSprite = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/playButton.png")));
-        playSprite.setPosition((float) (width*0.25-playSprite.getWidth()*0.5), (float) (height*0.25));
-        playSprite.setScale((float) (width*0.002));
+        playSprite.setPosition((float) (width * 0.25 - playSprite.getWidth() * 0.5), (float) (height * 0.25));
+        playSprite.setScale((float) (width * 0.002));
         htpSprite = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/htpButton.png")));
-        htpSprite.setPosition((float) (width*0.5-htpSprite.getWidth()*0.5), (float) (height*0.25));
-        htpSprite.setScale((float) (width*0.002));
+        htpSprite.setPosition((float) (width * 0.5 - htpSprite.getWidth() * 0.5), (float) (height * 0.25));
+        htpSprite.setScale((float) (width * 0.002));
         a4gSprite = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/aboutButton.png")));
-        a4gSprite.setPosition((float) (width*0.75-a4gSprite.getWidth()*0.5), (float) (height*0.25));
-        a4gSprite.setScale((float) (width*0.002));
+        a4gSprite.setPosition((float) (width * 0.75 - a4gSprite.getWidth() * 0.5), (float) (height * 0.25));
+        a4gSprite.setScale((float) (width * 0.002));
         Gdx.input.setInputProcessor(new GestureDetector(this));
         flagClicker = new Sprite(game.assets.PLANE);
         flagClicker.setScale(0.125f);
@@ -63,8 +64,8 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
             flagClicker.draw(game.batch);
         }
         BitmapFont font = game.assets.DEFAULT;
-        font.getData().setScale((float) (width*0.004));
-        font.draw(game.batch, "Where in the world? ", 0, (float) (height*0.75), Gdx.graphics.getWidth(), 1, false);
+        font.getData().setScale((float) (width * 0.004));
+        font.draw(game.batch, "Where in the world? ", 0, (float) (height * 0.75), Gdx.graphics.getWidth(), 1, false);
         font.getData().setScale(1);
         game.batch.end();
         if (lastTouched) {
@@ -78,15 +79,13 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
                 if (Intersector.intersectRectangles(playSprite.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
                     game.setScreen(new Cutscene(game));
                     dispose();
+                } else if (Intersector.intersectRectangles(htpSprite.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
+                    game.setScreen(new HowToPlay(game));
+                    dispose();
+                } else if (Intersector.intersectRectangles(a4gSprite.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
+                    game.setScreen(new About(game));
+                    dispose();
                 }
-                else if (Intersector.intersectRectangles(htpSprite.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
-                     game.setScreen(new HowToPlay(game));
-                     dispose();
-                 }
-               else if (Intersector.intersectRectangles(a4gSprite.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
-                        game.setScreen(new About(game));
-                        dispose();
-                 }
             }
             lastTouched = false;
         }
@@ -117,25 +116,26 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
     }
 
     @Override
-    public boolean touchDown ( float x, float y, int pointer, int button){
+    public boolean touchDown(float x, float y, int pointer, int button) {
         return false;
     }
 
     @Override
-    public boolean tap ( float x, float y, int count, int button){
+    public boolean tap(float x, float y, int count, int button) {
         atAllTouched = true;
         lastTouched = true;
         touchX = x;
         touchY = y;
         return false;
     }
+
     @Override
-    public boolean longPress ( float x, float y){
+    public boolean longPress(float x, float y) {
         return false;
     }
 
     @Override
-    public boolean fling ( float velocityX, float velocityY, int button){
+    public boolean fling(float velocityX, float velocityY, int button) {
         return false;
     }
 
@@ -143,7 +143,7 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
     }
 
     @Override
-    public boolean pan(float x, float y, float deltaX, float deltaY){
+    public boolean pan(float x, float y, float deltaX, float deltaY) {
         return false;
     }
 
@@ -159,6 +159,6 @@ public class MainMenu implements Screen, GestureDetector.GestureListener {
 
     @Override
     public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
-            return true;
+        return true;
     }
 }

@@ -42,8 +42,8 @@ public class HowToPlay implements Screen, GestureDetector.GestureListener {
         background.setCenterY(camera.position.y);
 
         back = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/backButton.png")));
-        back.setPosition(Gdx.graphics.getWidth() * 1/ 16, Gdx.graphics.getHeight() * 13/16);
-        back.setScale((float) (width*0.0015));
+        back.setPosition(Gdx.graphics.getWidth() * 1 / 16, Gdx.graphics.getHeight() * 13 / 16);
+        back.setScale((float) (width * 0.0015));
         Gdx.input.setInputProcessor(new GestureDetector(this));
         Gdx.input.setCatchBackKey(true);
         flagClicker = new Sprite(game.assets.PLANE);
@@ -65,23 +65,23 @@ public class HowToPlay implements Screen, GestureDetector.GestureListener {
             "2. Congratulations, you can now begin playing!", 0, Gdx.graphics.getHeight() * 5 / 8, Gdx.graphics.getWidth(), -1, true);
 
 
-            back.draw(game.batch);
+        back.draw(game.batch);
 
-            if (atAllTouched) {
-                flagClicker.draw(game.batch);
-            }
+        if (atAllTouched) {
+            flagClicker.draw(game.batch);
+        }
 
-            game.batch.end();
-            backButtonPressed |= Gdx.input.isKeyPressed(Input.Keys.BACK);
+        game.batch.end();
+        backButtonPressed |= Gdx.input.isKeyPressed(Input.Keys.BACK);
 
 
         if (lastTouched) {
-                Vector3 pos = new Vector3(touchX, touchY, 0);
-                pos = camera.unproject(pos);
-                //flagClicker.setPosition(pos.x, pos.y);
-                flagClicker.setCenterX(pos.x);
-                flagClicker.setCenterY(pos.y);
-            }
+            Vector3 pos = new Vector3(touchX, touchY, 0);
+            pos = camera.unproject(pos);
+            //flagClicker.setPosition(pos.x, pos.y);
+            flagClicker.setCenterX(pos.x);
+            flagClicker.setCenterY(pos.y);
+        }
 
         if (backButtonPressed ||
             (lastTouched && Intersector.intersectRectangles(back.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle()))) {
@@ -91,42 +91,48 @@ public class HowToPlay implements Screen, GestureDetector.GestureListener {
             return;
         }
 
-            if (atAllTouched) {
-                if (lastTouched) {
+        if (atAllTouched) {
+            if (lastTouched) {
 
-                }
-
-                lastTouched = false;
             }
 
+            lastTouched = false;
         }
 
+    }
+
 
     @Override
-    public void resize (int width, int height){ }
+    public void resize(int width, int height) {
+    }
 
     @Override
-    public void show () { }
+    public void show() {
+    }
 
     @Override
-    public void hide () { }
+    public void hide() {
+    }
 
     @Override
-    public void pause () { }
+    public void pause() {
+    }
 
     @Override
-    public void resume () { }
+    public void resume() {
+    }
 
     @Override
-    public void dispose () { }
+    public void dispose() {
+    }
 
     @Override
-    public boolean touchDown ( float x, float y, int pointer, int button){
+    public boolean touchDown(float x, float y, int pointer, int button) {
         return false;
     }
 
     @Override
-    public boolean tap ( float x, float y, int count, int button){
+    public boolean tap(float x, float y, int count, int button) {
         atAllTouched = true;
         lastTouched = true;
         touchX = x;
@@ -135,19 +141,22 @@ public class HowToPlay implements Screen, GestureDetector.GestureListener {
     }
 
     @Override
-    public boolean longPress ( float x, float y){
+    public boolean longPress(float x, float y) {
         return false;
     }
 
     @Override
-    public boolean fling ( float velocityX, float velocityY, int button){
+    public boolean fling(float velocityX, float velocityY, int button) {
         return false;
     }
 
-    public void pinchStop() { }
+    public void pinchStop() {
+    }
 
     @Override
-    public boolean pan(float x, float y, float deltaX, float deltaY) { return false; }
+    public boolean pan(float x, float y, float deltaX, float deltaY) {
+        return false;
+    }
 
     @Override
     public boolean panStop(float x, float y, int pointer, int button) {
@@ -155,14 +164,19 @@ public class HowToPlay implements Screen, GestureDetector.GestureListener {
     }
 
     @Override
-    public boolean zoom(float initialDistance, float distance) { return false; }
+    public boolean zoom(float initialDistance, float distance) {
+        return false;
+    }
 
     @Override
-    public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) { return true; }
+    public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
+        return true;
+    }
 
     boolean backButtonPressed = false;
+
     public boolean keyDown(int keycode) {
-        if(keycode == Input.Keys.BACK){
+        if (keycode == Input.Keys.BACK) {
             // Do your optional back button handling (show pause menu?)
             backButtonPressed = true;
         }

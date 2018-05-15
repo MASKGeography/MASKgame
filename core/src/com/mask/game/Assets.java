@@ -8,7 +8,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,12 +51,13 @@ public class Assets {
         }
 
     }
+
     private void initCountryTextures() {
         FileHandle file = Gdx.files.internal("geography/listOfCountriesFormatted.csv");
         String[] lines = file.readString().split("\n");
 
         countries = new ArrayList<String>();
-        flagSprites = new HashMap<String,Texture>();
+        flagSprites = new HashMap<String, Texture>();
 
 
         for (String line : lines) {
@@ -71,6 +71,7 @@ public class Assets {
 
         }
     }
+
     private void initCountryPos() {
         countries2XPos = new HashMap<String, Double>();
         countries2YPos = new HashMap<String, Double>();
@@ -91,6 +92,7 @@ public class Assets {
 
 
     }
+
     public void init() {
         WORLDMAP = new Texture(Gdx.files.internal("geography/worldMap.png"));
         WORLDMAP2 = new Texture(Gdx.files.internal("geography/worldMap2.png"));

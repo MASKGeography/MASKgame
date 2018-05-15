@@ -1,6 +1,7 @@
 package com.mask.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -8,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.Screen;
 
 public class Cutscene implements Screen, GestureDetector.GestureListener {
     private MASKgame game;
@@ -22,7 +22,7 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
     float tstart = 0;
 
     public Cutscene(MASKgame gam) {
-        game=gam;
+        game = gam;
         height = Gdx.graphics.getHeight();
         width = Gdx.graphics.getWidth();
         camera = new OrthographicCamera();
@@ -41,10 +41,10 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
     public void render(float delta) {
         tstart += 3 * Gdx.graphics.getDeltaTime();
         boolean drawRed = false;
-        if ((int)tstart % 2 == 0) {
+        if ((int) tstart % 2 == 0) {
             drawRed = true;
         }
-        Gdx.gl.glClearColor(100/255.0f, 150/255.0f, 200/255.0f, 1);
+        Gdx.gl.glClearColor(100 / 255.0f, 150 / 255.0f, 200 / 255.0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
@@ -53,11 +53,11 @@ public class Cutscene implements Screen, GestureDetector.GestureListener {
         if (mode >= 1) {
             BitmapFont font = game.assets.DEFAULT;
             font.getData().setScale((float) (0.003 * (Gdx.graphics.getWidth())));
-            font.draw(game.batch, "A person needs your help!" + overview, 0, Gdx.graphics.getHeight() * 27/32   , Gdx.graphics.getWidth(), 1, true);
+            font.draw(game.batch, "A person needs your help!" + overview, 0, Gdx.graphics.getHeight() * 27 / 32, Gdx.graphics.getWidth(), 1, true);
             if (drawRed) font.setColor(Color.RED);
             else font.setColor(Color.BLACK);
             font.getData().setScale((float) (0.005 * (Gdx.graphics.getWidth())));
-            font.draw(game.batch, game.scoreString(), 0, Gdx.graphics.getHeight() * 31/32, Gdx.graphics.getWidth(), 1, true);
+            font.draw(game.batch, game.scoreString(), 0, Gdx.graphics.getHeight() * 31 / 32, Gdx.graphics.getWidth(), 1, true);
             font.setColor(Color.WHITE);
         }
         game.batch.end();

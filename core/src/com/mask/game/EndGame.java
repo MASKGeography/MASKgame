@@ -1,16 +1,12 @@
 package com.mask.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.Screen;
-
-import java.util.ArrayList;
 
 public class EndGame implements Screen, GestureDetector.GestureListener {
     private MASKgame game;
@@ -38,7 +34,7 @@ public class EndGame implements Screen, GestureDetector.GestureListener {
     public void render(float delta) {
         time += Gdx.graphics.getDeltaTime();
 
-        Gdx.gl.glClearColor(100/255.0f, 150/255.0f, 200/255.0f, 1);
+        Gdx.gl.glClearColor(100 / 255.0f, 150 / 255.0f, 200 / 255.0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         camera.update();
@@ -47,7 +43,7 @@ public class EndGame implements Screen, GestureDetector.GestureListener {
 
         BitmapFont font = game.assets.DEFAULT;
         font.getData().setScale((float) (0.003 * (Gdx.graphics.getWidth())));
-        font.draw(game.batch, "Congratulations! You finished the game!\n" + game.scoreString(), 0, Gdx.graphics.getHeight() * 9/16, Gdx.graphics.getWidth(), 1, false);
+        font.draw(game.batch, "Congratulations! You finished the game!\n" + game.scoreString(), 0, Gdx.graphics.getHeight() * 9 / 16, Gdx.graphics.getWidth(), 1, false);
 
         game.batch.end();
 

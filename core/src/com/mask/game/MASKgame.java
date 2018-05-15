@@ -4,6 +4,7 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import java.util.ArrayList;
 
 /**
@@ -57,7 +58,7 @@ public class MASKgame extends Game {
         thePrompt = prompty.getPromptWord();
         theSprite = prompty.getSpriteName();
         overview = ploty.getOverview();
-        if (thePrompt.equals(thePlots.get(plotNumber).getLastPrompt().getPromptWord())){
+        if (thePrompt.equals(thePlots.get(plotNumber).getLastPrompt().getPromptWord())) {
             plotNumber = (plotNumber + 1) % thePlots.size();
             if (plotNumber == 0) almostCompleted = true;
         }
@@ -67,6 +68,7 @@ public class MASKgame extends Game {
 
     /**
      * Gets the updated Prompt as a String.
+     *
      * @return the updated Prompt
      */
     public String getThePrompt() {
@@ -75,6 +77,7 @@ public class MASKgame extends Game {
 
     /**
      * Gets the updated Sprite as a String.
+     *
      * @return the updated Sprite
      */
     public String getTheSprite() {
@@ -83,6 +86,7 @@ public class MASKgame extends Game {
 
     /**
      * Gets the overview as a String.
+     *
      * @return the overview
      */
     public String getOverview() {
@@ -108,13 +112,14 @@ public class MASKgame extends Game {
 
     /**
      * Returns the user's time as a String.
+     *
      * @return the user's time
      */
     public String scoreString() {
-        int tmp = (int)time;
+        int tmp = (int) time;
         int seconds = tmp % 60;
         int minutes = (tmp - seconds) / 60;
-        int milli = (int)((time - tmp) * 1000);
+        int milli = (int) ((time - tmp) * 1000);
         String strSeconds = "" + seconds;
         if (strSeconds.length() == 1) {
             strSeconds = "0" + strSeconds;

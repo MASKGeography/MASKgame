@@ -14,6 +14,7 @@ public class Assets {
         BUCKET("tutorial/bucket.png");
 
         private final Texture texture;
+
         Textures(String image) {
             texture = new Texture(Gdx.files.internal(image));
         }
