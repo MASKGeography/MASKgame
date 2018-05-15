@@ -29,10 +29,12 @@ public class Assets {
     public ArrayList<String> countriesProper;
     public ArrayList<String> countries;
     public HashMap<String, Texture> flagSprites;
-
     public HashMap<String, Double> countries2XPos;
     public HashMap<String, Double> countries2YPos;
 
+    /**
+     * Reads capitalized country names from a csv and stores as strings in an ArrayList.
+     */
     private void initCountries() {
         countriesProper = new ArrayList<String>();
 
@@ -52,6 +54,10 @@ public class Assets {
 
     }
 
+    /**
+     * Reads texture names as a String, puts in a Hashmap with Texture objects.
+     * Finds png with texture name and creates the associated Texture.
+     */
     private void initCountryTextures() {
         FileHandle file = Gdx.files.internal("geography/listOfCountriesFormatted.csv");
         String[] lines = file.readString().split("\n");
@@ -72,6 +78,9 @@ public class Assets {
         }
     }
 
+    /**
+     * Reads csv with country positions as doubles and places in a Hashmap.
+     */
     private void initCountryPos() {
         countries2XPos = new HashMap<String, Double>();
         countries2YPos = new HashMap<String, Double>();
@@ -93,6 +102,9 @@ public class Assets {
 
     }
 
+    /**
+     * Creates global Textures from pngs.
+     */
     public void init() {
         WORLDMAP = new Texture(Gdx.files.internal("geography/worldMap.png"));
         WORLDMAP2 = new Texture(Gdx.files.internal("geography/worldMap2.png"));
@@ -110,8 +122,14 @@ public class Assets {
 
     }
 
+    /**
+     * Changes improper uncapitalized country name to capitalized "proper" country name.
+     * If there is a failure, "proper" name becomes "ERROR".
+     * @param country the country to be made "proper"
+     * @return the proper Country as a String
+     */
     public String makeProper(String country) {
-        String ans = "ERRRRRRROR";
+        String ans = "ERROR";
         for (int i = 0; i < countries.size(); ++i) {
             if (country.equals(countries.get(i))) {
                 ans = countriesProper.get(i);

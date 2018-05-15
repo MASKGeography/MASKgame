@@ -23,7 +23,6 @@ public class About implements Screen, GestureDetector.GestureListener {
     private final MASKgame game;
     private OrthographicCamera camera;
     private float width, height;
-    Sprite background;
     boolean lastTouched = false;
     boolean atAllTouched = false;
     float touchX = -1, touchY = -1;
@@ -40,18 +39,18 @@ public class About implements Screen, GestureDetector.GestureListener {
         height = Gdx.graphics.getHeight();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, width, height);
+
         Vector3 pos = new Vector3(0, 0, 0);
         Gdx.input.setInputProcessor(new GestureDetector(this));
         Gdx.input.setCatchBackKey(true);
+
         flagClicker = new Sprite(game.assets.PLANE);
         flagClicker.setScale(0.125f);
-        //use new square version of map
-        background = new Sprite(game.assets.WORLDMAP2);
-        background.setCenterX(camera.position.x);
-        background.setCenterY(camera.position.y);
+
         back = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/backButton.png")));
         back.setScale((float) (width * 0.0015));
         back.setPosition(Gdx.graphics.getWidth() * 1 / 16, Gdx.graphics.getHeight() * 13 / 16);
+
         credits = "The following resources were used to find information for prompts:\n" +
             "\n" +
             "The Telegraph Travel Destinations: \n " +
@@ -146,12 +145,15 @@ public class About implements Screen, GestureDetector.GestureListener {
         font.draw(game.batch, purpose, 0, Gdx.graphics.getHeight() * -3 / 8, Gdx.graphics.getWidth(), -1, true);
         font.draw(game.batch, credits, 0, Gdx.graphics.getHeight() * -7 / 8, Gdx.graphics.getWidth(), -1, true);
         back.draw(game.batch);
+
+        //draws the airplane when screen touched
         if (atAllTouched) {
             flagClicker.draw(game.batch);
         }
         game.batch.end();
         backButtonPressed |= Gdx.input.isKeyPressed(Input.Keys.BACK);
 
+        //returns to main menu when back button pressed
         if (backButtonPressed ||
             (lastTouched && Intersector.intersectRectangles(back.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle()))) {
             game.setScreen(new MainMenu(game));
@@ -160,6 +162,7 @@ public class About implements Screen, GestureDetector.GestureListener {
             return;
         }
 
+        //moves airplane to the last tapped location
         if (lastTouched) {
             Vector3 pos = new Vector3(touchX, touchY, 0);
             pos = camera.unproject(pos);
@@ -167,12 +170,13 @@ public class About implements Screen, GestureDetector.GestureListener {
             flagClicker.setCenterY(pos.y);
         }
 
-        if (atAllTouched) {
-            if (lastTouched) {
+        if(atAllTouched)  {
+            if(lastTouched){
 
             }
             lastTouched = false;
         }
+
     }
 
     @Override
