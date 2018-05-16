@@ -50,7 +50,7 @@ public class HowToPlay implements Screen, GestureDetector.GestureListener {
         Gdx.input.setInputProcessor(new GestureDetector(this));
         Gdx.input.setCatchBackKey(true);
 
-        //Flag clicker
+        //Air plane clicker
         flagClicker = new Sprite(game.assets.PLANE);
         flagClicker.setScale(0.125f);
     }
