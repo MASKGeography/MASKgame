@@ -36,6 +36,9 @@ public class MASKgame extends Game {
         updatePlotsNStuff();
     }
 
+    /**
+     * Restarts the app.
+     */
     public void restart() {
         completed = false;
         almostCompleted = false;
@@ -50,6 +53,9 @@ public class MASKgame extends Game {
         time = 0;
     }
 
+    /**
+     * Updates plots and prompts when needed.
+     */
     public void updatePlotsNStuff() {
         if (almostCompleted) completed = true;
         thePlots = Plot.getThePlots();
