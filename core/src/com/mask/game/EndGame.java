@@ -41,12 +41,14 @@ public class EndGame implements Screen, GestureDetector.GestureListener {
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
 
+        //shows a user their score and time
         BitmapFont font = game.assets.DEFAULT;
         font.getData().setScale((float) (0.003 * (Gdx.graphics.getWidth())));
         font.draw(game.batch, "Congratulations! You finished the game!\n" + game.scoreString(), 0, Gdx.graphics.getHeight() * 9 / 16, Gdx.graphics.getWidth(), 1, false);
 
         game.batch.end();
 
+        //makes it so a user cannot leave screen for 3 seconds
         if (mode >= 1 && time >= 3) {
             game.restart();
             game.setScreen(new MainMenu(game));
