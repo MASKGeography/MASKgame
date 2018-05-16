@@ -97,9 +97,11 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         fakebackground.setCenterX(camera.position.x);
         fakebackground.setCenterY(camera.position.y);
 
+        //makes touch sensor work
         Gdx.input.setInputProcessor(new GestureDetector(this));
         Gdx.input.setCatchBackKey(true);
 
+        //constructs airplane
         flagClicker = new Sprite(game.assets.PLANE);
         flagClicker.setScale(0.125f);
 
@@ -202,7 +204,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
         backButtonPressed |= Gdx.input.isKeyPressed(Input.Keys.BACK);
 
-        //
+        //moves airplane to last tapped location
         if (lastTouched) {
             Vector3 pos = new Vector3(touchX, touchY, 0);
             pos = camera.unproject(pos);
@@ -210,7 +212,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
             flagClicker.setCenterY(pos.y);
         }
 
-        //
+        //when back button pressed, moves user back to main menu
         if (backButtonPressed ||
             (lastTouched && Intersector.intersectRectangles(back.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle()))) {
             game.setScreen(new MainMenu(game));
