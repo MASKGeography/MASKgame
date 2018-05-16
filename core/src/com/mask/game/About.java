@@ -162,7 +162,6 @@ public class About implements Screen, GestureDetector.GestureListener {
         }
 
         //returns to main menu when back button pressed
-
         if (backButtonPressed ||
             (lastTouched && Intersector.intersectRectangles(back.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle()))) {
             game.setScreen(new MainMenu(game));
@@ -170,7 +169,7 @@ public class About implements Screen, GestureDetector.GestureListener {
             dispose();
             return;
         }
-        
+
         if(atAllTouched)  {
             if(lastTouched){
 
