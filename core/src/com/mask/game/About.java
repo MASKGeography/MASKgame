@@ -153,6 +153,14 @@ public class About implements Screen, GestureDetector.GestureListener {
         game.batch.end();
         backButtonPressed |= Gdx.input.isKeyPressed(Input.Keys.BACK);
 
+        //moves airplane to the last tapped location
+        if (lastTouched) {
+            Vector3 pos = new Vector3(touchX, touchY, 0);
+            pos = camera.unproject(pos);
+            flagClicker.setCenterX(pos.x);
+            flagClicker.setCenterY(pos.y);
+        }
+
         //returns to main menu when back button pressed
         if (backButtonPressed ||
             (lastTouched && Intersector.intersectRectangles(back.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle()))) {
@@ -160,14 +168,6 @@ public class About implements Screen, GestureDetector.GestureListener {
 
             dispose();
             return;
-        }
-
-        //moves airplane to the last tapped location
-        if (lastTouched) {
-            Vector3 pos = new Vector3(touchX, touchY, 0);
-            pos = camera.unproject(pos);
-            flagClicker.setCenterX(pos.x);
-            flagClicker.setCenterY(pos.y);
         }
 
         if(atAllTouched)  {
