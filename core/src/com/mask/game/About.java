@@ -152,19 +152,19 @@ public class About implements Screen, GestureDetector.GestureListener {
         game.batch.end();
         backButtonPressed |= Gdx.input.isKeyPressed(Input.Keys.BACK);
 
+        if (lastTouched) {
+            Vector3 pos = new Vector3(touchX, touchY, 0);
+            pos = camera.unproject(pos);
+            flagClicker.setCenterX(pos.x);
+            flagClicker.setCenterY(pos.y);
+        }
+
         if (backButtonPressed ||
             (lastTouched && Intersector.intersectRectangles(back.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle()))) {
             game.setScreen(new MainMenu(game));
 
             dispose();
             return;
-        }
-
-        if (lastTouched) {
-            Vector3 pos = new Vector3(touchX, touchY, 0);
-            pos = camera.unproject(pos);
-            flagClicker.setCenterX(pos.x);
-            flagClicker.setCenterY(pos.y);
         }
 
         if (atAllTouched) {
