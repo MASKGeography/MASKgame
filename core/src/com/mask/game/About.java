@@ -44,13 +44,17 @@ public class About implements Screen, GestureDetector.GestureListener {
         Gdx.input.setInputProcessor(new GestureDetector(this));
         Gdx.input.setCatchBackKey(true);
 
+
+        //Airplane clicker
         flagClicker = new Sprite(game.assets.PLANE);
         flagClicker.setScale(0.125f);
 
+        //Formatting back button
         back = new Sprite(new Texture(Gdx.files.internal("geography/mainMenuButtons/backButton.png")));
         back.setScale((float) (width * 0.0015));
         back.setPosition(Gdx.graphics.getWidth() * 1 / 16, Gdx.graphics.getHeight() * 13 / 16);
 
+        //Text to be displayed on the screen
         credits = "The following resources were used to find information for prompts:\n" +
             "\n" +
             "The Telegraph Travel Destinations: \n " +
@@ -133,17 +137,23 @@ public class About implements Screen, GestureDetector.GestureListener {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
+
+        //Draws headings
         BitmapFont font = game.assets.DEFAULT;
         font.getData().setScale((float) (0.004 * (Gdx.graphics.getWidth())));
         font.draw(game.batch, "About Apps for Good:", 0, Gdx.graphics.getHeight() * 7 / 8, Gdx.graphics.getWidth(), 1, false);
         font.draw(game.batch, "About the Creators:", 0, Gdx.graphics.getHeight() * 4 / 8, Gdx.graphics.getWidth(), 1, false);
         font.draw(game.batch, "Our Purpose:", 0, Gdx.graphics.getHeight() * -2 / 8, Gdx.graphics.getWidth(), 1, false);
         font.draw(game.batch, "Credits:", 0, Gdx.graphics.getHeight() * -6 / 8, Gdx.graphics.getWidth(), 1, false);
+
+        //Draws body text
         font.getData().setScale((float) (0.002 * (Gdx.graphics.getWidth())));
         font.draw(game.batch, abouta4g, 0, Gdx.graphics.getHeight() * 6 / 8, Gdx.graphics.getWidth(), -1, true);
         font.draw(game.batch, aboutTC, 0, Gdx.graphics.getHeight() * 3 / 8, Gdx.graphics.getWidth(), -1, true);
         font.draw(game.batch, purpose, 0, Gdx.graphics.getHeight() * -3 / 8, Gdx.graphics.getWidth(), -1, true);
         font.draw(game.batch, credits, 0, Gdx.graphics.getHeight() * -7 / 8, Gdx.graphics.getWidth(), -1, true);
+
+        //Draws back button
         back.draw(game.batch);
 
         //draws the airplane when screen touched
@@ -153,6 +163,14 @@ public class About implements Screen, GestureDetector.GestureListener {
         game.batch.end();
         backButtonPressed |= Gdx.input.isKeyPressed(Input.Keys.BACK);
 
+        //moves airplane to the last tapped location
+        if (lastTouched) {
+            Vector3 pos = new Vector3(touchX, touchY, 0);
+            pos = camera.unproject(pos);
+            flagClicker.setCenterX(pos.x);
+            flagClicker.setCenterY(pos.y);
+        }
+
         //returns to main menu when back button pressed
         if (backButtonPressed ||
             (lastTouched && Intersector.intersectRectangles(back.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle()))) {
@@ -160,14 +178,6 @@ public class About implements Screen, GestureDetector.GestureListener {
 
             dispose();
             return;
-        }
-
-        //moves airplane to the last tapped location
-        if (lastTouched) {
-            Vector3 pos = new Vector3(touchX, touchY, 0);
-            pos = camera.unproject(pos);
-            flagClicker.setCenterX(pos.x);
-            flagClicker.setCenterY(pos.y);
         }
 
         if(atAllTouched)  {

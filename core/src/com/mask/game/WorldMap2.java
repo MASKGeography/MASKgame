@@ -84,6 +84,8 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
             scale = height / mapHeight;
         }
 
+        //initializes background
+
         background.setScale(scale);
         fakebackground.setScale(scale);
 
@@ -95,9 +97,11 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         fakebackground.setCenterX(camera.position.x);
         fakebackground.setCenterY(camera.position.y);
 
+        //makes touch sensor work
         Gdx.input.setInputProcessor(new GestureDetector(this));
         Gdx.input.setCatchBackKey(true);
 
+        //constructs airplane
         flagClicker = new Sprite(game.assets.PLANE);
         flagClicker.setScale(0.125f);
 
@@ -106,6 +110,8 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         Vector3 pos = new Vector3(0, 0, 0);
 
         int iter = 0;
+
+
         for (String key : game.assets.countries2XPos.keySet()) {
             String name = key;
             Double x = game.assets.countries2XPos.get(key);
@@ -123,26 +129,21 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
 
             pos.z = 0;
-            //pos = camera.unproject(pos);
 
 
             Sprite flagButton = new Sprite(game.assets.flagSprites.get(name));
             flagButtons[iter] = flagButton;
             buttonNames[iter] = name;
 
-            String namePNG = name + ".png";
 
             flagButtons[iter].setPosition(pos.x, pos.y);
 
             flagButtons[iter].setScale(0.5f);
-//            flagButtons[iter].setCenterX(pos.x);
-//            flagButtons[iter].setCenterY(pos.y);
 
             ++iter;
         }
 
 
-        Rectangle rect = background.getBoundingRectangle();
     }
 
     @Override
@@ -158,6 +159,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
         background.draw(game.batch);
 
         //fakebackground.draw(game.batch);
+
         for (Sprite button : flagButtons) button.draw(game.batch);
 
         BitmapFont font = game.assets.DEFAULT;
@@ -202,14 +204,15 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
         backButtonPressed |= Gdx.input.isKeyPressed(Input.Keys.BACK);
 
+        //moves airplane to last tapped location
         if (lastTouched) {
             Vector3 pos = new Vector3(touchX, touchY, 0);
             pos = camera.unproject(pos);
-            //flagClicker.setPosition(pos.x, pos.y);
             flagClicker.setCenterX(pos.x);
             flagClicker.setCenterY(pos.y);
         }
 
+        //when back button pressed, moves user back to main menu
         if (backButtonPressed ||
             (lastTouched && Intersector.intersectRectangles(back.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle()))) {
             game.setScreen(new MainMenu(game));
@@ -218,6 +221,9 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
             return;
         }
 
+        //If the screen is touched, check for an intersection of airplane and country.
+        //Evaluates whether correct flag is touched or not.
+        //If incorrect message pops up, if correct moves to cut scene.
         if (atAllTouched) {
             if (lastTouched) {
 
@@ -229,6 +235,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
                     if (Intersector.intersectRectangles(flag.getBoundingRectangle(), flagClicker.getBoundingRectangle(), new Rectangle())) {
                         anyflagtouched = true;
                         if (theSprite.equals(name + ".png")) {
+                            //if correct, ten points added to score
                             game.score += 10;
                             answerString = "Congratulations, you found the country!";
 
@@ -237,6 +244,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
                             //get new prompts
                             game.updatePlotsNStuff();
 
+                            //move to end screen if game is done, if not, move to cut scene
                             if (game.completed) {
                                 game.setScreen(new EndGame(game));
                             } else {
@@ -254,7 +262,7 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
                     }
 
                 }
-
+                //if the wrong flag is touched, one point is subtracted.
                 if (anyflagtouched) {
                     --game.score;
                 }
@@ -333,7 +341,6 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
     @Override
     public boolean zoom(float initialDistance, float distance) {
-        //camera.zoom *= (initialDistance / distance) * 0.0001;
         camera.zoom *= Math.sqrt(Math.sqrt(initialDistance / distance));
         camera.zoom = Math.min(1.0f, camera.zoom);
         camera.zoom = Math.max(1 / 10.0f, camera.zoom);
