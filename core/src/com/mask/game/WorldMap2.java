@@ -341,16 +341,75 @@ public class WorldMap2 implements Screen, GestureDetector.GestureListener {
 
     @Override
     public boolean zoom(float initialDistance, float distance) {
-        camera.zoom *= Math.sqrt(Math.sqrt(initialDistance / distance));
-        camera.zoom = Math.min(1.0f, camera.zoom);
-        camera.zoom = Math.max(1 / 10.0f, camera.zoom);
-        camera.update();
+//        camera.zoom *= Math.sqrt(Math.sqrt(initialDistance / distance));
+//        camera.zoom = Math.min(1.0f, camera.zoom);
+//        camera.zoom = Math.max(1 / 10.0f, camera.zoom);
+//        camera.update();
         return false;
     }
 
+    private float getLength(Vector2 p1, Vector2 p2) {
+        float x = p1.x - p2.x;
+        float y = p1.y - p2.y;
+
+        return (float)Math.sqrt(x*x + y*y);
+    }
+
+    private Vector2 getCenter(Vector2 p1, Vector2 p2) {
+        float xCenter = (p1.x + p2.x) / 2;
+        float yCenter = (p1.y + p2.y) / 2;
+
+        return new Vector2(xCenter, yCenter);
+    }
+
+    private Vector2 mapToGdxCoords(Vector2 ptr) {
+        Vector3 pos = new Vector3(ptr.x, ptr.y, 0);
+        camera.unproject(pos);
+        return new Vector2(pos.x, pos.y);
+    }
+
+
     @Override
     public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
-        return true;
+        initialPointer1 = mapToGdxCoords(initialPointer1);
+        initialPointer2 = mapToGdxCoords(initialPointer2);
+        pointer1 = mapToGdxCoords(pointer1);
+        pointer2 = mapToGdxCoords(pointer2);
+
+
+        float dist1 = getLength(initialPointer1, initialPointer2);
+        float dist2 = getLength(pointer1, pointer2);
+
+        if (dist2 == 0 || dist1 == 0)
+            return false;
+
+        float factor = (float)Math.sqrt(Math.sqrt(dist1 / dist2));
+
+        Vector2 center = getCenter(initialPointer1, initialPointer2);
+
+        if (camera.zoom * factor > 1.0f) {
+            factor = 1.0f / camera.zoom;
+        } else if (camera.zoom * factor < 1/10.0f) {
+            factor = (1/10.0f) / camera.zoom;
+        }
+
+        {
+            float cx = camera.position.x;
+            float cy = camera.position.y;
+
+            float newcx = (cx - center.x) * factor + center.x;
+            float newcy = (cy - center.y) * factor + center.y;
+
+            camera.position.x = newcx;
+            camera.position.y = newcy;
+        }
+
+        camera.zoom *= factor;
+        camera.zoom = Math.min(1.0f, camera.zoom);
+        camera.zoom = Math.max(1 / 10.0f, camera.zoom);
+        camera.update();
+
+        return false;
     }
 
     boolean backButtonPressed = false;
